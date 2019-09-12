@@ -1,6 +1,7 @@
 {
     "Pipeline.pipelineRunName": "nanoporeTestRun",
     "Pipeline.novelIDprefix": "NOVEL",
+    "Pipeline.outputDirectory": "test-output",
     "Pipeline.sampleConfigFile": "tests/samplesheets/nanopore.yml",
     "Pipeline.dockerImagesFile": "dockerImages.yml",
     "Pipeline.genomeBuild": "hg38",

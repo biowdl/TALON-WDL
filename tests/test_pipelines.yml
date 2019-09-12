@@ -1,12 +1,10 @@
 - name: Nanopore
   tags:
     - integration
-    - docker_conf
+    - no_docker_conf
   command: >-
-    bash -c '
-    TEST_JSON=tests/integration/nanopore.json ;
-    sed -i "2i\"pipeline.outputDirectory\":\"$PWD/test-output\"," $TEST_JSON ;
-    cromwell run -i $TEST_JSON pipeline.wdl'
+    cromwell run -o tests/cromwell_options.json
+    -i tests/integration/nanopore.json pipeline.wdl
   files:
     - path: "test-output/ONT_GM12878_SUBSET/lib1-rg1.sam"
     - path: "test-output/ONT_GM12878_SUBSET/lib1-rg1_clean.sam"
