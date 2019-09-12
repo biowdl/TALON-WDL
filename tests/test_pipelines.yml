@@ -1,0 +1,19 @@
+- name: Nanopore
+  tags:
+    - integration
+    - docker_conf
+  command: >-
+    bash -c '
+    TEST_JSON=tests/integration/nanopore.json ;
+    sed -i "2i\"pipeline.outputDir\":\"$PWD/test-output\"," $TEST_JSON ;
+    cromwell run -i $TEST_JSON pipeline.wdl
+  files:
+    - path: "test-output/ONT_GM12878_SUBSET/lib1-rg1.sam"
+    - path: "test-output/ONT_GM12878_SUBSET/lib1-rg1_clean.sam"
+    - path: "test-output/ONT_K562_SUBSET/lib1-rg1.sam"
+    - path: "test-output/ONT_K562_SUBSET/lib1-rg1_clean.sam"
+    - path: "test-output/spliceJunctionsFile.tsv"
+    - path: "test-output/nanoporeTestRun.db"
+    - path: "test-output/nanoporeTestRun_talon_abundance.tsv"
+    - path: "test-output/nanoporeTestRun_talon_QC.log"
+    - path: "test-output/nanoporeTestRun_talon_summary.tsv"
