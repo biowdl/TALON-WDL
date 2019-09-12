@@ -5,7 +5,7 @@
   command: >-
     bash -c '
     TEST_JSON=tests/integration/nanopore.json ;
-    sed -i "2i\"pipeline.outputDir\":\"$PWD/test-output\"," $TEST_JSON ;
+    sed -i "2i\"pipeline.outputDirectory\":\"$PWD/test-output\"," $TEST_JSON ;
     cromwell run -i $TEST_JSON pipeline.wdl'
   files:
     - path: "test-output/ONT_GM12878_SUBSET/lib1-rg1.sam"
