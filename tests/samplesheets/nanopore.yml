@@ -1,0 +1,17 @@
+samples:
+- id: ONT_GM12878_SUBSET
+  libraries:
+  - id: lib1
+    readgroups:
+    - id: rg1
+      reads:
+        R1: tests/data/ONT_GM12878_SUBSET.fastq
+        R1_md5: 750dc282c02948b3f75a7ea76eeb3464
+- id: ONT_K562_SUBSET
+  libraries:
+  - id: lib1
+    readgroups:
+    - id: rg1
+      reads:
+        R1: tests/data/ONT_K562_SUBSET.fastq
+        R1_md5: c779f8b69e2d5b55e34f1a4894174e8d
