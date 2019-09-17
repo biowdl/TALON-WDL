@@ -38,6 +38,7 @@ workflow Pipeline {
         File talonConfigFile
         String pipelineRunName
         File dockerImagesFile
+        Boolean filterTranscriptsAbundance = false
 
         File? talonDatabase
         File? spliceJunctionsFile
@@ -45,7 +46,6 @@ workflow Pipeline {
         Int? minimumLength
         Int? cutoff5p
         Int? cutoff3p
-        Boolean? filterTranscriptsAbundance = false
         File? filterPairingsFileAbundance
         File? summaryDatasetGroupsCSV
         Int? minIntronSize
@@ -69,10 +69,10 @@ workflow Pipeline {
     SampleConfig sampleConfig = read_json(convertSampleConfig.json)
     Array[Sample] allSamples = sampleConfig.samples
 
-    Boolean runInitDatabase = defined(talonDatabase)
-    Boolean runGetSJsFromGTF = defined(spliceJunctionsFile)
+    Boolean userProvidedDatabase = defined(talonDatabase)
+    Boolean userProvidedSJfile = defined(spliceJunctionsFile)
 
-    if (runInitDatabase == false) {
+    if (! userProvidedDatabase) {
         call talon.InitializeTalonDatabase as createDatabase {
             input:
                 GTFfile = annotationGTF,
@@ -87,12 +87,12 @@ workflow Pipeline {
         }
     }
 
-    if (runGetSJsFromGTF == false) {
+    if (! userProvidedSJfile) {
         call transcriptClean.GetSJsFromGtf as createSJsfile {
             input:
                 GTFfile = annotationGTF,
                 genomeFile = referenceGenome,
-                outputPrefix = outputDirectory + "/" + "spliceJunctionsFile",
+                outputPrefix = outputDirectory + "/spliceJunctionsFile",
                 minIntronSize = minIntronSize,
                 dockerImage = dockerImages["transcriptclean"]
         }
@@ -171,8 +171,6 @@ task RunTalonOnLoop {
     }
 
     command <<<
-        #$ -l h_vmem=~{memory}G
-        #$ -pe BWA ~{cores}
         set -e
         mkdir -p $(dirname ~{outputPrefix})
         counter=1
