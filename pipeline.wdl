@@ -140,6 +140,7 @@ workflow Pipeline {
     }
 
     output {
+        File outputSpliceJunctionsFile = select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
         Array[File] outputMinimap2 = flatten(sampleWorkflow.outputMinimap2)
         Array[File] outputTranscriptCleanFasta = flatten(sampleWorkflow.outputTranscriptCleanFasta)
         Array[File] outputTranscriptCleanLog = flatten(sampleWorkflow.outputTranscriptCleanLog)
@@ -147,6 +148,8 @@ workflow Pipeline {
         Array[File] outputTranscriptCleanTElog = flatten(sampleWorkflow.outputTranscriptCleanTElog)
         File outputTalonDatabase = runTalon.outputUpdatedDatabase
         File outputTalonLog = runTalon.outputLog
+        File outputAbundance = createAbundanceFile.outputAbundanceFile
+        File outputSummary = createSummaryFile.outputSummaryFile
     }
 }
 
@@ -163,11 +166,13 @@ task RunTalonOnLoop {
         Int? minimumIdentity = 0
 
         Int cores = 1
-        Int memory = 4
+        Int memory = 20
         String dockerImage = "biocontainers/talon:v4.2_cv2"
     }
 
     command <<<
+        #$ -l h_vmem=~{memory}G
+        #$ -pe BWA ~{cores}
         set -e
         mkdir -p $(dirname ~{outputPrefix})
         counter=1
