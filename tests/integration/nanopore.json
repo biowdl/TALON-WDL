@@ -8,7 +8,7 @@
     "Pipeline.annotationVersion": "gencode_v29",
     "Pipeline.referenceGenome": "tests/data/GRCh38.fasta",
     "Pipeline.sampleWorkflow.presetOption": "splice",
-    "Pipeline.sampleWorkflow.variantVCF": "tests/data/00-common_all.vcf",
+    "Pipeline.sampleWorkflow.variantVCF": "tests/data/commonVariants.vcf",
     "Pipeline.sequencingPlatform": "Nanopore",
     "Pipeline.talonConfigFile": "tests/data/nanoporeTALONconfigFile.csv",
     "Pipeline.sampleWorkflow.howToFindGTAG": "f",
