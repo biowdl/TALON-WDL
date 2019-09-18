@@ -39,13 +39,13 @@ workflow Pipeline {
         String pipelineRunName
         File dockerImagesFile
         Boolean filterTranscriptsAbundance = false
+        String novelIDprefix = "TALON"
+        Int minimumLength = 300
+        Int cutoff5p = 500
+        Int cutoff3p = 300
 
         File? talonDatabase
         File? spliceJunctionsFile
-        String? novelIDprefix
-        Int? minimumLength
-        Int? cutoff5p
-        Int? cutoff3p
         File? filterPairingsFileAbundance
         File? summaryDatasetGroupsCSV
         Int? minIntronSize
@@ -59,7 +59,7 @@ workflow Pipeline {
 
     Map[String, String] dockerImages = read_json(convertDockerImagesFile.json)
 
-    call SampleConfigToSampleReadgroupLists as convertSampleConfig {
+    call common.SampleConfigToSampleReadgroupLists as convertSampleConfig {
         input:
             yaml = sampleConfigFile,
             outputJson = outputDirectory + "/samples.json",
@@ -147,7 +147,7 @@ workflow Pipeline {
         Array[File] outputTranscriptCleanSAM = flatten(sampleWorkflow.outputTranscriptCleanSAM)
         Array[File] outputTranscriptCleanTElog = flatten(sampleWorkflow.outputTranscriptCleanTElog)
         File outputTalonDatabase = runTalon.outputUpdatedDatabase
-        File outputTalonLog = runTalon.outputLog
+        Array[File] outputTalonLogs = runTalon.outputLogs
         File outputAbundance = createAbundanceFile.outputAbundanceFile
         File outputSummary = createSummaryFile.outputSummaryFile
     }
@@ -161,9 +161,8 @@ task RunTalonOnLoop {
         String outputPrefix
         String genomeBuild
         String sequencingPlatform = "PacBio-Sequal"
-
-        Float? minimumCoverage = 0.9
-        Int? minimumIdentity = 0
+        Float minimumCoverage = 0.9
+        Int minimumIdentity = 0
 
         Int cores = 1
         Int memory = 20
@@ -178,11 +177,12 @@ task RunTalonOnLoop {
         do
             userInput="$(sed -n ${counter}p ~{configFile})"
             configFileLine="${userInput},~{sequencingPlatform},${file}"
+            outputPrefixString="~{outputPrefix}_${userInput%,*}"
             echo ${configFileLine} > configFile.csv
             talon \
                 --f configFile.csv \
                 ~{"--db " + databaseFile} \
-                ~{"--o " + outputPrefix} \
+                --o ${outputPrefixString} \
                 ~{"--build " + genomeBuild} \
                 ~{"--cov " + minimumCoverage} \
                 ~{"--identity " + minimumIdentity}
@@ -192,7 +192,7 @@ task RunTalonOnLoop {
 
     output {
         File outputUpdatedDatabase = databaseFile
-        File outputLog = outputPrefix + "_talon_QC.log"
+        Array[File] outputLogs = glob(outputPrefix + "*_talon_QC.log")
     }
 
     runtime {
@@ -200,45 +200,18 @@ task RunTalonOnLoop {
         memory: memory
         docker: dockerImage
     }
-}
 
-task SampleConfigToSampleReadgroupLists {
-    input {
-        File yaml
-        String outputJson = "samples.json"
-        String dockerImage = "biowdl/pyyaml:3.13-py37-slim"
-    }
+    parameter_meta {
+        SAMfiles: "Input SAM files, same one as described in configFile."
+        configFile: "Dataset config file."
+        databaseFile: "TALON database. Created using initialize_talon_database.py."
+        outputPrefix: "Output directory path + output file prefix."
+        genomeBuild: "Genome build (i.e. hg38) to use."
+        sequencingPlatform: "The sequencing platform used to generate long reads."
+        minimumCoverage: "Minimum alignment coverage in order to use a SAM entry."
+        minimumIdentity: "Minimum alignment identity in order to use a SAM entry."
 
-    command <<<
-        set -e
-        mkdir -p $(dirname ~{outputJson})
-        python <<CODE
-        import json
-        import yaml
-        with open("~{yaml}", "r") as input_yaml:
-            sample_config = yaml.load(input_yaml)
-
-        sample_rg_lists = []
-        for sample in sample_config["samples"]:
-            new_sample = {"readgroups": [], "id": sample['id']}
-            for library in sample["libraries"]:
-                for readgroup in library["readgroups"]:
-                    new_readgroup = {'lib_id': library['id'], 'id': readgroup['id']}
-                    # Having a nested "reads" struct does not make any sense.
-                    new_readgroup.update(readgroup["reads"])
-                    new_sample['readgroups'].append(new_readgroup)
-            sample_rg_lists.append(new_sample)
-        sample_mod_config = {"samples": sample_rg_lists}
-        with open("~{outputJson}", "w") as output_json:
-            json.dump(sample_mod_config, output_json)
-        CODE
-    >>>
-
-    output {
-        File json = outputJson
-    }
-
-    runtime {
-        docker: dockerImage
+        outputUpdatedDatabase: "Updated TALON database."
+        outputLogs: "Log files from TALON run."
     }
 }
