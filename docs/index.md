@@ -27,15 +27,15 @@ Womtool as described in the
 {
     "Pipeline.sampleConfigFile": "A sample configuration file (see below).",
     "Pipeline.outputDirectory": "The path to the output directory.",
-    "Pipeline.annotationGTF": "",
-    "Pipeline.genomeBuild": "",
-    "Pipeline.annotationVersion": "",
-    "Pipeline.referenceGenome": "",
-    "Pipeline.sequencingPlatform": "",
-    "Pipeline.talonConfigFile": "",
-    "Pipeline.pipelineRunName": "",
+    "Pipeline.annotationGTF": "GTF annotation containing genes, transcripts, and edges.",
+    "Pipeline.genomeBuild": "Name of genome build that the GTF file is based on (ie hg38).",
+    "Pipeline.annotationVersion": "Name of supplied annotation (will be used to label data).",
+    "Pipeline.referenceGenome": "Reference genome fasta file.",
+    "Pipeline.sequencingPlatform": "The sequencing platform used to generate long reads.",
+    "Pipeline.talonConfigFile": "TALON specific configuration file",
+    "Pipeline.pipelineRunName": "A short name to distinguish a run.",
     "Pipeline.dockerImagesFile": "A file listing the used docker images.",
-    "Pipeline.sampleWorkflow.presetOption": ""
+    "Pipeline.sampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2."
 }
 ```
 
