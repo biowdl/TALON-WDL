@@ -10,6 +10,7 @@ that users understand how the changes affect the new version.
 
 version 0.1
 ---------------------------
++ Add documentation to repository.
 + Removed TALON QC logs from test_pipelines.yml.
 + Fixed bug were TALON QC logs would be overwritten by next dataset in line.
 + Create the Minimap2, TranscriptClean, TALON pipeline.
