@@ -57,12 +57,9 @@ samples:
             reads:
               R1: <Path to first FastQ file.>
               R1_md5: <Path to MD5 checksum file of first FastQ file.>
-              R2: <Path to second FastQ file.>
-              R2_md5: <Path to MD5 checksum file of second FastQ file.>
 ```
-Replace the text between `< >` with appropriate values. R2 values may be
-omitted in the case of one FastQ file for a sample. Multiple samples, libraries (per
-sample) and readgroups (per library) may be given.
+Replace the text between `< >` with appropriate values. Multiple samples or
+libraries (per sample) may be given.
 
 #### Example
 The following is an example of what an inputs JSON might look like:
@@ -94,6 +91,14 @@ samples:
             reads:
               R1: /tests/data/ONT_GM12878_SUBSET.fastq
               R1_md5: 750dc282c02948b3f75a7ea76eeb3464
+  - id: K562
+    libraries:
+      - id: lib1
+        readgroups:
+          - id: rg1
+            reads:
+              R1: tests/data/ONT_K562_SUBSET.fastq
+              R1_md5: c779f8b69e2d5b55e34f1a4894174e8d
 ```
 
 ### Dependency requirements and tool versions
