@@ -3,7 +3,11 @@ layout: default
 title: Home
 ---
 
-This pipeline can be used to process RNA sequenced by either the Pacific Biosciences or Oxford Nanopore sequencer, starting from FastQ files. It will perform mapping to a reference genome (using minimap2), INDEL/mismatch and noncanonical splice junction correction (using TranscriptClean) and identify and count known and novel genes/transcripts (using TALON).
+This pipeline can be used to process RNA sequenced by either the Pacific Biosciences
+or Oxford Nanopore sequencer, starting from FastQ files. It will perform mapping
+to a reference genome (using minimap2), INDEL/mismatch and noncanonical splice junction
+correction (using TranscriptClean) and identify and count known and
+novel genes/transcripts (using TALON).
 
 This pipeline is part of [BioWDL](https://biowdl.github.io/)
 developed by the SASC team at [Leiden University Medical Center](https://www.lumc.nl/).
@@ -35,7 +39,7 @@ Womtool as described in the
     "Pipeline.talonConfigFile": "TALON specific configuration file",
     "Pipeline.pipelineRunName": "A short name to distinguish a run.",
     "Pipeline.dockerImagesFile": "A file listing the used docker images.",
-    "Pipeline.sampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2."
+    "Pipeline.sampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2, this should be either 'splice'(directRNA) or 'splice:hq'(cDNA)."
 }
 ```
 
@@ -106,7 +110,10 @@ biowdl pipelines. The list of default images for this pipeline can be
 found in the default for the `dockerImages` input.
 
 ### Output
-The workflow will output mapped reads by minimap2 in a .sam file, a cleaned .sam file and log information from TranscriptClean, a database containing transcript information together with a log file of read/transcript comparison and a abundance plus summary file of the database.
+The workflow will output mapped reads by minimap2 in a .sam file, a
+cleaned .sam file and log information from TranscriptClean, a database
+containing transcript information together with a log file of
+read/transcript comparison and a abundance plus summary file of the database.
 
 ## Contact
 <p>
