@@ -58,8 +58,8 @@ samples:
               R1: <Path to first FastQ file.>
               R1_md5: <Path to MD5 checksum file of first FastQ file.>
 ```
-Replace the text between `< >` with appropriate values. Multiple samples or
-libraries (per sample) may be given.
+Replace the text between `< >` with appropriate values. Multiple samples, libraries (per
+sample) and readgroups (per library) may be given.
 
 #### Example
 The following is an example of what an inputs JSON might look like:
