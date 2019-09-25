@@ -35,7 +35,7 @@ workflow Pipeline {
         String annotationVersion
         File referenceGenome
         String sequencingPlatform
-        File talonConfigFile
+        String organismName
         String pipelineRunName
         File dockerImagesFile
         Boolean filterTranscriptsAbundance = false
@@ -111,11 +111,11 @@ workflow Pipeline {
 
     call RunTalonOnLoop as runTalon {
         input:
-            SAMfiles = flatten(sampleWorkflow.outputTranscriptCleanSAM),
-            configFile = talonConfigFile,
+            SAMfiles = flatten(sampleWorkflow.outputSAMsampleWorkflow),
             databaseFile = select_first([talonDatabase, createDatabase.outputDatabase]),
-            outputPrefix = outputDirectory + "/" + pipelineRunName,
+            outputPrefix = outputDirectory,
             genomeBuild = genomeBuild,
+            organism = organismName,
             sequencingPlatform = sequencingPlatform,
             dockerImage = dockerImages["talon"]
     }
@@ -142,10 +142,10 @@ workflow Pipeline {
     output {
         File outputSpliceJunctionsFile = select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
         Array[File] outputMinimap2 = flatten(sampleWorkflow.outputMinimap2)
-        Array[File] outputTranscriptCleanFasta = flatten(sampleWorkflow.outputTranscriptCleanFasta)
-        Array[File] outputTranscriptCleanLog = flatten(sampleWorkflow.outputTranscriptCleanLog)
-        Array[File] outputTranscriptCleanSAM = flatten(sampleWorkflow.outputTranscriptCleanSAM)
-        Array[File] outputTranscriptCleanTElog = flatten(sampleWorkflow.outputTranscriptCleanTElog)
+        Array[File?] outputTranscriptCleanFasta = flatten(sampleWorkflow.outputTranscriptCleanFasta)
+        Array[File?] outputTranscriptCleanLog = flatten(sampleWorkflow.outputTranscriptCleanLog)
+        Array[File?] outputTranscriptCleanSAM = flatten(sampleWorkflow.outputTranscriptCleanSAM)
+        Array[File?] outputTranscriptCleanTElog = flatten(sampleWorkflow.outputTranscriptCleanTElog)
         File outputTalonDatabase = runTalon.outputUpdatedDatabase
         Array[File] outputTalonLogs = runTalon.outputLogs
         File outputAbundance = createAbundanceFile.outputAbundanceFile
@@ -156,11 +156,11 @@ workflow Pipeline {
 task RunTalonOnLoop {
     input {
         Array[File] SAMfiles
-        File configFile
+        String organism
         File databaseFile
         String outputPrefix
         String genomeBuild
-        String sequencingPlatform = "PacBio-Sequal"
+        String sequencingPlatform = "PacBio-RS-II"
         Float minimumCoverage = 0.9
         Int minimumIdentity = 0
 
@@ -175,14 +175,12 @@ task RunTalonOnLoop {
         counter=1
         for file in ~{sep=" " SAMfiles}
         do
-            userInput="$(sed -n ${counter}p ~{configFile})"
-            configFileLine="${userInput},~{sequencingPlatform},${file}"
-            outputPrefixString="~{outputPrefix}_${userInput%,*}"
+            configFileLine="$(basename ${file%.*}),~{organism},~{sequencingPlatform},${file}"
             echo ${configFileLine} > configFile.csv
             talon \
                 --f configFile.csv \
                 ~{"--db " + databaseFile} \
-                --o ${outputPrefixString} \
+                --o $(basename ${file%.*}) \
                 ~{"--build " + genomeBuild} \
                 ~{"--cov " + minimumCoverage} \
                 ~{"--identity " + minimumIdentity}
@@ -192,7 +190,7 @@ task RunTalonOnLoop {
 
     output {
         File outputUpdatedDatabase = databaseFile
-        Array[File] outputLogs = glob(outputPrefix + "*_talon_QC.log")
+        Array[File] outputLogs = glob("*_talon_QC.log")
     }
 
     runtime {
@@ -202,10 +200,10 @@ task RunTalonOnLoop {
     }
 
     parameter_meta {
-        SAMfiles: "Input SAM files, same one as described in configFile."
-        configFile: "Dataset config file."
+        SAMfiles: "Input SAM files."
+        organism: "The name of the organism from which the samples originated."
         databaseFile: "TALON database. Created using initialize_talon_database.py."
-        outputPrefix: "Output directory path + output file prefix."
+        outputPrefix: "Output directory path."
         genomeBuild: "Genome build (i.e. hg38) to use."
         sequencingPlatform: "The sequencing platform used to generate long reads."
         minimumCoverage: "Minimum alignment coverage in order to use a SAM entry."

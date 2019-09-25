@@ -31,6 +31,7 @@ workflow SampleWorkflow {
         File genomeFile
         String presetOption
         Map[String, String] dockerImages
+        Boolean runTranscriptClean = true
 
         File? variantVCF
         String? howToFindGTAG
@@ -40,7 +41,7 @@ workflow SampleWorkflow {
     Array[Readgroup] readgroups = sample.readgroups
 
     scatter (readgroup in readgroups) {
-        String readgroupIdentifier = readgroup.lib_id + "-" + readgroup.id
+        String readgroupIdentifier = sample.id + "-" + readgroup.lib_id + "-" + readgroup.id
         call minimap2.Mapping as minimap2 {
             input:
                 queryFile = readgroup.R1,
@@ -50,25 +51,29 @@ workflow SampleWorkflow {
                 outputSAM = true,
                 secondaryAlignment = false,
                 howToFindGTAG = howToFindGTAG,
+                addMDtagToSAM = true,
                 dockerImage = dockerImages["minimap2"]
         }
 
-        call transcriptClean.TranscriptClean as transcriptClean {
-            input:
-                SAMfile = minimap2.outputAlignmentFile,
-                referenceGenome = genomeFile,
-                outputPrefix = outputDirectory + "/" + readgroupIdentifier,
-                spliceJunctionAnnotation = spliceJunctionsFile,
-                variantFile = variantVCF,
-                dockerImage = dockerImages["transcriptclean"]
+        if (runTranscriptClean) {
+            call transcriptClean.TranscriptClean as transcriptClean {
+                input:
+                    SAMfile = minimap2.outputAlignmentFile,
+                    referenceGenome = genomeFile,
+                    outputPrefix = outputDirectory + "/" + readgroupIdentifier,
+                    spliceJunctionAnnotation = spliceJunctionsFile,
+                    variantFile = variantVCF,
+                    dockerImage = dockerImages["transcriptclean"]
+            }
         }
     }
 
     output {
+        Array[File] outputSAMsampleWorkflow = if (runTranscriptClean) then select_all(transcriptClean.outputTranscriptCleanSAM) else minimap2.outputAlignmentFile
         Array[File] outputMinimap2 = minimap2.outputAlignmentFile
-        Array[File] outputTranscriptCleanFasta = transcriptClean.outputTranscriptCleanFasta
-        Array[File] outputTranscriptCleanLog = transcriptClean.outputTranscriptCleanLog
-        Array[File] outputTranscriptCleanSAM = transcriptClean.outputTranscriptCleanSAM
-        Array[File] outputTranscriptCleanTElog = transcriptClean.outputTranscriptCleanTElog
+        Array[File?] outputTranscriptCleanFasta = transcriptClean.outputTranscriptCleanFasta
+        Array[File?] outputTranscriptCleanLog = transcriptClean.outputTranscriptCleanLog
+        Array[File?] outputTranscriptCleanSAM = transcriptClean.outputTranscriptCleanSAM
+        Array[File?] outputTranscriptCleanTElog = transcriptClean.outputTranscriptCleanTElog
     }
 }
