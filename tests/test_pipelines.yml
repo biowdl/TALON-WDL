@@ -6,10 +6,10 @@
     cromwell run -o tests/cromwell_options.json
     -i tests/integration/ONT_FULL.json pipeline.wdl
   files:
-    - path: "test-output/ONT_GM12878_SUBSET/lib1-rg1.sam"
-    - path: "test-output/ONT_GM12878_SUBSET/lib1-rg1_clean.sam"
-    - path: "test-output/ONT_K562_SUBSET/lib1-rg1.sam"
-    - path: "test-output/ONT_K562_SUBSET/lib1-rg1_clean.sam"
+    - path: "test-output/ONT_GM12878_SUBSET/ONT_GM12878_SUBSET-lib1-rg1.sam"
+    - path: "test-output/ONT_GM12878_SUBSET/ONT_GM12878_SUBSET-lib1-rg1_clean.sam"
+    - path: "test-output/ONT_K562_SUBSET/ONT_GM12878_SUBSET-lib1-rg1.sam"
+    - path: "test-output/ONT_K562_SUBSET/ONT_GM12878_SUBSET-lib1-rg1_clean.sam"
     - path: "test-output/nanoporeTestRun.db"
     - path: "test-output/nanoporeTestRun_talon_abundance.tsv"
     - path: "test-output/nanoporeTestRun_talon_summary.tsv"
@@ -22,8 +22,8 @@
     cromwell run -o tests/cromwell_options.json
     -i tests/integration/ONT_TC_FALSE.json pipeline.wdl
   files:
-    - path: "test-output/ONT_GM12878_SUBSET/lib1-rg1.sam"
-    - path: "test-output/ONT_K562_SUBSET/lib1-rg1.sam"
+    - path: "test-output/ONT_GM12878_SUBSET/ONT_GM12878_SUBSET-lib1-rg1.sam"
+    - path: "test-output/ONT_K562_SUBSET/ONT_GM12878_SUBSET-lib1-rg1.sam"
     - path: "test-output/nanoporeTestRun.db"
     - path: "test-output/nanoporeTestRun_talon_abundance.tsv"
     - path: "test-output/nanoporeTestRun_talon_summary.tsv"
