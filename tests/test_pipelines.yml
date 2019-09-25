@@ -8,8 +8,8 @@
   files:
     - path: "test-output/ONT_GM12878_SUBSET/ONT_GM12878_SUBSET-lib1-rg1.sam"
     - path: "test-output/ONT_GM12878_SUBSET/ONT_GM12878_SUBSET-lib1-rg1_clean.sam"
-    - path: "test-output/ONT_K562_SUBSET/ONT_GM12878_SUBSET-lib1-rg1.sam"
-    - path: "test-output/ONT_K562_SUBSET/ONT_GM12878_SUBSET-lib1-rg1_clean.sam"
+    - path: "test-output/ONT_K562_SUBSET/ONT_K562_SUBSET-lib1-rg1.sam"
+    - path: "test-output/ONT_K562_SUBSET/ONT_K562_SUBSET-lib1-rg1_clean.sam"
     - path: "test-output/nanoporeTestRun.db"
     - path: "test-output/nanoporeTestRun_talon_abundance.tsv"
     - path: "test-output/nanoporeTestRun_talon_summary.tsv"
@@ -23,7 +23,7 @@
     -i tests/integration/ONT_TC_FALSE.json pipeline.wdl
   files:
     - path: "test-output/ONT_GM12878_SUBSET/ONT_GM12878_SUBSET-lib1-rg1.sam"
-    - path: "test-output/ONT_K562_SUBSET/ONT_GM12878_SUBSET-lib1-rg1.sam"
+    - path: "test-output/ONT_K562_SUBSET/ONT_K562_SUBSET-lib1-rg1.sam"
     - path: "test-output/nanoporeTestRun.db"
     - path: "test-output/nanoporeTestRun_talon_abundance.tsv"
     - path: "test-output/nanoporeTestRun_talon_summary.tsv"
