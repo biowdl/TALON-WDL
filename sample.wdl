@@ -69,7 +69,9 @@ workflow SampleWorkflow {
     }
 
     output {
-        Array[File] outputSAMsampleWorkflow = if (runTranscriptClean) then select_all(transcriptClean.outputTranscriptCleanSAM) else minimap2.outputAlignmentFile
+        Array[File] outputSAMsampleWorkflow = if (runTranscriptClean) 
+                    then select_all(transcriptClean.outputTranscriptCleanSAM)
+                    else minimap2.outputAlignmentFile
         Array[File] outputMinimap2 = minimap2.outputAlignmentFile
         Array[File?] outputTranscriptCleanFasta = transcriptClean.outputTranscriptCleanFasta
         Array[File?] outputTranscriptCleanLog = transcriptClean.outputTranscriptCleanLog
