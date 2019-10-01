@@ -10,10 +10,12 @@ that users understand how the changes affect the new version.
 
 version 0.1
 ---------------------------
-+ Added test for TranscriptClean skip and renamed tests
-+ Removed user input for TALON config file, is now created by pipeline
-+ TranscriptClean can now be skipped
-+ Add documentation to repository.
++ TALON logs are now in the specified output directory.
++ Added link to documentation in README.
++ Added test for TranscriptClean skip and renamed tests.
++ Removed user input for TALON config file, is now created by pipeline.
++ TranscriptClean can now be skipped.
++ Added documentation to repository.
 + Removed TALON QC logs from test_pipelines.yml.
 + Fixed bug were TALON QC logs would be overwritten by next dataset in line.
 + Create the Minimap2, TranscriptClean, TALON pipeline.
