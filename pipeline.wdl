@@ -177,20 +177,22 @@ task RunTalonOnLoop {
         do
             configFileLine="$(basename ${file%.*}),~{organism},~{sequencingPlatform},${file}"
             echo ${configFileLine} > configFile.csv
+            outputLog="~{outputPrefix}/$(basename ${file%.*})"
             talon \
                 --f configFile.csv \
                 ~{"--db " + databaseFile} \
-                --o $(basename ${file%.*}) \
+                --o ${outputLog} \
                 ~{"--build " + genomeBuild} \
                 ~{"--cov " + minimumCoverage} \
                 ~{"--identity " + minimumIdentity}
             counter=$((counter+1))
         done
+        ls ~{outputPrefix}/*_talon_QC.log > logFiles.txt
     >>>
 
     output {
         File outputUpdatedDatabase = databaseFile
-        Array[File] outputLogs = glob("*_talon_QC.log")
+        Array[File] outputLogs = read_lines("logFiles.txt")
     }
 
     runtime {
