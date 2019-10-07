@@ -39,8 +39,8 @@ Womtool as described in the
     "Pipeline.organismName": "The name of the organism from which the samples originated.",
     "Pipeline.pipelineRunName": "A short name to distinguish a run.",
     "Pipeline.dockerImagesFile": "A file listing the used docker images.",
-    "Pipeline.sampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2, this should be either 'splice'(directRNA) or 'splice:hq'(cDNA).",
-    "Pipeline.sampleWorkflow.runTranscriptClean": "Set to true in order to run TranscriptClean, set to false in order to disable TranscriptClean."
+    "Pipeline.runTranscriptClean": "Set to true in order to run TranscriptClean, set to false in order to disable TranscriptClean."
+    "Pipeline.sampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2, this should be either 'splice'(directRNA) or 'splice:hq'(cDNA)."
 }
 ```
 
@@ -77,8 +77,8 @@ The following is an example of what an inputs JSON might look like:
     "Pipeline.organismName": "Human",
     "Pipeline.pipelineRunName": "testRun",
     "Pipeline.dockerImagesFile": "dockerImages.yml",
-    "Pipeline.sampleWorkflow.presetOption": "splice",
-    "Pipeline.sampleWorkflow.runTranscriptClean": "true"
+    "Pipeline.runTranscriptClean": "true"
+    "Pipeline.sampleWorkflow.presetOption": "splice"
 }
 ```
 

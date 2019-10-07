@@ -8,8 +8,8 @@
     "Pipeline.organismName": "Human",
     "Pipeline.pipelineRunName": "nanoporeTestRun",
     "Pipeline.dockerImagesFile": "dockerImages.yml",
+    "Pipeline.runTranscriptClean": "true",
     "Pipeline.sampleWorkflow.presetOption": "splice",
     "Pipeline.sampleWorkflow.variantVCF": "tests/data/commonVariants.vcf",
-    "Pipeline.sampleWorkflow.howToFindGTAG": "f",
-    "Pipeline.sampleWorkflow.runTranscriptClean": "true"
+    "Pipeline.sampleWorkflow.howToFindGTAG": "f"
 }
