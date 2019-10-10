@@ -108,7 +108,9 @@ workflow Pipeline {
                 sample = sample,
                 outputDirectory = outputDirectory + "/" + sample.id,
                 genomeFile = referenceGenome,
-                spliceJunctionsFile = if (runTranscriptClean) then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile, "null"]) else NoneFile,
+                spliceJunctionsFile = if (runTranscriptClean)
+                                      then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile, "null"])
+                                      else NoneFile,
                 runTranscriptClean = runTranscriptClean,
                 dockerImages = dockerImages
         }
@@ -154,7 +156,9 @@ workflow Pipeline {
         Array[File] outputTalonLogs = runTalon.outputLogs
         File outputAbundance = createAbundanceFile.outputAbundanceFile
         File outputSummary = createSummaryFile.outputSummaryFile
-        File? outputSpliceJunctionsFile = if (runTranscriptClean) then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile, "null"]) else NoneFile
+        File? outputSpliceJunctionsFile = if (runTranscriptClean)
+              then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile, "null"])
+              else NoneFile
     }
 }
 
