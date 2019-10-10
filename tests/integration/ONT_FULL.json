@@ -1,5 +1,5 @@
 {
-    "Pipeline.sampleConfigFile": "tests/samplesheets/ONT_SUBSETS.yml",
+    "Pipeline.sampleConfigFile": "tests/samplesheets/ONT_SUBSETS.csv",
     "Pipeline.annotationGTF": "tests/data/gencode.v29.annotation.gtf",
     "Pipeline.genomeBuild": "hg38",
     "Pipeline.annotationVersion": "gencode_v29",

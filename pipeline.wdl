@@ -22,6 +22,7 @@ version 1.0
 
 import "sample.wdl" as sampleWorkflow
 import "structs.wdl" as structs
+import "tasks/biowdl.wdl" as biowdl
 import "tasks/common.wdl" as common
 import "tasks/talon.wdl" as talon
 import "tasks/transcriptclean.wdl" as transcriptClean
@@ -50,6 +51,7 @@ workflow Pipeline {
         File? filterPairingsFileAbundance
         File? summaryDatasetGroupsCSV
         Int? minIntronSize
+        File? NoneFile
     }
 
     call common.YamlToJson as convertDockerImagesFile {
@@ -60,11 +62,11 @@ workflow Pipeline {
 
     Map[String, String] dockerImages = read_json(convertDockerImagesFile.json)
 
-    call common.SampleConfigToSampleReadgroupLists as convertSampleConfig {
+    call biowdl.InputConverter as convertSampleConfig {
         input:
-            yaml = sampleConfigFile,
-            outputJson = outputDirectory + "/samples.json",
-            dockerImage = dockerImages["pyyaml"]
+            samplesheet = sampleConfigFile,
+            outputFile = outputDirectory + "/samplesheet.json",
+            dockerImage = dockerImages["biowdl-input-converter"]
     }
 
     SampleConfig sampleConfig = read_json(convertSampleConfig.json)
@@ -106,7 +108,7 @@ workflow Pipeline {
                 sample = sample,
                 outputDirectory = outputDirectory + "/" + sample.id,
                 genomeFile = referenceGenome,
-                spliceJunctionsFile = select_first([spliceJunctionsFile, createSJsfile.outputSJsFile]),
+                spliceJunctionsFile = if (runTranscriptClean) then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile, "null"]) else NoneFile,
                 runTranscriptClean = runTranscriptClean,
                 dockerImages = dockerImages
         }
@@ -152,7 +154,7 @@ workflow Pipeline {
         Array[File] outputTalonLogs = runTalon.outputLogs
         File outputAbundance = createAbundanceFile.outputAbundanceFile
         File outputSummary = createSummaryFile.outputSummaryFile
-        File? outputSpliceJunctionsFile = select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
+        File? outputSpliceJunctionsFile = if (runTranscriptClean) then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile, "null"]) else NoneFile
     }
 }
 
@@ -182,12 +184,12 @@ task RunTalonOnLoop {
             echo ${configFileLine} > configFile.csv
             outputLog="~{outputPrefix}/$(basename ${file%.*})"
             talon \
-                --f configFile.csv \
-                ~{"--db " + databaseFile} \
-                --o ${outputLog} \
-                ~{"--build " + genomeBuild} \
-                ~{"--cov " + minimumCoverage} \
-                ~{"--identity " + minimumIdentity}
+            --f configFile.csv \
+            ~{"--db " + databaseFile} \
+            --o ${outputLog} \
+            ~{"--build " + genomeBuild} \
+            ~{"--cov " + minimumCoverage} \
+            ~{"--identity " + minimumIdentity}
             counter=$((counter+1))
         done
         ls ~{outputPrefix}/*_talon_QC.log > logFiles.txt

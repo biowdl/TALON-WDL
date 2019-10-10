@@ -39,13 +39,60 @@ Womtool as described in the
     "Pipeline.organismName": "The name of the organism from which the samples originated.",
     "Pipeline.pipelineRunName": "A short name to distinguish a run.",
     "Pipeline.dockerImagesFile": "A file listing the used docker images.",
-    "Pipeline.runTranscriptClean": "Set to true in order to run TranscriptClean, set to false in order to disable TranscriptClean."
+    "Pipeline.runTranscriptClean": "Set to true in order to run TranscriptClean, set to false in order to disable TranscriptClean.",
     "Pipeline.sampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2, this should be either 'splice'(directRNA) or 'splice:hq'(cDNA)."
 }
 ```
 
+Optional settings:
+```JSON
+{
+    "Pipeline.sampleWorkflow.variantVCF": "tests/data/commonVariants.vcf",
+    "Pipeline.sampleWorkflow.howToFindGTAG": "f"
+}
+```
+
 #### Sample configuration
-The sample configuration should be a YML file which adheres to the following
+##### Verification
+All samplesheet formats can be verified using `biowdl-input-converter`. 
+It can be installed with `pip install biowdl-input-converter` or 
+`conda install biowdl-input-converter` (from the bioconda channel). 
+Python 3.7 or higher is required.
+
+With `biowdl-input-converter --validate samplesheet.csv` The file
+"samplesheet.csv" will be checked. Also the presence of all files in
+the samplesheet will be checked to ensure no typos were made. For more
+information check out the [biowdl-input-converter readthedocs page](
+https://biowdl-input-converter.readthedocs.io).
+
+##### CSV format
+The sample configuration can be given as a csv file with the following 
+columns: sample, library, readgroup, R1, R1_md5, R2, R2_md5.
+
+column name | function
+---|---
+sample | sample ID
+library | library ID. These are the libraries that are sequenced. Usually there is only one library per sample
+readgroup | readgroup ID. Usually a library is sequenced on multiple lanes in the sequencer, which gives multiple fastq files (referred to as readgroups). Each readgroup pair should have an ID.
+R1| The fastq file containing the first reads of the read pairs
+R1_md5 | Optional: md5sum for the R1 file.
+
+The easiest way to create a samplesheet is to use a spreadsheet program
+such as LibreOffice Calc or Microsoft Excel, and create a table:
+
+sample | library | read | R1 | R1_md5 | R2 | R2_md5
+-------|---------|------|----|--------|----|-------
+<sampleId>|<libId>|<rgId>|<Path to first FastQ file.>|<Path to MD5 checksum file of first FastQ file.>||
+<sampleId>|<libId>|<rgId>|<Path to first FastQ file.>|<Path to MD5 checksum file of first FastQ file.>||
+
+NOTE: R1_md5, R2 and R2_md5 are optional do not have to be filled. And additional fields may be added (eg. for documentation purposes), these will be ignored by the pipeline.
+
+
+After creating the table in a spreadsheet program it can be saved in 
+csv format.
+
+##### YAML format
+The sample configuration can also be a YML file which adheres to the following
 structure:
 
 ```yml
@@ -59,8 +106,8 @@ samples:
               R1: <Path to first FastQ file.>
               R1_md5: <Path to MD5 checksum file of first FastQ file.>
 ```
-Replace the text between `< >` with appropriate values. Multiple samples, libraries (per
-sample) and readgroups (per library) may be given.
+Replace the text between `< >` with appropriate values. Multiple samples,
+libraries (per sample) and readgroups (per library) may be given.
 
 #### Example
 The following is an example of what an inputs JSON might look like:
@@ -77,8 +124,10 @@ The following is an example of what an inputs JSON might look like:
     "Pipeline.organismName": "Human",
     "Pipeline.pipelineRunName": "testRun",
     "Pipeline.dockerImagesFile": "dockerImages.yml",
-    "Pipeline.runTranscriptClean": "true"
-    "Pipeline.sampleWorkflow.presetOption": "splice"
+    "Pipeline.runTranscriptClean": "true",
+    "Pipeline.sampleWorkflow.presetOption": "splice",
+    "Pipeline.sampleWorkflow.variantVCF": "tests/data/commonVariants.vcf",
+    "Pipeline.sampleWorkflow.howToFindGTAG": "f"
 }
 ```
 
