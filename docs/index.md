@@ -82,8 +82,8 @@ such as LibreOffice Calc or Microsoft Excel, and create a table:
 
 sample | library | read | R1 | R1_md5 | R2 | R2_md5
 -------|---------|------|----|--------|----|-------
-<sampleId>|<libId>|<rgId>|<Path to first FastQ file.>|<Path to MD5 checksum file of first FastQ file.>||
-<sampleId>|<libId>|<rgId>|<Path to first FastQ file.>|<Path to MD5 checksum file of first FastQ file.>||
+<sampleId>|<libId>|<rgId>|<Path to first FastQ file.>|<MD5 checksum string.>||
+<sampleId>|<libId>|<rgId>|<Path to first FastQ file.>|<MD5 checksum string.>||
 
 NOTE: R1_md5, R2 and R2_md5 are optional do not have to be filled. And additional fields may be added (eg. for documentation purposes), these will be ignored by the pipeline.
 
@@ -104,7 +104,7 @@ samples:
           - id: <rgId>
             reads:
               R1: <Path to first FastQ file.>
-              R1_md5: <Path to MD5 checksum file of first FastQ file.>
+              R1_md5: <MD5 checksum string.>
 ```
 Replace the text between `< >` with appropriate values. Multiple samples,
 libraries (per sample) and readgroups (per library) may be given.
