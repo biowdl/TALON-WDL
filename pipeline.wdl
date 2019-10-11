@@ -22,6 +22,7 @@ version 1.0
 
 import "sample.wdl" as sampleWorkflow
 import "structs.wdl" as structs
+import "tasks/biowdl.wdl" as biowdl
 import "tasks/common.wdl" as common
 import "tasks/talon.wdl" as talon
 import "tasks/transcriptclean.wdl" as transcriptClean
@@ -43,12 +44,14 @@ workflow Pipeline {
         Int minimumLength = 300
         Int cutoff5p = 500
         Int cutoff3p = 300
+        Boolean runTranscriptClean = true
 
         File? talonDatabase
         File? spliceJunctionsFile
         File? filterPairingsFileAbundance
         File? summaryDatasetGroupsCSV
         Int? minIntronSize
+        File? NoneFile
     }
 
     call common.YamlToJson as convertDockerImagesFile {
@@ -59,16 +62,15 @@ workflow Pipeline {
 
     Map[String, String] dockerImages = read_json(convertDockerImagesFile.json)
 
-    call common.SampleConfigToSampleReadgroupLists as convertSampleConfig {
+    call biowdl.InputConverter as convertSampleConfig {
         input:
-            yaml = sampleConfigFile,
-            outputJson = outputDirectory + "/samples.json",
-            dockerImage = dockerImages["pyyaml"]
+            samplesheet = sampleConfigFile,
+            outputFile = outputDirectory + "/samplesheet.json",
+            dockerImage = dockerImages["biowdl-input-converter"]
     }
 
     SampleConfig sampleConfig = read_json(convertSampleConfig.json)
     Array[Sample] allSamples = sampleConfig.samples
-
     Boolean userProvidedDatabase = defined(talonDatabase)
     Boolean userProvidedSJfile = defined(spliceJunctionsFile)
 
@@ -88,13 +90,15 @@ workflow Pipeline {
     }
 
     if (! userProvidedSJfile) {
-        call transcriptClean.GetSJsFromGtf as createSJsfile {
-            input:
-                GTFfile = annotationGTF,
-                genomeFile = referenceGenome,
-                outputPrefix = outputDirectory + "/spliceJunctionsFile",
-                minIntronSize = minIntronSize,
-                dockerImage = dockerImages["transcriptclean"]
+        if (runTranscriptClean) {
+            call transcriptClean.GetSJsFromGtf as createSJsfile {
+                input:
+                    GTFfile = annotationGTF,
+                    genomeFile = referenceGenome,
+                    outputPrefix = outputDirectory + "/spliceJunctionsFile",
+                    minIntronSize = minIntronSize,
+                    dockerImage = dockerImages["transcriptclean"]
+            }
         }
     }
 
@@ -104,7 +108,10 @@ workflow Pipeline {
                 sample = sample,
                 outputDirectory = outputDirectory + "/" + sample.id,
                 genomeFile = referenceGenome,
-                spliceJunctionsFile = select_first([spliceJunctionsFile, createSJsfile.outputSJsFile]),
+                spliceJunctionsFile = if (runTranscriptClean)
+                                      then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
+                                      else NoneFile,
+                runTranscriptClean = runTranscriptClean,
                 dockerImages = dockerImages
         }
     }
@@ -140,7 +147,6 @@ workflow Pipeline {
     }
 
     output {
-        File outputSpliceJunctionsFile = select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
         Array[File] outputMinimap2 = flatten(sampleWorkflow.outputMinimap2)
         Array[File?] outputTranscriptCleanFasta = flatten(sampleWorkflow.outputTranscriptCleanFasta)
         Array[File?] outputTranscriptCleanLog = flatten(sampleWorkflow.outputTranscriptCleanLog)
@@ -150,6 +156,9 @@ workflow Pipeline {
         Array[File] outputTalonLogs = runTalon.outputLogs
         File outputAbundance = createAbundanceFile.outputAbundanceFile
         File outputSummary = createSummaryFile.outputSummaryFile
+        File? outputSpliceJunctionsFile = if (runTranscriptClean)
+              then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
+              else NoneFile
     }
 }
 
@@ -165,7 +174,7 @@ task RunTalonOnLoop {
         Int minimumIdentity = 0
 
         Int cores = 1
-        Int memory = 20
+        String memory = "20G"
         String dockerImage = "biocontainers/talon:v4.2_cv2"
     }
 
@@ -179,12 +188,12 @@ task RunTalonOnLoop {
             echo ${configFileLine} > configFile.csv
             outputLog="~{outputPrefix}/$(basename ${file%.*})"
             talon \
-                --f configFile.csv \
-                ~{"--db " + databaseFile} \
-                --o ${outputLog} \
-                ~{"--build " + genomeBuild} \
-                ~{"--cov " + minimumCoverage} \
-                ~{"--identity " + minimumIdentity}
+            --f configFile.csv \
+            ~{"--db " + databaseFile} \
+            --o ${outputLog} \
+            ~{"--build " + genomeBuild} \
+            ~{"--cov " + minimumCoverage} \
+            ~{"--identity " + minimumIdentity}
             counter=$((counter+1))
         done
         ls ~{outputPrefix}/*_talon_QC.log > logFiles.txt

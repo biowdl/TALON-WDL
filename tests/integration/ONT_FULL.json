@@ -1,5 +1,5 @@
 {
-    "Pipeline.sampleConfigFile": "tests/samplesheets/ONT_SUBSETS.yml",
+    "Pipeline.sampleConfigFile": "tests/samplesheets/ONT_SUBSETS.csv",
     "Pipeline.annotationGTF": "tests/data/gencode.v29.annotation.gtf",
     "Pipeline.genomeBuild": "hg38",
     "Pipeline.annotationVersion": "gencode_v29",
@@ -8,8 +8,8 @@
     "Pipeline.organismName": "Human",
     "Pipeline.pipelineRunName": "nanoporeTestRun",
     "Pipeline.dockerImagesFile": "dockerImages.yml",
+    "Pipeline.runTranscriptClean": "true",
     "Pipeline.sampleWorkflow.presetOption": "splice",
     "Pipeline.sampleWorkflow.variantVCF": "tests/data/commonVariants.vcf",
-    "Pipeline.sampleWorkflow.howToFindGTAG": "f",
-    "Pipeline.sampleWorkflow.runTranscriptClean": "true"
+    "Pipeline.sampleWorkflow.howToFindGTAG": "f"
 }
