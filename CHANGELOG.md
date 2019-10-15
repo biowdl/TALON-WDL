@@ -10,6 +10,7 @@ that users understand how the changes affect the new version.
 
 version 0.1
 ---------------------------
++ Update TranscriptClean to version 2.0.2.
 + Change samplesheet converter from SampleConfigToSampleReadgroupLists to InputConverter.
 + Splice Junctions file is no longer created when TranscriptClean is set to FALSE.
 + TALON logs are now in the specified output directory.

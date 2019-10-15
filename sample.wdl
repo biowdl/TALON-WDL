@@ -63,6 +63,7 @@ workflow SampleWorkflow {
                     outputPrefix = outputDirectory + "/" + readgroupIdentifier,
                     spliceJunctionAnnotation = spliceJunctionsFile,
                     variantFile = variantVCF,
+                    primaryOnly = true,
                     dockerImage = dockerImages["transcriptclean"]
             }
         }
