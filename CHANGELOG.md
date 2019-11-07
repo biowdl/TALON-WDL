@@ -8,8 +8,9 @@ This document is user facing. Please word the changes in such a way
 that users understand how the changes affect the new version.
 -->
 
-version 0.1
+version develop
 ---------------------------
++ Update TALON to version 4.4.
 + Update TranscriptClean to version 2.0.2.
 + Change samplesheet converter from SampleConfigToSampleReadgroupLists to InputConverter.
 + Splice Junctions file is no longer created when TranscriptClean is set to FALSE.

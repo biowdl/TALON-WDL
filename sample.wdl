@@ -30,8 +30,8 @@ workflow SampleWorkflow {
         String outputDirectory = "."
         File genomeFile
         String presetOption
-        Map[String, String] dockerImages
         Boolean runTranscriptClean = true
+        Map[String, String] dockerImages
 
         File? variantVCF
         String? howToFindGTAG
