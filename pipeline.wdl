@@ -105,7 +105,7 @@ workflow Pipeline {
         }
     }
 
-    call RunTalonOnLoop as runTalon {
+    call RunTalon as runTalon {
         input:
             SAMfiles = flatten(sampleWorkflow.outputSAMsampleWorkflow),
             databaseFile = select_first([talonDatabase, createDatabase.outputDatabase]),
@@ -258,7 +258,7 @@ workflow Pipeline {
     }
 }
 
-task RunTalonOnLoop {
+task RunTalon {
     input {
         Array[File] SAMfiles
         File databaseFile
@@ -271,7 +271,7 @@ task RunTalonOnLoop {
 
         Int cores = 4
         String memory = "20G"
-        String dockerImage = "biocontainers/talon:v4.4_cv1"
+        String dockerImage = "biocontainers/talon:v4.4_cv2"
     }
 
     command <<<
