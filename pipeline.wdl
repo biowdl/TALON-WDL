@@ -134,10 +134,6 @@ workflow Pipeline {
 
     output {
         Array[File] outputMinimap2 = flatten(sampleWorkflow.outputMinimap2)
-        Array[File?] outputTranscriptCleanFasta = flatten(sampleWorkflow.outputTranscriptCleanFasta)
-        Array[File?] outputTranscriptCleanLog = flatten(sampleWorkflow.outputTranscriptCleanLog)
-        Array[File?] outputTranscriptCleanSAM = flatten(sampleWorkflow.outputTranscriptCleanSAM)
-        Array[File?] outputTranscriptCleanTElog = flatten(sampleWorkflow.outputTranscriptCleanTElog)
         File outputTalonDatabase = runTalon.outputUpdatedDatabase
         File outputAbundance = createAbundanceFile.outputAbundanceFile
         File outputSummary = createSummaryFile.outputSummaryFile
@@ -146,65 +142,112 @@ workflow Pipeline {
         File? outputSpliceJunctionsFile = if (runTranscriptClean)
               then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
               else NoneFile
+        Array[File?] outputTranscriptCleanFasta = flatten(sampleWorkflow.outputTranscriptCleanFasta)
+        Array[File?] outputTranscriptCleanLog = flatten(sampleWorkflow.outputTranscriptCleanLog)
+        Array[File?] outputTranscriptCleanSAM = flatten(sampleWorkflow.outputTranscriptCleanSAM)
+        Array[File?] outputTranscriptCleanTElog = flatten(sampleWorkflow.outputTranscriptCleanTElog)
     }
 
     parameter_meta {
-        sampleConfigFile {
+        sampleConfigFile: {
             description: "Samplesheet describing input fasta/fastq files.",
             category: "required"
         }
-        outputDirectory {
+        outputDirectory: {
             description: "The directory to which the outputs will be written.",
             category: "common"
         }
-        annotationGTF {
+        annotationGTF: {
             description: "GTF annotation containing genes, transcripts, and edges.",
             category: "required"
         }
-        genomeBuild {
+        genomeBuild: {
             description: "Genome build (i.e. hg38) to use.",
             category: "required"
         }
-        annotationVersion {
+        annotationVersion: {
             description: "Name of supplied annotation (will be used to label data).",
             category: "required"
         }
-        referenceGenome {
+        referenceGenome: {
             description: "Reference genome fasta file.",
             category: "required"
         }
-        sequencingPlatform {
+        sequencingPlatform: {
             description: "The sequencing machine used to generate the data.",
             category: "required"
         }
-        organismName {
+        organismName: {
             description: "The name of the organism from which the data was collected.",
             category: "required"
         }
-        pipelineRunName {
+        pipelineRunName: {
             description: "A name describing the pipeline run.",
             category: "required"
         }
-        dockerImagesFile {
+        dockerImagesFile: {
             description: "The docker image used for this workflow. Changing this may result in errors which the developers may choose not to address.",
             category: "required"
         }
-        novelIDprefix {
+        novelIDprefix: {
             description: "Prefix for naming novel discoveries in eventual TALON runs.",
             category: "common"
         }
-        runTranscriptClean {
+        runTranscriptClean: {
             description: "Option to run TranscriptClean after Minimap2 alignment.",
             category: "common"
         }
-
-        talonDatabase {
+        talonDatabase: {
             description: "A pre-generated TALON database file.",
             category: "advanced"
         }
-        spliceJunctionsFile {
+        spliceJunctionsFile: {
             description: "A pre-generated splice junction annotation file.",
             category: "advanced"
+        }
+        outputMinimap2: {
+            description: "Mapping and alignment between collections of DNA sequences file.",
+            category: "required"
+        }
+        outputTalonDatabase: {
+            description: "TALON database.",
+            category: "required"
+        }
+        outputAbundance: {
+            description: "Abundance for each transcript in the TALON database across datasets.",
+            category: "required"
+        }
+        outputSummary: {
+            description: "Tab-delimited file of gene and transcript counts for each dataset.",
+            category: "required"
+        }
+        outputTalonLog: {
+            description: "Log file from TALON run.",
+            category: "required"
+        }
+        outputTalonReadAnnot: {
+            description: "Read annotation file from TALON run.",
+            category: "required"
+        }
+        outputSpliceJunctionsFile: {
+            description: "Splice junction annotation file.",
+            category: "common"
+        }
+        outputTranscriptCleanFasta: {
+            description: "Fasta files containing corrected reads.",
+            category: "common"
+        }
+        outputTranscriptCleanLog: {
+            description: "Log files of TranscriptClean run.",
+            category: "common"
+        }
+        outputTranscriptCleanSAM: {
+            description: "SAM files containing corrected aligned reads.",
+            category: "common"
+        }
+        outputTranscriptCleanTElog: {
+            description: "TE log files of TranscriptClean run.",
+            category: "common"
         }
     }
 
