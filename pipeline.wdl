@@ -199,7 +199,7 @@ task RunTalonOnLoop {
     }
 
     parameter_meta {
-        SAMfiles {
+        SAMfiles: {
             description: "Input SAM files.",
             category: "required"
         }
