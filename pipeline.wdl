@@ -39,17 +39,11 @@ workflow Pipeline {
         String organismName
         String pipelineRunName
         File dockerImagesFile
-        Boolean filterTranscriptsAbundance = false
         String novelIDprefix = "TALON"
-        Int minimumLength = 300
-        Int cutoff5p = 500
-        Int cutoff3p = 300
         Boolean runTranscriptClean = true
 
         File? talonDatabase
         File? spliceJunctionsFile
-        File? filterPairingsFileAbundance
-        File? summaryDatasetGroupsCSV
         Int? minIntronSize
         File? NoneFile
     }
@@ -78,13 +72,10 @@ workflow Pipeline {
         call talon.InitializeTalonDatabase as createDatabase {
             input:
                 GTFfile = annotationGTF,
-                outputPrefix = outputDirectory + "/" + pipelineRunName,
                 genomeBuild = genomeBuild,
                 annotationVersion = annotationVersion,
-                minimumLength = minimumLength,
                 novelIDprefix = novelIDprefix,
-                cutoff5p = cutoff5p,
-                cutoff3p = cutoff3p,
+                outputPrefix = outputDirectory + "/" + pipelineRunName,
                 dockerImage = dockerImages["talon"]
         }
     }
@@ -120,8 +111,8 @@ workflow Pipeline {
         input:
             SAMfiles = flatten(sampleWorkflow.outputSAMsampleWorkflow),
             databaseFile = select_first([talonDatabase, createDatabase.outputDatabase]),
-            outputPrefix = outputDirectory,
             genomeBuild = genomeBuild,
+            outputPrefix = outputDirectory,
             organism = organismName,
             sequencingPlatform = sequencingPlatform,
             dockerImage = dockerImages["talon"]
@@ -130,11 +121,9 @@ workflow Pipeline {
     call talon.CreateAbundanceFileFromDatabase as createAbundanceFile {
         input:
             databaseFile = runTalon.outputUpdatedDatabase,
-            outputPrefix = outputDirectory + "/" + pipelineRunName,
-            genomeBuild = genomeBuild,
             annotationVersion = annotationVersion,
-            filterTranscripts = filterTranscriptsAbundance,
-            filterPairingsFile = filterPairingsFileAbundance,
+            genomeBuild = genomeBuild,
+            outputPrefix = outputDirectory + "/" + pipelineRunName,
             dockerImage = dockerImages["talon"]
     }
 
@@ -142,7 +131,6 @@ workflow Pipeline {
         input:
             databaseFile = runTalon.outputUpdatedDatabase,
             outputPrefix = outputDirectory + "/" + pipelineRunName,
-            datasetGroupsCSV = summaryDatasetGroupsCSV,
             dockerImage = dockerImages["talon"]
     }
 
@@ -153,9 +141,10 @@ workflow Pipeline {
         Array[File?] outputTranscriptCleanSAM = flatten(sampleWorkflow.outputTranscriptCleanSAM)
         Array[File?] outputTranscriptCleanTElog = flatten(sampleWorkflow.outputTranscriptCleanTElog)
         File outputTalonDatabase = runTalon.outputUpdatedDatabase
-        Array[File] outputTalonLogs = runTalon.outputLogs
         File outputAbundance = createAbundanceFile.outputAbundanceFile
         File outputSummary = createSummaryFile.outputSummaryFile
+        File outputTalonLog = runTalon.outputLog
+        File outputTalonReadAnnot = runTalon.outputAnnot
         File? outputSpliceJunctionsFile = if (runTranscriptClean)
               then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
               else NoneFile
@@ -165,43 +154,42 @@ workflow Pipeline {
 task RunTalonOnLoop {
     input {
         Array[File] SAMfiles
-        String organism
         File databaseFile
-        String outputPrefix
         String genomeBuild
-        String sequencingPlatform = "PacBio-RS-II"
         Float minimumCoverage = 0.9
         Int minimumIdentity = 0
+        String outputPrefix
+        String organism
+        String sequencingPlatform = "PacBio-RS-II"
 
-        Int cores = 1
+        Int cores = 4
         String memory = "20G"
-        String dockerImage = "biocontainers/talon:v4.2_cv2"
+        String dockerImage = "biocontainers/talon:v4.4_cv1"
     }
 
     command <<<
         set -e
         mkdir -p $(dirname ~{outputPrefix})
-        counter=1
+        export TMPDIR=/tmp
         for file in ~{sep=" " SAMfiles}
         do
             configFileLine="$(basename ${file%.*}),~{organism},~{sequencingPlatform},${file}"
-            echo ${configFileLine} > configFile.csv
-            outputLog="~{outputPrefix}/$(basename ${file%.*})"
-            talon \
-            --f configFile.csv \
-            ~{"--db " + databaseFile} \
-            --o ${outputLog} \
-            ~{"--build " + genomeBuild} \
-            ~{"--cov " + minimumCoverage} \
-            ~{"--identity " + minimumIdentity}
-            counter=$((counter+1))
+            echo ${configFileLine} >> configFile.csv
         done
-        ls ~{outputPrefix}/*_talon_QC.log > logFiles.txt
+        talon \
+        --f configFile.csv \
+        ~{"--db " + databaseFile} \
+        ~{"--build " + genomeBuild} \
+        ~{"--threads " + cores} \
+        ~{"--cov " + minimumCoverage} \
+        ~{"--identity " + minimumIdentity} \
+        ~{"--o " + outputPrefix + "/run"}
     >>>
 
     output {
         File outputUpdatedDatabase = databaseFile
-        Array[File] outputLogs = read_lines("logFiles.txt")
+        File outputLog = outputPrefix + "/run_QC.log"
+        File outputAnnot = outputPrefix + "/run_talon_read_annot.tsv"
     }
 
     runtime {
@@ -211,16 +199,49 @@ task RunTalonOnLoop {
     }
 
     parameter_meta {
-        SAMfiles: "Input SAM files."
-        organism: "The name of the organism from which the samples originated."
-        databaseFile: "TALON database. Created using initialize_talon_database.py."
-        outputPrefix: "Output directory path."
-        genomeBuild: "Genome build (i.e. hg38) to use."
-        sequencingPlatform: "The sequencing platform used to generate long reads."
-        minimumCoverage: "Minimum alignment coverage in order to use a SAM entry."
-        minimumIdentity: "Minimum alignment identity in order to use a SAM entry."
-
-        outputUpdatedDatabase: "Updated TALON database."
-        outputLogs: "Log files from TALON run."
+        SAMfiles {
+            description: "Input SAM files.",
+            category: "required"
+        }
+        databaseFile: {
+            description: "TALON database. Created using initialize_talon_database.py.",
+            category: "required"
+        }
+        genomeBuild: {
+            description: "Genome build (i.e. hg38) to use.",
+            category: "required"
+        }
+        minimumCoverage: {
+            description: "Minimum alignment coverage in order to use a SAM entry.",
+            category: "common"
+        }
+        minimumIdentity: {
+            description: "Minimum alignment identity in order to use a SAM entry.",
+            category: "common" 
+        }
+        outputPrefix: {
+            description: "Output directory path + output file prefix.",
+            category: "required"
+        }
+        organism: {
+            description: "The name of the organism from which the samples originated.",
+            category: "required"
+        }
+        sequencingPlatform: {
+            description: "The sequencing platform used to generate long reads.",
+            category: "required"
+        }
+        outputUpdatedDatabase: {
+            description: "Updated TALON database.",
+            category: "required"
+        }
+        outputLog: {
+            description: "Log file from TALON run.",
+            category: "required"
+        }
+        outputAnnot: {
+            description: "Read annotation file from TALON run.",
+            category: "required"
+        }
     }
 }
