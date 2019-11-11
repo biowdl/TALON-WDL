@@ -28,7 +28,7 @@ workflow SampleWorkflow {
     input {
         Sample sample
         String outputDirectory = "."
-        File genomeFile
+        File referenceGenome
         String presetOption
         Boolean runTranscriptClean = true
         Map[String, String] dockerImages
@@ -45,7 +45,7 @@ workflow SampleWorkflow {
         call minimap2.Mapping as minimap2 {
             input:
                 queryFile = readgroup.R1,
-                referenceFile = genomeFile,
+                referenceFile = referenceGenome,
                 outputPrefix = outputDirectory + "/" + readgroupIdentifier + ".sam",
                 presetOption = presetOption,
                 outputSAM = true,
@@ -59,7 +59,7 @@ workflow SampleWorkflow {
             call transcriptClean.TranscriptClean as transcriptClean {
                 input:
                     SAMfile = minimap2.outputAlignmentFile,
-                    referenceGenome = genomeFile,
+                    referenceGenome = referenceGenome,
                     outputPrefix = outputDirectory + "/" + readgroupIdentifier,
                     spliceJunctionAnnotation = spliceJunctionsFile,
                     variantFile = variantVCF,

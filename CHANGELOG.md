@@ -10,6 +10,7 @@ that users understand how the changes affect the new version.
 
 version develop
 ---------------------------
++ Add parameter_meta to pipeline.wdl workflow.
 + Update TALON to version 4.4.
 + Update TranscriptClean to version 2.0.2.
 + Change samplesheet converter from SampleConfigToSampleReadgroupLists to InputConverter.

@@ -44,7 +44,6 @@ workflow Pipeline {
 
         File? talonDatabase
         File? spliceJunctionsFile
-        Int? minIntronSize
         File? NoneFile
     }
 
@@ -87,7 +86,6 @@ workflow Pipeline {
                     GTFfile = annotationGTF,
                     genomeFile = referenceGenome,
                     outputPrefix = outputDirectory + "/spliceJunctionsFile",
-                    minIntronSize = minIntronSize,
                     dockerImage = dockerImages["transcriptclean"]
             }
         }
@@ -98,7 +96,7 @@ workflow Pipeline {
             input:
                 sample = sample,
                 outputDirectory = outputDirectory + "/" + sample.id,
-                genomeFile = referenceGenome,
+                referenceGenome = referenceGenome,
                 spliceJunctionsFile = if (runTranscriptClean)
                                       then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
                                       else NoneFile,
@@ -148,6 +146,72 @@ workflow Pipeline {
         File? outputSpliceJunctionsFile = if (runTranscriptClean)
               then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
               else NoneFile
+    }
+
+    parameter_meta {
+        sampleConfigFile {
+            description: "Samplesheet describing input fasta/fastq files.",
+            category: "required"
+        }
+        outputDirectory {
+            description: "The directory to which the outputs will be written.",
+            category: "common"
+        }
+        annotationGTF {
+            description: "GTF annotation containing genes, transcripts, and edges.",
+            category: "required"
+        }
+        genomeBuild {
+            description: "Genome build (i.e. hg38) to use.",
+            category: "required"
+        }
+        annotationVersion {
+            description: "Name of supplied annotation (will be used to label data).",
+            category: "required"
+        }
+        referenceGenome {
+            description: "Reference genome fasta file.",
+            category: "required"
+        }
+        sequencingPlatform {
+            description: "The sequencing machine used to generate the data.",
+            category: "required"
+        }
+        organismName {
+            description: "The name of the organism from which the data was collected.",
+            category: "required"
+        }
+        pipelineRunName {
+            description: "A name describing the pipeline run.",
+            category: "required"
+        }
+        dockerImagesFile {
+            description: "The docker image used for this workflow. Changing this may result in errors which the developers may choose not to address.",
+            category: "required"
+        }
+        novelIDprefix {
+            description: "Prefix for naming novel discoveries in eventual TALON runs.",
+            category: "common"
+        }
+        runTranscriptClean {
+            description: "Option to run TranscriptClean after Minimap2 alignment.",
+            category: "common"
+        }
+
+        talonDatabase {
+            description: "A pre-generated TALON database file.",
+            category: "advanced"
+        }
+        spliceJunctionsFile {
+            description: "A pre-generated splice junction annotation file.",
+            category: "advanced"
+        }
+    }
+
+    meta {
+        WDL_AID: {
+            exclude: ["NoneFile"]
+        }
     }
 }
 
