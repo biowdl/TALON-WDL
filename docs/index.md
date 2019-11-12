@@ -40,15 +40,18 @@ Womtool as described in the
     "Pipeline.pipelineRunName": "A short name to distinguish a run.",
     "Pipeline.dockerImagesFile": "A file listing the used docker images.",
     "Pipeline.runTranscriptClean": "Set to true in order to run TranscriptClean, set to false in order to disable TranscriptClean.",
-    "Pipeline.sampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2, this should be either 'splice'(directRNA) or 'splice:hq'(cDNA)."
+    "Pipeline.sampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2, this should be either 'splice'(directRNA) or 'splice:hq'(cDNA).",
+    "Pipeline.sampleWorkflow.variantVCF": "A VCF file with common variants should be supplied when running TranscriptClean, this will make sure TranscriptClean does not correct those known variants.",
 }
 ```
 
 Optional settings:
-```JSON
+```json
 {
-    "Pipeline.sampleWorkflow.variantVCF": "tests/data/commonVariants.vcf",
-    "Pipeline.sampleWorkflow.howToFindGTAG": "f"
+    "Pipeline.novelIDprefix": "A prefix for novel transcript discoveries.",
+    "Pipeline.sampleWorkflow.howToFindGTAG": "How to find canonical splicing sites GT-AG - f: transcript strand; b: both strands; n: no attempt to match GT-AG.",
+    "Pipeline.spliceJunctionsFile": "A pre-generated splice junction annotation file.",
+    "Pipeline.talonDatabase": "A pre-generated TALON database file."
 }
 ```
 
@@ -114,7 +117,7 @@ The following is an example of what an inputs JSON might look like:
 
 ```json
 {
-    "Pipeline.sampleConfigFile": "/tests/samplesheets/nanopore.yml",
+    "Pipeline.sampleConfigFile": "/tests/samplesheets/ONT_SUBSETS.csv",
     "Pipeline.outputDirectory": "/tests/test-ouput",
     "Pipeline.annotationGTF": "/tests/data/gencode.v29.annotation.gtf",
     "Pipeline.genomeBuild": "hg38",
