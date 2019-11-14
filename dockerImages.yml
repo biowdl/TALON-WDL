@@ -30,5 +30,5 @@
 biowdl-input-converter: "quay.io/biocontainers/biowdl-input-converter:0.2.0--py_0"
 pyyaml: "biowdl/pyyaml:3.13-py37-slim"
 minimap2: "quay.io/biocontainers/minimap2:2.17--h84994c4_0"
-talon: "biocontainers/talon:v4.2_cv2"
+talon: "biocontainers/talon:v4.4_cv2"
 transcriptclean: "biocontainers/transcriptclean:v2.0.2_cv1"
