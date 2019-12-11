@@ -10,7 +10,6 @@ that users understand how the changes affect the new version.
 
 version develop
 ---------------------------
-+ Add GetConfigFile task to create the TALON config file.
 + Remove RunTalon task and now use talon.wdl to run the main TALON script.
 + Update biowdl-input-converter to 0.2.1.
 + Update TALON to version 4.4.1.
