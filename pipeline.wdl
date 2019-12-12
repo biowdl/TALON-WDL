@@ -139,6 +139,7 @@ workflow Pipeline {
         File outputSummary = createSummaryFile.outputSummaryFile
         File outputTalonLog = talon.outputLog
         File outputTalonReadAnnot = talon.outputAnnot
+        File outputTalonConfigFile = talon.outputConfigFile
         File? outputSpliceJunctionsFile = if (runTranscriptClean)
               then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
               else NoneFile
@@ -227,6 +228,10 @@ workflow Pipeline {
         }
         outputTalonReadAnnot: {
             description: "Read annotation file from TALON run.",
+            category: "required"
+        }
+        outputTalonConfigFile: {
+            description: "The TALON configuration file.",
             category: "required"
         }
         outputSpliceJunctionsFile: {
