@@ -92,7 +92,7 @@ workflow Pipeline {
     }
 
     scatter (sample in allSamples) {
-        call sampleWorkflow.SampleWorkflow as sampleWorkflow {
+        call sampleWorkflow.SampleWorkflow as executeSampleWorkflow {
             input:
                 sample = sample,
                 outputDirectory = outputDirectory + "/" + sample.id,
@@ -105,9 +105,9 @@ workflow Pipeline {
         }
     }
 
-    call talon.Talon as talon {
+    call talon.Talon as executeTalon {
         input:
-            SAMfiles = flatten(sampleWorkflow.outputSAMsampleWorkflow),
+            SAMfiles = flatten(executeSampleWorkflow.outputSAMsampleWorkflow),
             organism = organismName,
             sequencingPlatform = sequencingPlatform,
             databaseFile = select_first([talonDatabase, createDatabase.outputDatabase]),
@@ -118,7 +118,7 @@ workflow Pipeline {
 
     call talon.CreateAbundanceFileFromDatabase as createAbundanceFile {
         input:
-            databaseFile = talon.outputUpdatedDatabase,
+            databaseFile = executeTalon.outputUpdatedDatabase,
             annotationVersion = annotationVersion,
             genomeBuild = genomeBuild,
             outputPrefix = outputDirectory + "/" + pipelineRunName,
@@ -127,26 +127,26 @@ workflow Pipeline {
 
     call talon.SummarizeDatasets as createSummaryFile {
         input:
-            databaseFile = talon.outputUpdatedDatabase,
+            databaseFile = executeTalon.outputUpdatedDatabase,
             outputPrefix = outputDirectory + "/" + pipelineRunName,
             dockerImage = dockerImages["talon"]
     }
 
     output {
-        Array[File] outputMinimap2 = flatten(sampleWorkflow.outputMinimap2)
-        File outputTalonDatabase = talon.outputUpdatedDatabase
+        Array[File] outputMinimap2 = flatten(executeSampleWorkflow.outputMinimap2)
+        File outputTalonDatabase = executeTalon.outputUpdatedDatabase
         File outputAbundance = createAbundanceFile.outputAbundanceFile
         File outputSummary = createSummaryFile.outputSummaryFile
-        File outputTalonLog = talon.outputLog
-        File outputTalonReadAnnot = talon.outputAnnot
-        File outputTalonConfigFile = talon.outputConfigFile
+        File outputTalonLog = executeTalon.outputLog
+        File outputTalonReadAnnot = executeTalon.outputAnnot
+        File outputTalonConfigFile = executeTalon.outputConfigFile
         File? outputSpliceJunctionsFile = if (runTranscriptClean)
               then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
               else NoneFile
-        Array[File?] outputTranscriptCleanFasta = flatten(sampleWorkflow.outputTranscriptCleanFasta)
-        Array[File?] outputTranscriptCleanLog = flatten(sampleWorkflow.outputTranscriptCleanLog)
-        Array[File?] outputTranscriptCleanSAM = flatten(sampleWorkflow.outputTranscriptCleanSAM)
-        Array[File?] outputTranscriptCleanTElog = flatten(sampleWorkflow.outputTranscriptCleanTElog)
+        Array[File?] outputTranscriptCleanFasta = flatten(executeSampleWorkflow.outputTranscriptCleanFasta)
+        Array[File?] outputTranscriptCleanLog = flatten(executeSampleWorkflow.outputTranscriptCleanLog)
+        Array[File?] outputTranscriptCleanSAM = flatten(executeSampleWorkflow.outputTranscriptCleanSAM)
+        Array[File?] outputTranscriptCleanTElog = flatten(executeSampleWorkflow.outputTranscriptCleanTElog)
     }
 
     parameter_meta {
