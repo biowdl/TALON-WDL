@@ -42,23 +42,22 @@ workflow SampleWorkflow {
 
     scatter (readgroup in readgroups) {
         String readgroupIdentifier = sample.id + "-" + readgroup.lib_id + "-" + readgroup.id
-        call minimap2.Mapping as minimap2 {
+        call minimap2.Mapping as executeMinimap2 {
             input:
                 queryFile = readgroup.R1,
                 referenceFile = referenceGenome,
                 outputPrefix = outputDirectory + "/" + readgroupIdentifier + ".sam",
                 presetOption = presetOption,
                 outputSAM = true,
-                secondaryAlignment = false,
                 howToFindGTAG = howToFindGTAG,
                 addMDtagToSAM = true,
                 dockerImage = dockerImages["minimap2"]
         }
 
         if (runTranscriptClean) {
-            call transcriptClean.TranscriptClean as transcriptClean {
+            call transcriptClean.TranscriptClean as executeTranscriptClean {
                 input:
-                    SAMfile = minimap2.outputAlignmentFile,
+                    SAMfile = executeMinimap2.outputAlignmentFile,
                     referenceGenome = referenceGenome,
                     outputPrefix = outputDirectory + "/" + readgroupIdentifier,
                     spliceJunctionAnnotation = spliceJunctionsFile,
@@ -71,12 +70,12 @@ workflow SampleWorkflow {
 
     output {
         Array[File] outputSAMsampleWorkflow = if (runTranscriptClean) 
-                    then select_all(transcriptClean.outputTranscriptCleanSAM)
-                    else minimap2.outputAlignmentFile
-        Array[File] outputMinimap2 = minimap2.outputAlignmentFile
-        Array[File?] outputTranscriptCleanFasta = transcriptClean.outputTranscriptCleanFasta
-        Array[File?] outputTranscriptCleanLog = transcriptClean.outputTranscriptCleanLog
-        Array[File?] outputTranscriptCleanSAM = transcriptClean.outputTranscriptCleanSAM
-        Array[File?] outputTranscriptCleanTElog = transcriptClean.outputTranscriptCleanTElog
+                    then select_all(executeTranscriptClean.outputTranscriptCleanSAM)
+                    else executeMinimap2.outputAlignmentFile
+        Array[File] outputMinimap2 = executeMinimap2.outputAlignmentFile
+        Array[File?] outputTranscriptCleanFasta = executeTranscriptClean.outputTranscriptCleanFasta
+        Array[File?] outputTranscriptCleanLog = executeTranscriptClean.outputTranscriptCleanLog
+        Array[File?] outputTranscriptCleanSAM = executeTranscriptClean.outputTranscriptCleanSAM
+        Array[File?] outputTranscriptCleanTElog = executeTranscriptClean.outputTranscriptCleanTElog
     }
 }
