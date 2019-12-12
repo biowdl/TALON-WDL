@@ -9,6 +9,6 @@
     "Pipeline.pipelineRunName": "nanoporeTestRun",
     "Pipeline.dockerImagesFile": "dockerImages.yml",
     "Pipeline.runTranscriptClean": "false",
-    "Pipeline.sampleWorkflow.presetOption": "splice",
-    "Pipeline.sampleWorkflow.howToFindGTAG": "f"
+    "Pipeline.executeSampleWorkflow.presetOption": "splice",
+    "Pipeline.executeSampleWorkflow.howToFindGTAG": "f"
 }
