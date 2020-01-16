@@ -44,7 +44,8 @@ workflow Pipeline {
 
         File? talonDatabase
         File? spliceJunctionsFile
-        File? NoneFile
+
+        File? NoneFile #FIXME
     }
 
     call common.YamlToJson as convertDockerImagesFile {
@@ -150,110 +151,35 @@ workflow Pipeline {
     }
 
     parameter_meta {
-        sampleConfigFile: {
-            description: "Samplesheet describing input fasta/fastq files.",
-            category: "required"
-        }
-        outputDirectory: {
-            description: "The directory to which the outputs will be written.",
-            category: "common"
-        }
-        annotationGTF: {
-            description: "GTF annotation containing genes, transcripts, and edges.",
-            category: "required"
-        }
-        genomeBuild: {
-            description: "Genome build (i.e. hg38) to use.",
-            category: "required"
-        }
-        annotationVersion: {
-            description: "Name of supplied annotation (will be used to label data).",
-            category: "required"
-        }
-        referenceGenome: {
-            description: "Reference genome fasta file.",
-            category: "required"
-        }
-        sequencingPlatform: {
-            description: "The sequencing machine used to generate the data.",
-            category: "required"
-        }
-        organismName: {
-            description: "The name of the organism from which the data was collected.",
-            category: "required"
-        }
-        pipelineRunName: {
-            description: "A name describing the pipeline run.",
-            category: "required"
-        }
-        dockerImagesFile: {
-            description: "The docker image used for this workflow. Changing this may result in errors which the developers may choose not to address.",
-            category: "required"
-        }
-        novelIDprefix: {
-            description: "Prefix for naming novel discoveries in eventual TALON runs.",
-            category: "common"
-        }
-        runTranscriptClean: {
-            description: "Option to run TranscriptClean after Minimap2 alignment.",
-            category: "common"
-        }
-        talonDatabase: {
-            description: "A pre-generated TALON database file.",
-            category: "advanced"
-        }
-        spliceJunctionsFile: {
-            description: "A pre-generated splice junction annotation file.",
-            category: "advanced"
-        }
-        outputMinimap2: {
-            description: "Mapping and alignment between collections of DNA sequences file.",
-            category: "required"
-        }
-        outputTalonDatabase: {
-            description: "TALON database.",
-            category: "required"
-        }
-        outputAbundance: {
-            description: "Abundance for each transcript in the TALON database across datasets.",
-            category: "required"
-        }
-        outputSummary: {
-            description: "Tab-delimited file of gene and transcript counts for each dataset.",
-            category: "required"
-        }
-        outputTalonLog: {
-            description: "Log file from TALON run.",
-            category: "required"
-        }
-        outputTalonReadAnnot: {
-            description: "Read annotation file from TALON run.",
-            category: "required"
-        }
-        outputTalonConfigFile: {
-            description: "The TALON configuration file.",
-            category: "required"
-        }
-        outputSpliceJunctionsFile: {
-            description: "Splice junction annotation file.",
-            category: "common"
-        }
-        outputTranscriptCleanFasta: {
-            description: "Fasta files containing corrected reads.",
-            category: "common"
-        }
-        outputTranscriptCleanLog: {
-            description: "Log files of TranscriptClean run.",
-            category: "common"
-        }
-        outputTranscriptCleanSAM: {
-            description: "SAM files containing corrected aligned reads.",
-            category: "common"
-        }
-        outputTranscriptCleanTElog: {
-            description: "TE log files of TranscriptClean run.",
-            category: "common"
-        }
+        # input
+        sampleConfigFile: {description: "Samplesheet describing input fasta/fastq files.", category: "required"}
+        outputDirectory: {description: "The directory to which the outputs will be written.", category: "common"}
+        annotationGTF: {description: "GTF annotation containing genes, transcripts, and edges.", category: "required"}
+        genomeBuild: {description: "Genome build (i.e. hg38) to use.", category: "required"}
+        annotationVersion: {description: "Name of supplied annotation (will be used to label data).", category: "required"}
+        referenceGenome: {description: "Reference genome fasta file.", category: "required"}
+        sequencingPlatform: {description: "The sequencing machine used to generate the data.", category: "required"}
+        organismName: {description: "The name of the organism from which the data was collected.", category: "required"}
+        pipelineRunName: {description: "A name describing the pipeline run.", category: "required"}
+        dockerImagesFile: {description: "The docker image used for this workflow. Changing this may result in errors which the developers may choose not to address.", category: "required"}
+        novelIDprefix: {description: "Prefix for naming novel discoveries in eventual TALON runs.", category: "common"}
+        runTranscriptClean: {description: "Option to run TranscriptClean after Minimap2 alignment.", category: "common"}
+        talonDatabase: {description: "A pre-generated TALON database file.", category: "advanced"}
+        spliceJunctionsFile: {description: "A pre-generated splice junction annotation file.", category: "advanced"}
+
+        # output
+        outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file."}
+        outputTalonDatabase: {description: "TALON database."}
+        outputAbundance: {description: "Abundance for each transcript in the TALON database across datasets."}
+        outputSummary: {description: "Tab-delimited file of gene and transcript counts for each dataset."}
+        outputTalonLog: {description: "Log file from TALON run."}
+        outputTalonReadAnnot: {description: "Read annotation file from TALON run."}
+        outputTalonConfigFile: {description: "The TALON configuration file."}
+        outputSpliceJunctionsFile: {description: "Splice junction annotation file."}
+        outputTranscriptCleanFasta: {description: "Fasta files containing corrected reads."}
+        outputTranscriptCleanLog: {description: "Log files of TranscriptClean run."}
+        outputTranscriptCleanSAM: {description: "SAM files containing corrected aligned reads."}
+        outputTranscriptCleanTElog: {description: "TE log files of TranscriptClean run."}
     }
 
     meta {
