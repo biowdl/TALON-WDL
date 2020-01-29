@@ -5,13 +5,13 @@ samples:
     readgroups:
     - id: rg1
       reads:
-        R1: tests/data/ONT_GM12878_SUBSET.fastq
-        R1_md5: 750dc282c02948b3f75a7ea76eeb3464
+        R1: tests/data/ONT_GM12878_SUBSET.fastq.gz
+        R1_md5: 2498f6d289e91b028d87080eb23a362e
 - id: ONT_K562_SUBSET
   libraries:
   - id: lib1
     readgroups:
     - id: rg1
       reads:
-        R1: tests/data/ONT_K562_SUBSET.fastq
-        R1_md5: c779f8b69e2d5b55e34f1a4894174e8d
+        R1: tests/data/ONT_K562_SUBSET.fastq.gz
+        R1_md5: 0fded322b59b212f111eb3c695cdbc17
