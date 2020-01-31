@@ -10,6 +10,7 @@ that users understand how the changes affect the new version.
 
 version develop
 ---------------------------
++ Remove YAML examples from documentation.
 + Updated test environment.
 + Added inputs overview to docs.
 + Added WDL-AID to linting.
