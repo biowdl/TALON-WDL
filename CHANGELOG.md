@@ -10,6 +10,7 @@ that users understand how the changes affect the new version.
 
 version develop
 ---------------------------
++ Updated test environment.
 + Added inputs overview to docs.
 + Added WDL-AID to linting.
 + Remove RunTalon task and now use talon.wdl to run the main TALON script.
