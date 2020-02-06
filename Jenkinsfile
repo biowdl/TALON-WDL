@@ -4,6 +4,7 @@ pipeline {
             label 'local'
         }
     }
+
     parameters {
         string name: 'PYTHON', defaultValue: '${DEFAULT}'
         string name: 'THREADS', defaultValue: '${DEFAULT}'
@@ -12,6 +13,7 @@ pipeline {
         string name: 'LINT', defaultValue: '${DEFAULT}'
         string name: 'CROMWELL_PATH', defaultValue: '${DEFAULT}'
     }
+
     stages {
         stage('Init') {
             steps {

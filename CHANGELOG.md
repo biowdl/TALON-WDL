@@ -10,8 +10,9 @@ that users understand how the changes affect the new version.
 
 version develop
 ---------------------------
++ Add prepulling docker images to Jenkins.
 + Remove YAML examples from documentation.
-+ Updated test environment.
++ Remove cromwell config from Travis.
 + Added inputs overview to docs.
 + Added WDL-AID to linting.
 + Remove RunTalon task and now use talon.wdl to run the main TALON script.
