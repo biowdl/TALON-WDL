@@ -4,6 +4,7 @@ pipeline {
             label 'local'
         }
     }
+
     parameters {
         string name: 'PYTHON', defaultValue: '${DEFAULT}'
         string name: 'THREADS', defaultValue: '${DEFAULT}'
@@ -12,6 +13,7 @@ pipeline {
         string name: 'LINT', defaultValue: '${DEFAULT}'
         string name: 'CROMWELL_PATH', defaultValue: '${DEFAULT}'
     }
+
     stages {
         stage('Init') {
             steps {
@@ -41,6 +43,15 @@ pipeline {
             when { environment name: 'LINT', value: 'true' }
             steps {
                 sh 'bash -c "PATH=$PATH:$CROMWELL_PATH bash scripts/biowdl_lint.sh"'
+            }
+        }
+
+        stage('Pull singularity images') {
+            steps {
+                sh "#!/bin/bash\n" +
+                   "set -e -o pipefail\n" +
+                   "export PATH=$PATH:$CROMWELL_PATH\n" +
+                   "prepull-singularity --show-output-on-success --show-output-on-failure --use-digest dockerImages.yml"
             }
         }
 

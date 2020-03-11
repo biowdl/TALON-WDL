@@ -41,8 +41,8 @@ For an overview of all available inputs, see [this page](./inputs.html).
     "Pipeline.pipelineRunName": "A short name to distinguish a run.",
     "Pipeline.dockerImagesFile": "A file listing the used docker images.",
     "Pipeline.runTranscriptClean": "Set to true in order to run TranscriptClean, set to false in order to disable TranscriptClean.",
-    "Pipeline.sampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2, this should be either 'splice'(directRNA) or 'splice:hq'(cDNA).",
-    "Pipeline.sampleWorkflow.variantVCF": "A VCF file with common variants should be supplied when running TranscriptClean, this will make sure TranscriptClean does not correct those known variants.",
+    "Pipeline.executeSampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2, this should be either 'splice'(directRNA) or 'splice:hq'(cDNA).",
+    "Pipeline.executeSampleWorkflow.variantVCF": "A VCF file with common variants should be supplied when running TranscriptClean, this will make sure TranscriptClean does not correct those known variants.",
 }
 ```
 
@@ -50,7 +50,7 @@ Optional settings:
 ```json
 {
     "Pipeline.novelIDprefix": "A prefix for novel transcript discoveries.",
-    "Pipeline.sampleWorkflow.howToFindGTAG": "How to find canonical splicing sites GT-AG - f: transcript strand; b: both strands; n: no attempt to match GT-AG.",
+    "Pipeline.executeSampleWorkflow.howToFindGTAG": "How to find canonical splicing sites GT-AG - f: transcript strand; b: both strands; n: no attempt to match GT-AG.",
     "Pipeline.spliceJunctionsFile": "A pre-generated splice junction annotation file.",
     "Pipeline.talonDatabase": "A pre-generated TALON database file."
 }
@@ -95,24 +95,6 @@ NOTE: R1_md5, R2 and R2_md5 are optional do not have to be filled. And additiona
 After creating the table in a spreadsheet program it can be saved in 
 csv format.
 
-##### YAML format
-The sample configuration can also be a YML file which adheres to the following
-structure:
-
-```yml
-samples:
-  - id: <sampleId>
-    libraries:
-      - id: <libId>
-        readgroups:
-          - id: <rgId>
-            reads:
-              R1: <Path to first FastQ file.>
-              R1_md5: <MD5 checksum string.>
-```
-Replace the text between `< >` with appropriate values. Multiple samples,
-libraries (per sample) and readgroups (per library) may be given.
-
 #### Example
 The following is an example of what an inputs JSON might look like:
 
@@ -129,31 +111,10 @@ The following is an example of what an inputs JSON might look like:
     "Pipeline.pipelineRunName": "testRun",
     "Pipeline.dockerImagesFile": "dockerImages.yml",
     "Pipeline.runTranscriptClean": "true",
-    "Pipeline.sampleWorkflow.presetOption": "splice",
-    "Pipeline.sampleWorkflow.variantVCF": "tests/data/commonVariants.vcf",
-    "Pipeline.sampleWorkflow.howToFindGTAG": "f"
+    "Pipeline.executeSampleWorkflow.presetOption": "splice",
+    "Pipeline.executeSampleWorkflow.variantVCF": "tests/data/commonVariants.vcf",
+    "Pipeline.executeSampleWorkflow.howToFindGTAG": "f"
 }
-```
-
-And the associated sample configuration YML might look like this:
-```yml
-samples:
-  - id: GM12878
-    libraries:
-      - id: lib1
-        readgroups:
-          - id: rg1
-            reads:
-              R1: /tests/data/ONT_GM12878_SUBSET.fastq
-              R1_md5: 750dc282c02948b3f75a7ea76eeb3464
-  - id: K562
-    libraries:
-      - id: lib1
-        readgroups:
-          - id: rg1
-            reads:
-              R1: tests/data/ONT_K562_SUBSET.fastq
-              R1_md5: c779f8b69e2d5b55e34f1a4894174e8d
 ```
 
 ### Dependency requirements and tool versions

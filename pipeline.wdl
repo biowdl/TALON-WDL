@@ -151,7 +151,7 @@ workflow Pipeline {
     }
 
     parameter_meta {
-        # input
+        # inputs
         sampleConfigFile: {description: "Samplesheet describing input fasta/fastq files.", category: "required"}
         outputDirectory: {description: "The directory to which the outputs will be written.", category: "common"}
         annotationGTF: {description: "GTF annotation containing genes, transcripts, and edges.", category: "required"}
@@ -167,7 +167,7 @@ workflow Pipeline {
         talonDatabase: {description: "A pre-generated TALON database file.", category: "advanced"}
         spliceJunctionsFile: {description: "A pre-generated splice junction annotation file.", category: "advanced"}
 
-        # output
+        # outputs
         outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file."}
         outputTalonDatabase: {description: "TALON database."}
         outputAbundance: {description: "Abundance for each transcript in the TALON database across datasets."}
