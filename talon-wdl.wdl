@@ -168,7 +168,7 @@ workflow Pipeline {
         spliceJunctionsFile: {description: "A pre-generated splice junction annotation file.", category: "advanced"}
 
         # outputs
-        outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file."}
+        outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
         outputTalonDatabase: {description: "TALON database."}
         outputAbundance: {description: "Abundance for each transcript in the TALON database across datasets."}
         outputSummary: {description: "Tab-delimited file of gene and transcript counts for each dataset."}
@@ -176,10 +176,10 @@ workflow Pipeline {
         outputTalonReadAnnot: {description: "Read annotation file from TALON run."}
         outputTalonConfigFile: {description: "The TALON configuration file."}
         outputSpliceJunctionsFile: {description: "Splice junction annotation file."}
-        outputTranscriptCleanFasta: {description: "Fasta files containing corrected reads."}
-        outputTranscriptCleanLog: {description: "Log files of TranscriptClean run."}
-        outputTranscriptCleanSAM: {description: "SAM files containing corrected aligned reads."}
-        outputTranscriptCleanTElog: {description: "TE log files of TranscriptClean run."}
+        outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
+        outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
+        outputTranscriptCleanSAM: {description: "SAM file(s) containing corrected aligned reads."}
+        outputTranscriptCleanTElog: {description: "TE log file(s) of TranscriptClean run."}
     }
 
     meta {

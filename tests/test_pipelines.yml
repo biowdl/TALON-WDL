@@ -4,7 +4,7 @@
     - no_docker_conf
   command: >-
     cromwell run -o tests/cromwell_options.json
-    -i tests/integration/ONT_FULL.json pipeline.wdl
+    -i tests/integration/ONT_FULL.json talon-wdl.wdl
   files:
     - path: "test-output/ONT_GM12878_SUBSET/ONT_GM12878_SUBSET-lib1-rg1.sam"
     - path: "test-output/ONT_GM12878_SUBSET/ONT_GM12878_SUBSET-lib1-rg1_clean.fa"
@@ -30,7 +30,7 @@
     - no_docker_conf
   command: >-
     cromwell run -o tests/cromwell_options.json
-    -i tests/integration/ONT_TC_FALSE.json pipeline.wdl
+    -i tests/integration/ONT_TC_FALSE.json talon-wdl.wdl
   files:
     - path: "test-output/ONT_GM12878_SUBSET/ONT_GM12878_SUBSET-lib1-rg1.sam"
     - path: "test-output/ONT_K562_SUBSET/ONT_K562_SUBSET-lib1-rg1.sam"

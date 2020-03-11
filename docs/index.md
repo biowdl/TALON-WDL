@@ -17,7 +17,7 @@ You can run the pipeline using
 [Cromwell](http://cromwell.readthedocs.io/en/stable/):
 
 ```bash
-java -jar cromwell-<version>.jar run -i inputs.json pipeline.wdl
+java -jar cromwell-<version>.jar run -i inputs.json talon-wdl.wdl
 ```
 
 ### Inputs
