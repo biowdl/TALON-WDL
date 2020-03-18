@@ -1,13 +1,17 @@
 # TALON-WDL
 
-This repository contains the [Biowdl](https://github.com/biowdl) pipeline usable for processing RNA-seq data produced by either a Nanopore or PacBio sequencer using [TALON](https://github.com/dewyman/TALON).
+This repository contains the [Biowdl](https://github.com/biowdl) pipeline
+usable for processing RNA-seq data produced by either a Nanopore or PacBio
+sequencer using [TALON](https://github.com/dewyman/TALON).
 
 ## Documentation
 
-Documentation for this pipeline can be found [here](https://biowdl.github.io/TALON-WDL).
+Documentation for this pipeline can be
+found [here](https://biowdl.github.io/TALON-WDL).
 
 ## About
-This pipeline is part of [Biowdl](https://github.com/biowdl) developed by the SASC team at [Leiden University Medical Center](https://www.lumc.nl/).
+This pipeline is part of [Biowdl](https://github.com/biowdl) developed by the
+SASC team at [Leiden University Medical Center](https://www.lumc.nl/).
 
 ## Contact
 <p>
