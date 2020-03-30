@@ -90,5 +90,13 @@ workflow SampleWorkflow {
         variantVCF: {description: "VCF formatted file of variants.", category: "common"}
         howToFindGTAG: {description: "How to find GT-AG. f:transcript strand, b:both strands, n:don't match GT-AG.", category: "common"}
         spliceJunctionsFile: {description: "A pre-generated splice junction annotation file.", category: "advanced"}
+
+        # outputs
+        outputSAMsampleWorkflow: {description: "Either the minimap2 or TranscriptClean SAM file(s)."}
+        outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
+        outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
+        outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
+        outputTranscriptCleanSAM: {description: "SAM file(s) containing corrected aligned reads."}
+        outputTranscriptCleanTElog: {description: "TE log file(s) of TranscriptClean run."}
     }
 }

@@ -1,8 +1,10 @@
-# These are the programs used for testing this biowdl workflow
-# These requirements can be installed with conda with the bioconda channel activated
+# These are the programs used for testing this biowdl workflow.
+# These requirements can be installed with conda with the bioconda channel
+# activated.
 # For more information on how to set up conda with bioconda channel see:
 # http://bioconda.github.io/#install-conda
-# this file can be installed with "conda install --file requirements-test.txt"
+# This file can be installed with "conda install --file requirements-test.txt".
+
 # TODO: Cromwell 49 bug should be fixed in cromwell 50
 cromwell<=48
 pytest-workflow
