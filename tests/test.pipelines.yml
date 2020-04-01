@@ -6,16 +6,16 @@
     cromwell run -o tests/cromwell.options.json
     -i tests/integration/all.settings.json talon-wdl.wdl
   files:
-    - path: "test-output/ONT_GM12878_SUBSET/ONT_GM12878_SUBSET-lib1-rg1.sam"
-    - path: "test-output/ONT_GM12878_SUBSET/ONT_GM12878_SUBSET-lib1-rg1_clean.fa"
-    - path: "test-output/ONT_GM12878_SUBSET/ONT_GM12878_SUBSET-lib1-rg1_clean.log"
-    - path: "test-output/ONT_GM12878_SUBSET/ONT_GM12878_SUBSET-lib1-rg1_clean.sam"
-    - path: "test-output/ONT_GM12878_SUBSET/ONT_GM12878_SUBSET-lib1-rg1_clean.TE.log"
-    - path: "test-output/ONT_K562_SUBSET/ONT_K562_SUBSET-lib1-rg1.sam"
-    - path: "test-output/ONT_K562_SUBSET/ONT_K562_SUBSET-lib1-rg1_clean.fa"
-    - path: "test-output/ONT_K562_SUBSET/ONT_K562_SUBSET-lib1-rg1_clean.log"
-    - path: "test-output/ONT_K562_SUBSET/ONT_K562_SUBSET-lib1-rg1_clean.sam"
-    - path: "test-output/ONT_K562_SUBSET/ONT_K562_SUBSET-lib1-rg1_clean.TE.log"
+    - path: "test-output/GM12878/GM12878-lib1-rg1.sam"
+    - path: "test-output/GM12878/GM12878-lib1-rg1_clean.fa"
+    - path: "test-output/GM12878/GM12878-lib1-rg1_clean.log"
+    - path: "test-output/GM12878/GM12878-lib1-rg1_clean.sam"
+    - path: "test-output/GM12878/GM12878-lib1-rg1_clean.TE.log"
+    - path: "test-output/K562/K562-lib1-rg1.sam"
+    - path: "test-output/K562/K562-lib1-rg1_clean.fa"
+    - path: "test-output/K562/K562-lib1-rg1_clean.log"
+    - path: "test-output/K562/K562-lib1-rg1_clean.sam"
+    - path: "test-output/K562/K562-lib1-rg1_clean.TE.log"
     - path: "test-output/nanoporeTestRun.db"
     - path: "test-output/nanoporeTestRun_talon_abundance.tsv"
     - path: "test-output/nanoporeTestRun_talon_summary.tsv"
@@ -32,8 +32,8 @@
     cromwell run -o tests/cromwell.options.json
     -i tests/integration/no.transcriptclean.json talon-wdl.wdl
   files:
-    - path: "test-output/ONT_GM12878_SUBSET/ONT_GM12878_SUBSET-lib1-rg1.sam"
-    - path: "test-output/ONT_K562_SUBSET/ONT_K562_SUBSET-lib1-rg1.sam"
+    - path: "test-output/GM12878/GM12878-lib1-rg1.sam"
+    - path: "test-output/K562/K562-lib1-rg1.sam"
     - path: "test-output/nanoporeTestRun.db"
     - path: "test-output/nanoporeTestRun_talon_abundance.tsv"
     - path: "test-output/nanoporeTestRun_talon_summary.tsv"
