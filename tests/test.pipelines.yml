@@ -1,10 +1,10 @@
-- name: ONT_FULL
+- name: all-settings
   tags:
     - integration
     - no_docker_conf
   command: >-
-    cromwell run -o tests/cromwell_options.json
-    -i tests/integration/ONT_FULL.json talon-wdl.wdl
+    cromwell run -o tests/cromwell.options.json
+    -i tests/integration/all.settings.json talon-wdl.wdl
   files:
     - path: "test-output/ONT_GM12878_SUBSET/ONT_GM12878_SUBSET-lib1-rg1.sam"
     - path: "test-output/ONT_GM12878_SUBSET/ONT_GM12878_SUBSET-lib1-rg1_clean.fa"
@@ -24,13 +24,13 @@
     - path: "test-output/spliceJunctionsFile.tsv"
     - path: "test-output/talonConfigFile.csv"
 
-- name: ONT_TC_FALSE
+- name: no-transcriptclean
   tags:
     - integration
     - no_docker_conf
   command: >-
-    cromwell run -o tests/cromwell_options.json
-    -i tests/integration/ONT_TC_FALSE.json talon-wdl.wdl
+    cromwell run -o tests/cromwell.options.json
+    -i tests/integration/no.transcriptclean.json talon-wdl.wdl
   files:
     - path: "test-output/ONT_GM12878_SUBSET/ONT_GM12878_SUBSET-lib1-rg1.sam"
     - path: "test-output/ONT_K562_SUBSET/ONT_K562_SUBSET-lib1-rg1.sam"
