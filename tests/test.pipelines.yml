@@ -1,0 +1,42 @@
+- name: all-settings
+  tags:
+    - integration
+    - no_docker_conf
+  command: >-
+    cromwell run -o tests/cromwell.options.json
+    -i tests/integration/all.settings.json talon-wdl.wdl
+  files:
+    - path: "test-output/GM12878/GM12878-lib1-rg1.sam"
+    - path: "test-output/GM12878/GM12878-lib1-rg1_clean.fa"
+    - path: "test-output/GM12878/GM12878-lib1-rg1_clean.log"
+    - path: "test-output/GM12878/GM12878-lib1-rg1_clean.sam"
+    - path: "test-output/GM12878/GM12878-lib1-rg1_clean.TE.log"
+    - path: "test-output/K562/K562-lib1-rg1.sam"
+    - path: "test-output/K562/K562-lib1-rg1_clean.fa"
+    - path: "test-output/K562/K562-lib1-rg1_clean.log"
+    - path: "test-output/K562/K562-lib1-rg1_clean.sam"
+    - path: "test-output/K562/K562-lib1-rg1_clean.TE.log"
+    - path: "test-output/nanoporeTestRun.db"
+    - path: "test-output/nanoporeTestRun_talon_abundance.tsv"
+    - path: "test-output/nanoporeTestRun_talon_summary.tsv"
+    - path: "test-output/run_QC.log"
+    - path: "test-output/run_talon_read_annot.tsv"
+    - path: "test-output/spliceJunctionsFile.tsv"
+    - path: "test-output/talonConfigFile.csv"
+
+- name: no-transcriptclean
+  tags:
+    - integration
+    - no_docker_conf
+  command: >-
+    cromwell run -o tests/cromwell.options.json
+    -i tests/integration/no.transcriptclean.json talon-wdl.wdl
+  files:
+    - path: "test-output/GM12878/GM12878-lib1-rg1.sam"
+    - path: "test-output/K562/K562-lib1-rg1.sam"
+    - path: "test-output/nanoporeTestRun.db"
+    - path: "test-output/nanoporeTestRun_talon_abundance.tsv"
+    - path: "test-output/nanoporeTestRun_talon_summary.tsv"
+    - path: "test-output/run_QC.log"
+    - path: "test-output/run_talon_read_annot.tsv"
+    - path: "test-output/talonConfigFile.csv"

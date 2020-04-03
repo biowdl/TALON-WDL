@@ -86,8 +86,8 @@ such as LibreOffice Calc or Microsoft Excel, and create a table:
 
 sample | library | read | R1 | R1_md5 | R2 | R2_md5
 -------|---------|------|----|--------|----|-------
-<sampleId>|<libId>|<rgId>|<Path to first FastQ file.>|<MD5 checksum string.>||
-<sampleId>|<libId>|<rgId>|<Path to first FastQ file.>|<MD5 checksum string.>||
+<sampleId>|<libId>|<rgId>|<Path to first FastQ file.>|<MD5 checksum string.>
+<sampleId>|<libId>|<rgId>|<Path to first FastQ file.>|<MD5 checksum string.>
 
 NOTE: R1_md5, R2 and R2_md5 are optional do not have to be filled. And additional fields may be added (eg. for documentation purposes), these will be ignored by the pipeline.
 
@@ -100,19 +100,19 @@ The following is an example of what an inputs JSON might look like:
 
 ```json
 {
-    "Pipeline.sampleConfigFile": "/tests/samplesheets/ONT_SUBSETS.csv",
-    "Pipeline.outputDirectory": "/tests/test-ouput",
-    "Pipeline.annotationGTF": "/tests/data/gencode.v29.annotation.gtf",
+    "Pipeline.sampleConfigFile": "tests/samplesheets/GM12878.K562.csv",
+    "Pipeline.outputDirectory": "tests/test-output",
+    "Pipeline.annotationGTF": "tests/data/gencode.v29.annotation.gtf",
     "Pipeline.genomeBuild": "hg38",
     "Pipeline.annotationVersion": "gencode_v29",
-    "Pipeline.referenceGenome": "/tests/data/GRCh38.fasta",
+    "Pipeline.referenceGenome": "tests/data/grch38.fasta",
     "Pipeline.sequencingPlatform": "Nanopore",
     "Pipeline.organismName": "Human",
     "Pipeline.pipelineRunName": "testRun",
     "Pipeline.dockerImagesFile": "dockerImages.yml",
     "Pipeline.runTranscriptClean": "true",
     "Pipeline.executeSampleWorkflow.presetOption": "splice",
-    "Pipeline.executeSampleWorkflow.variantVCF": "tests/data/commonVariants.vcf",
+    "Pipeline.executeSampleWorkflow.variantVCF": "tests/data/common.variants.vcf",
     "Pipeline.executeSampleWorkflow.howToFindGTAG": "f"
 }
 ```

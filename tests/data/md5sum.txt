@@ -1,2 +1,2 @@
-2498f6d289e91b028d87080eb23a362e  ONT_GM12878_SUBSET.fastq.gz
-0fded322b59b212f111eb3c695cdbc17  ONT_K562_SUBSET.fastq.gz
+2498f6d289e91b028d87080eb23a362e  GM12878.subset.fastq.gz
+0fded322b59b212f111eb3c695cdbc17  K562.subset.fastq.gz
