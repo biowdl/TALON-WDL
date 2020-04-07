@@ -76,9 +76,9 @@ columns: sample, library, readgroup, R1, R1_md5, R2, R2_md5.
 column name | function
 ---|---
 sample | sample ID
-library | library ID. These are the libraries that are sequenced. Usually there is only one library per sample
+library | library ID. These are the libraries that are sequenced. Usually there is only one library per sample.
 readgroup | readgroup ID. Usually a library is sequenced on multiple lanes in the sequencer, which gives multiple fastq files (referred to as readgroups). Each readgroup pair should have an ID.
-R1| The fastq file containing the first reads of the read pairs
+R1| The fastq file containing the first reads of the read pairs.
 R1_md5 | Optional: md5sum for the R1 file.
 
 The easiest way to create a samplesheet is to use a spreadsheet program
@@ -89,7 +89,9 @@ sample | library | read | R1 | R1_md5 | R2 | R2_md5
 Sample1|lib1|rg1|tests/data/GM12878.subset.fastq.gz|2498f6d289e91b028d87080eb23a362e
 Sample2|lib1|rg1|tests/data/K562.subset.fastq.gz|0fded322b59b212f111eb3c695cdbc17
 
-NOTE: R1_md5, R2 and R2_md5 are optional do not have to be filled. And additional fields may be added (eg. for documentation purposes), these will be ignored by the pipeline.
+NOTE: R1_md5, R2 and R2_md5 are optional do not have to be filled. And\
+additional fields may be added (eg. for documentation purposes), these will be
+ignored by the pipeline.
 
 After creating the table in a spreadsheet program it can be saved in 
 csv format.
