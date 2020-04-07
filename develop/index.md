@@ -17,7 +17,7 @@ You can run the pipeline using
 [Cromwell](http://cromwell.readthedocs.io/en/stable/):
 
 ```bash
-java -jar cromwell-<version>.jar run -i inputs.json pipeline.wdl
+java -jar cromwell-<version>.jar run -i inputs.json talon-wdl.wdl
 ```
 
 ### Inputs
@@ -26,6 +26,7 @@ described below, but additional inputs are available.
 A template containing all possible inputs can be generated using
 Womtool as described in the
 [WOMtool documentation](http://cromwell.readthedocs.io/en/stable/WOMtool/).
+For an overview of all available inputs, see [this page](./inputs.html).
 
 ```json
 {
@@ -39,68 +40,81 @@ Womtool as described in the
     "Pipeline.organismName": "The name of the organism from which the samples originated.",
     "Pipeline.pipelineRunName": "A short name to distinguish a run.",
     "Pipeline.dockerImagesFile": "A file listing the used docker images.",
-    "Pipeline.sampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2, this should be either 'splice'(directRNA) or 'splice:hq'(cDNA).",
-    "Pipeline.sampleWorkflow.runTranscriptClean": "Set to true in order to run TranscriptClean, set to false in order to disable TranscriptClean."
+    "Pipeline.runTranscriptClean": "Set to true in order to run TranscriptClean, set to false in order to disable TranscriptClean.",
+    "Pipeline.executeSampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2, this should be either 'splice'(directRNA) or 'splice:hq'(cDNA).",
+    "Pipeline.executeSampleWorkflow.variantVCF": "A VCF file with common variants should be supplied when running TranscriptClean, this will make sure TranscriptClean does not correct those known variants.",
+}
+```
+
+Optional settings:
+```json
+{
+    "Pipeline.novelIDprefix": "A prefix for novel transcript discoveries.",
+    "Pipeline.executeSampleWorkflow.howToFindGTAG": "How to find canonical splicing sites GT-AG - f: transcript strand; b: both strands; n: no attempt to match GT-AG.",
+    "Pipeline.spliceJunctionsFile": "A pre-generated splice junction annotation file.",
+    "Pipeline.talonDatabase": "A pre-generated TALON database file."
 }
 ```
 
 #### Sample configuration
-The sample configuration should be a YML file which adheres to the following
-structure:
+##### Verification
+All samplesheet formats can be verified using `biowdl-input-converter`. 
+It can be installed with `pip install biowdl-input-converter` or 
+`conda install biowdl-input-converter` (from the bioconda channel). 
+Python 3.7 or higher is required.
 
-```yml
-samples:
-  - id: <sampleId>
-    libraries:
-      - id: <libId>
-        readgroups:
-          - id: <rgId>
-            reads:
-              R1: <Path to first FastQ file.>
-              R1_md5: <Path to MD5 checksum file of first FastQ file.>
-```
-Replace the text between `< >` with appropriate values. Multiple samples, libraries (per
-sample) and readgroups (per library) may be given.
+With `biowdl-input-converter --validate samplesheet.csv` The file
+"samplesheet.csv" will be checked. Also the presence of all files in
+the samplesheet will be checked to ensure no typos were made. For more
+information check out the [biowdl-input-converter readthedocs page](
+https://biowdl-input-converter.readthedocs.io).
+
+##### CSV format
+The sample configuration can be given as a csv file with the following 
+columns: sample, library, readgroup, R1, R1_md5, R2, R2_md5.
+
+column name | function
+---|---
+sample | sample ID
+library | library ID. These are the libraries that are sequenced. Usually there is only one library per sample
+readgroup | readgroup ID. Usually a library is sequenced on multiple lanes in the sequencer, which gives multiple fastq files (referred to as readgroups). Each readgroup pair should have an ID.
+R1| The fastq file containing the first reads of the read pairs
+R1_md5 | Optional: md5sum for the R1 file.
+
+The easiest way to create a samplesheet is to use a spreadsheet program
+such as LibreOffice Calc or Microsoft Excel, and create a table:
+
+sample | library | read | R1 | R1_md5 | R2 | R2_md5
+-------|---------|------|----|--------|----|-------
+<sampleId>|<libId>|<rgId>|<Path to first FastQ file.>|<MD5 checksum string.>
+<sampleId>|<libId>|<rgId>|<Path to first FastQ file.>|<MD5 checksum string.>
+
+NOTE: R1_md5, R2 and R2_md5 are optional do not have to be filled. And additional fields may be added (eg. for documentation purposes), these will be ignored by the pipeline.
+
+
+After creating the table in a spreadsheet program it can be saved in 
+csv format.
 
 #### Example
 The following is an example of what an inputs JSON might look like:
 
 ```json
 {
-    "Pipeline.sampleConfigFile": "/tests/samplesheets/nanopore.yml",
-    "Pipeline.outputDirectory": "/tests/test-ouput",
-    "Pipeline.annotationGTF": "/tests/data/gencode.v29.annotation.gtf",
+    "Pipeline.sampleConfigFile": "tests/samplesheets/GM12878.K562.csv",
+    "Pipeline.outputDirectory": "tests/test-output",
+    "Pipeline.annotationGTF": "tests/data/gencode.v29.annotation.gtf",
     "Pipeline.genomeBuild": "hg38",
     "Pipeline.annotationVersion": "gencode_v29",
-    "Pipeline.referenceGenome": "/tests/data/GRCh38.fasta",
+    "Pipeline.referenceGenome": "tests/data/grch38.fasta",
     "Pipeline.sequencingPlatform": "Nanopore",
     "Pipeline.organismName": "Human",
     "Pipeline.pipelineRunName": "testRun",
     "Pipeline.dockerImagesFile": "dockerImages.yml",
-    "Pipeline.sampleWorkflow.presetOption": "splice",
-    "Pipeline.sampleWorkflow.runTranscriptClean": "true"
+    "Pipeline.runTranscriptClean": "true",
+    "Pipeline.executeSampleWorkflow.presetOption": "splice",
+    "Pipeline.executeSampleWorkflow.variantVCF": "tests/data/common.variants.vcf",
+    "Pipeline.executeSampleWorkflow.howToFindGTAG": "f"
 }
-```
-
-And the associated sample configuration YML might look like this:
-```yml
-samples:
-  - id: GM12878
-    libraries:
-      - id: lib1
-        readgroups:
-          - id: rg1
-            reads:
-              R1: /tests/data/ONT_GM12878_SUBSET.fastq
-              R1_md5: 750dc282c02948b3f75a7ea76eeb3464
-  - id: K562
-    libraries:
-      - id: lib1
-        readgroups:
-          - id: rg1
-            reads:
-              R1: tests/data/ONT_K562_SUBSET.fastq
-              R1_md5: c779f8b69e2d5b55e34f1a4894174e8d
 ```
 
 ### Dependency requirements and tool versions
