@@ -89,7 +89,7 @@ sample | library | read | R1 | R1_md5 | R2 | R2_md5
 Sample1|lib1|rg1|tests/data/GM12878.subset.fastq.gz|2498f6d289e91b028d87080eb23a362e
 Sample2|lib1|rg1|tests/data/K562.subset.fastq.gz|0fded322b59b212f111eb3c695cdbc17
 
-NOTE: R1_md5, R2 and R2_md5 are optional do not have to be filled. And\
+NOTE: R1_md5, R2 and R2_md5 are optional do not have to be filled. And
 additional fields may be added (eg. for documentation purposes), these will be
 ignored by the pipeline.
 
