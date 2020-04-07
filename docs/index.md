@@ -3,11 +3,11 @@ layout: default
 title: Home
 ---
 
-This pipeline can be used to process RNA sequenced by either the Pacific Biosciences
-or Oxford Nanopore sequencer, starting from FastQ files. It will perform mapping
-to a reference genome (using minimap2), INDEL/mismatch and noncanonical splice junction
-correction (using TranscriptClean) and identify and count known and
-novel genes/transcripts (using TALON).
+This pipeline can be used to process RNA sequenced by either the Pacific
+Biosciences or Oxford Nanopore sequencer, starting from FastQ files. It will
+perform mapping to a reference genome (using minimap2), INDEL/mismatch and
+noncanonical splice junction correction (using TranscriptClean) and identify
+and count known and novel genes/transcripts (using TALON).
 
 This pipeline is part of [BioWDL](https://biowdl.github.io/)
 developed by the SASC team at [Leiden University Medical Center](https://www.lumc.nl/).
@@ -86,11 +86,10 @@ such as LibreOffice Calc or Microsoft Excel, and create a table:
 
 sample | library | read | R1 | R1_md5 | R2 | R2_md5
 -------|---------|------|----|--------|----|-------
-<sampleId>|<libId>|<rgId>|<Path to first FastQ file.>|<MD5 checksum string.>
-<sampleId>|<libId>|<rgId>|<Path to first FastQ file.>|<MD5 checksum string.>
+Sample1|lib1|rg1|tests/data/GM12878.subset.fastq.gz|2498f6d289e91b028d87080eb23a362e
+Sample2|lib1|rg1|tests/data/K562.subset.fastq.gz|0fded322b59b212f111eb3c695cdbc17
 
 NOTE: R1_md5, R2 and R2_md5 are optional do not have to be filled. And additional fields may be added (eg. for documentation purposes), these will be ignored by the pipeline.
-
 
 After creating the table in a spreadsheet program it can be saved in 
 csv format.
