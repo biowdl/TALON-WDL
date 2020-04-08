@@ -10,6 +10,7 @@ that users understand how the changes affect the new version.
 
 version develop
 ---------------------------
++ Update documentation with more specific example of sample sheet CSV file.
 + Update TALON to version 4.4.2.
 + Add prepulling docker images to Jenkins.
 + Remove YAML examples from documentation.
