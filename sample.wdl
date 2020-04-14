@@ -21,6 +21,7 @@ version 1.0
 # SOFTWARE.
 
 import "structs.wdl" as structs
+import "tasks/fastqc.wdl" as fastqc
 import "tasks/minimap2.wdl" as minimap2
 import "tasks/transcriptclean.wdl" as transcriptClean
 
@@ -42,6 +43,13 @@ workflow SampleWorkflow {
 
     scatter (readgroup in readgroups) {
         String readgroupIdentifier = sample.id + "-" + readgroup.lib_id + "-" + readgroup.id
+        call fastqc.Fastqc as fastqcTask {
+            input:
+                seqFile = readgroup.R1,
+                outdirPath = outputDirectory + "/" + readgroupIdentifier + "-fastqc",
+                dockerImage = dockerImages["fastqc"]
+        }
+
         call minimap2.Mapping as executeMinimap2 {
             input:
                 queryFile = readgroup.R1,
@@ -69,6 +77,8 @@ workflow SampleWorkflow {
     }
 
     output {
+        Array[File] outputHtmlReport = fastqcTask.htmlReport
+        Array[File] outputZipReport = fastqcTask.reportZip
         Array[File] outputSAMsampleWorkflow = if (runTranscriptClean) 
                     then select_all(executeTranscriptClean.outputTranscriptCleanSAM)
                     else executeMinimap2.outputAlignmentFile

@@ -26,8 +26,9 @@ import "tasks/biowdl.wdl" as biowdl
 import "tasks/common.wdl" as common
 import "tasks/talon.wdl" as talon
 import "tasks/transcriptclean.wdl" as transcriptClean
+import "tasks/multiqc.wdl" as multiqc
 
-workflow Pipeline {
+workflow TalonWDL {
     input {
         File sampleConfigFile
         String outputDirectory = "."
@@ -133,6 +134,14 @@ workflow Pipeline {
             dockerImage = dockerImages["talon"]
     }
 
+    call multiqc.MultiQC as multiqcTask {
+        input:
+            dependencies = flatten(executeSampleWorkflow.outputHtmlReport),
+            outDir = outputDirectory + "/multiqc",
+            analysisDirectory = outputDirectory,
+            dockerImage = dockerImages["multiqc"]
+    }
+
     output {
         Array[File] outputMinimap2 = flatten(executeSampleWorkflow.outputMinimap2)
         File outputTalonDatabase = executeTalon.outputUpdatedDatabase
@@ -141,6 +150,8 @@ workflow Pipeline {
         File outputTalonLog = executeTalon.outputLog
         File outputTalonReadAnnot = executeTalon.outputAnnot
         File outputTalonConfigFile = executeTalon.outputConfigFile
+        Array[File] outputHtmlReport = flatten(executeSampleWorkflow.outputHtmlReport)
+        Array[File] outputZipReport = flatten(executeSampleWorkflow.outputZipReport)
         File? outputSpliceJunctionsFile = if (runTranscriptClean)
               then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
               else NoneFile

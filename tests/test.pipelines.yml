@@ -23,6 +23,9 @@
     - path: "test-output/run_talon_read_annot.tsv"
     - path: "test-output/spliceJunctionsFile.tsv"
     - path: "test-output/talonConfigFile.csv"
+    - path: "test-output/GM12878/GM12878-lib1-rg1-fastqc/GM12878.subset_fastqc.html"
+    - path: "test-output/K562/K562-lib1-rg1-fastqc/K562.subset_fastqc.html"
+    - path: "test-output/multiqc/multiqc_report.html"
 
 - name: no-transcriptclean
   tags:
@@ -40,3 +43,6 @@
     - path: "test-output/run_QC.log"
     - path: "test-output/run_talon_read_annot.tsv"
     - path: "test-output/talonConfigFile.csv"
+    - path: "test-output/GM12878/GM12878-lib1-rg1-fastqc/GM12878.subset_fastqc.html"
+    - path: "test-output/K562/K562-lib1-rg1-fastqc/K562.subset_fastqc.html"
+    - path: "test-output/multiqc/multiqc_report.html"
