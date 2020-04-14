@@ -42,6 +42,7 @@ workflow TalonWDL {
         File dockerImagesFile
         String novelIDprefix = "TALON"
         Boolean runTranscriptClean = true
+        Boolean runMultiQC = if (outputDirectory == ".") then false else true
 
         File? talonDatabase
         File? spliceJunctionsFile
@@ -134,12 +135,14 @@ workflow TalonWDL {
             dockerImage = dockerImages["talon"]
     }
 
-    call multiqc.MultiQC as multiqcTask {
-        input:
-            dependencies = flatten(executeSampleWorkflow.outputHtmlReport),
-            outDir = outputDirectory + "/multiqc",
-            analysisDirectory = outputDirectory,
-            dockerImage = dockerImages["multiqc"]
+    if (runMultiQC) {
+        call multiqc.MultiQC as multiqcTask {
+            input:
+                dependencies = flatten(executeSampleWorkflow.outputHtmlReport),
+                outDir = outputDirectory + "/multiqc",
+                analysisDirectory = outputDirectory,
+                dockerImage = dockerImages["multiqc"]
+        }
     }
 
     output {
