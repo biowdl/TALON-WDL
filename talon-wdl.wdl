@@ -186,6 +186,8 @@ workflow TalonWDL {
         outputTalonLog: {description: "Log file from TALON run."}
         outputTalonReadAnnot: {description: "Read annotation file from TALON run."}
         outputTalonConfigFile: {description: "The TALON configuration file."}
+        outputHtmlReport: {description: "FastQC output HTML files."}
+        outputZipReport: {description: "FastQC output support files."}
         outputSpliceJunctionsFile: {description: "Splice junction annotation file."}
         outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
         outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}

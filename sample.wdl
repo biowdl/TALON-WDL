@@ -102,6 +102,8 @@ workflow SampleWorkflow {
         spliceJunctionsFile: {description: "A pre-generated splice junction annotation file.", category: "advanced"}
 
         # outputs
+        outputHtmlReport: {description: "FastQC output HTML files."}
+        outputZipReport: {description: "FastQC output support files."}
         outputSAMsampleWorkflow: {description: "Either the minimap2 or TranscriptClean SAM file(s)."}
         outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
         outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
