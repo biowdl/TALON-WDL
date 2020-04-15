@@ -180,6 +180,7 @@ workflow TalonWDL {
         runTranscriptClean: {description: "Option to run TranscriptClean after Minimap2 alignment.", category: "common"}
         talonDatabase: {description: "A pre-generated TALON database file.", category: "advanced"}
         spliceJunctionsFile: {description: "A pre-generated splice junction annotation file.", category: "advanced"}
+        runMultiQC: {description: "Whether or not MultiQC should be run.", category: "advanced"}
 
         # outputs
         outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
