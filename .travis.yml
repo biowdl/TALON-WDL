@@ -37,13 +37,6 @@ after_failure:
 
 matrix:
   include:
-    - env:
-      - TEST="all-settings"
-      - _JAVA_OPTIONS="-Dconfig.file=tests/cromwell.config.conf"
-    - env:
-      - TEST="no-transcriptclean"
-      - _JAVA_OPTIONS="-Dconfig.file=tests/cromwell.config.conf"
-    # Below is for testing if all files are valid and if all submodules are up to date.
     - env: TEST="Womtool validate and submodule up to date"
       stage: lint
       install:
@@ -51,3 +44,7 @@ matrix:
       script: bash scripts/biowdl_lint.sh
       after_failure:
         - echo "Linting failed"
+    - env:
+      - TEST="all-settings"
+    - env:
+      - TEST="no-transcriptclean"
