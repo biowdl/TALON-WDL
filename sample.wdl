@@ -132,6 +132,8 @@ workflow SampleWorkflow {
         sample: {description: "The sample data.", category: "required"}
         outputDirectory: {description: "The directory to which the outputs will be written.", category: "common"}
         referenceGenome: {description: "Reference genome fasta file.", category: "required"}
+        referenceGenomeIndex: {description: "Reference genome index file.", category: "required"}
+        referenceGenomeDict: {description: "Reference genome dictionary file.", category: "required"}
         presetOption: {description: "This option applies multiple options at the same time in minimap2.", category: "common"}
         runTranscriptClean: {description: "Option to run TranscriptClean after Minimap2 alignment.", category: "common"}
         dockerImages: {description: "The docker image used for this workflow. Changing this may result in errors which the developers may choose not to address.", category: "advanced"}
