@@ -9,4 +9,4 @@
 [submodule "BamMetrics"]
 	path = BamMetrics
 	url = https://github.com/biowdl/BamMetrics
-        branch = develop
+	branch = develop
