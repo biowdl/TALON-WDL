@@ -10,6 +10,8 @@ that users understand how the changes affect the new version.
 
 version develop
 ---------------------------
++ Add BamMetrics.
++ Add indexing of sam files and reference genome.
 + Add fastqc & multiqc.
 + Update documentation with more specific example of sample sheet CSV file.
 + Update TALON to version 4.4.2.
