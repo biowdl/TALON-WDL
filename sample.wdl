@@ -30,6 +30,8 @@ workflow SampleWorkflow {
         Sample sample
         String outputDirectory = "."
         File referenceGenome
+        File referenceGenomeIndex
+        File referenceGenomeDict
         String presetOption
         Boolean runTranscriptClean = true
         Map[String, String] dockerImages
@@ -62,6 +64,15 @@ workflow SampleWorkflow {
                 dockerImage = dockerImages["minimap2"]
         }
 
+        call SortAndIndex as executeSamtoolsMinimap2 {
+            input:
+                inputFile = executeMinimap2.outputAlignmentFile,
+                outputPrefix = outputDirectory + "/" + readgroupIdentifier,
+                dockerImage = dockerImages["samtools"]
+        }
+
+        
+
         if (runTranscriptClean) {
             call transcriptClean.TranscriptClean as executeTranscriptClean {
                 input:
@@ -73,6 +84,13 @@ workflow SampleWorkflow {
                     primaryOnly = true,
                     dockerImage = dockerImages["transcriptclean"]
             }
+
+            call SortAndIndex as executeSamtoolsTranscriptClean {
+                input:
+                    inputFile = executeTranscriptClean.outputTranscriptCleanSAM,
+                    outputPrefix = outputDirectory + "/" + readgroupIdentifier + "_clean",
+                    dockerImage = dockerImages["samtools"]
+            }
         }
     }
 
@@ -83,10 +101,16 @@ workflow SampleWorkflow {
                     then select_all(executeTranscriptClean.outputTranscriptCleanSAM)
                     else executeMinimap2.outputAlignmentFile
         Array[File] outputMinimap2 = executeMinimap2.outputAlignmentFile
+        Array[File] outputMinimap2BAM = executeSamtoolsMinimap2.outputBAM
+        Array[File] outputMinimap2SortedBAM = executeSamtoolsMinimap2.outputSortedBAM
+        Array[File] outputMinimap2SortedBai = executeSamtoolsMinimap2.outputSortedBai
         Array[File?] outputTranscriptCleanFasta = executeTranscriptClean.outputTranscriptCleanFasta
         Array[File?] outputTranscriptCleanLog = executeTranscriptClean.outputTranscriptCleanLog
         Array[File?] outputTranscriptCleanSAM = executeTranscriptClean.outputTranscriptCleanSAM
         Array[File?] outputTranscriptCleanTElog = executeTranscriptClean.outputTranscriptCleanTElog
+        Array[File?] outputTranscriptCleanBAM = executeSamtoolsTranscriptClean.outputBAM
+        Array[File?] outputTranscriptCleanSortedBAM = executeSamtoolsTranscriptClean.outputSortedBAM
+        Array[File?] outputTranscriptCleanSortedBai = executeSamtoolsTranscriptClean.outputSortedBai
     }
 
     parameter_meta {
@@ -110,5 +134,62 @@ workflow SampleWorkflow {
         outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
         outputTranscriptCleanSAM: {description: "SAM file(s) containing corrected aligned reads."}
         outputTranscriptCleanTElog: {description: "TE log file(s) of TranscriptClean run."}
+    }
+}
+
+task SortAndIndex {
+    input {
+        File inputFile
+        String outputPrefix
+
+        Int cores = 1
+        String memory = "2G"
+        String dockerImage = "quay.io/biocontainers/samtools:1.10--h9402c20_2"
+    }
+
+    command {
+        set -e
+        mkdir -p "$(dirname ~{outputPrefix})"
+        samtools view \
+        --threads ~{cores} \
+        -S \
+        -b \
+        -o "~{outputPrefix}.bam" \
+        ~{inputFile}
+        samtools sort \
+        --threads ~{cores} \
+        -o "~{outputPrefix}.sorted.bam" \
+        "~{outputPrefix}.bam"
+        samtools index \
+        -@ ~{cores} \
+        -b \
+        "~{outputPrefix}.sorted.bam" \
+        "~{outputPrefix}.sorted.bai"
+    }
+
+    output {
+        File outputBAM = outputPrefix + ".bam"
+        File outputSortedBAM = outputPrefix + ".sorted.bam"
+        File outputSortedBai = outputPrefix + ".sorted.bai"
+    }
+
+    runtime {
+        cpu: cores
+        memory: memory
+        docker: dockerImage
+    }
+
+    parameter_meta {
+        # inputs
+        inputFile: {description: "The input SAM file.", category: "required"}
+        outputPrefix: {description: "Output directory path + output file prefix.", category: "required"}
+        cores: {description: "The number of cores to be used.", category: "advanced"}
+        memory: {description: "The amount of memory available to the job.", category: "advanced"}
+        dockerImage: {description: "The docker image used for this task. Changing this may result in errors which the developers may choose not to address.", category: "advanced"}
+
+        # outputs
+        outputBAM: {description: "BAM file converted from SAM file."}
+        outputSortedBAM: {description: "Sorted BAM file."}
+        outputSortedBai: {description: "Index of the sorted BAM file."}
     }
 }

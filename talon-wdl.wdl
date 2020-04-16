@@ -94,12 +94,28 @@ workflow TalonWDL {
         }
     }
 
+    call Faidx as executeSamtoolsFaidx {
+        input:
+            inputFile = referenceGenome,
+            outputDir = outputDirectory,
+            dockerImage = dockerImages["samtools"]
+    }
+
+    call Dict as executePicardDict {
+        input:
+            inputFile = referenceGenome,
+            outputDir = outputDirectory,
+            dockerImage = dockerImages["picard"]
+    }
+
     scatter (sample in allSamples) {
         call sampleWorkflow.SampleWorkflow as executeSampleWorkflow {
             input:
                 sample = sample,
                 outputDirectory = outputDirectory + "/" + sample.id,
                 referenceGenome = referenceGenome,
+                referenceGenomeIndex = executeSamtoolsFaidx.outputIndex,
+                referenceGenomeDict = executePicardDict.outputDict,
                 spliceJunctionsFile = if (runTranscriptClean)
                                       then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
                                       else NoneFile,
@@ -146,6 +162,8 @@ workflow TalonWDL {
     }
 
     output {
+        File outputReferenceIndex = executeSamtoolsFaidx.outputIndex
+        File outputReferenceDict = executePicardDict.outputDict
         Array[File] outputMinimap2 = flatten(executeSampleWorkflow.outputMinimap2)
         File outputTalonDatabase = executeTalon.outputUpdatedDatabase
         File outputAbundance = createAbundanceFile.outputAbundanceFile
@@ -203,5 +221,85 @@ workflow TalonWDL {
         WDL_AID: {
             exclude: ["NoneFile"]
         }
+    }
+}
+
+task Faidx {
+    input {
+        File inputFile
+        String outputDir
+        String basenameInputFile = basename(inputFile)
+
+        String memory = "2G"
+        String dockerImage = "quay.io/biocontainers/samtools:1.10--h9402c20_2"
+    }
+
+    command <<<
+        set -e
+        mkdir -p "$(dirname ~{outputDir})"
+        ln -s ~{inputFile} "~{outputDir}/~{basenameInputFile}"
+        samtools faidx \
+        "~{outputDir}/~{basenameInputFile}"
+    >>>
+
+    output {
+        File outputIndex = outputDir + "/" + basenameInputFile + ".fai"
+    }
+
+    runtime {
+        memory: memory
+        docker: dockerImage
+    }
+
+    parameter_meta {
+        # inputs
+        inputFile: {description: "The input fasta file.", category: "required"}
+        outputDir: {description: "Output directory path.", category: "required"}
+        basenameInputFile: {description: "The basename of the input file.", category: "required"}
+        memory: {description: "The amount of memory available to the job.", category: "advanced"}
+        dockerImage: {description: "The docker image used for this task. Changing this may result in errors which the developers may choose not to address.", category: "advanced"}
+
+        # outputs
+        outputIndex: {description: "Index of the input fasta file."}
+    }
+}
+
+task Dict {
+    input {
+        File inputFile
+        String outputDir
+        String basenameInputFile = basename(inputFile)
+
+        String memory = "2G"
+        String dockerImage = "quay.io/biocontainers/picard:2.22.3--0"
+    }
+
+    command {
+        set -e
+        mkdir -p "$(dirname ~{outputDir})"
+        picard CreateSequenceDictionary \
+        REFERENCE=~{inputFile} \
+        OUTPUT="~{outputDir}/~{basenameInputFile}.dict"
+    }
+
+    output {
+        File outputDict = outputDir + "/" + basenameInputFile + ".dict"
+    }
+
+    runtime {
+        memory: memory
+        docker: dockerImage
+    }
+
+    parameter_meta {
+        # inputs
+        inputFile: {description: "The input fasta file.", category: "required"}
+        outputDir: {description: "Output directory path.", category: "required"}
+        basenameInputFile: {description: "The basename of the input file.", category: "required"}
+        memory: {description: "The amount of memory available to the job.", category: "advanced"}
+        dockerImage: {description: "The docker image used for this task. Changing this may result in errors which the developers may choose not to address.", category: "advanced"}
+
+        # outputs
+        outputDict: {description: "Dictionary of the input fasta file."}
     }
 }

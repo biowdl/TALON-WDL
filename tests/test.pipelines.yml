@@ -24,6 +24,16 @@
     - path: test-output/talonConfigFile.csv
     - path: test-output/GM12878/GM12878-lib1-rg1-fastqc/GM12878.subset_fastqc.html
     - path: test-output/K562/K562-lib1-rg1-fastqc/K562.subset_fastqc.html
+    - path: test-output/grch38.fasta.fai
+    - path: test-output/grch38.fasta.dict
+    - path: test-output/GM12878/GM12878-lib1-rg1.sorted.bam
+    - path: test-output/GM12878/GM12878-lib1-rg1.sorted.bai
+    - path: test-output/GM12878/GM12878-lib1-rg1_clean.sorted.bam
+    - path: test-output/GM12878/GM12878-lib1-rg1_clean.sorted.bai
+    - path: test-output/K562/K562-lib1-rg1.sorted.bam
+    - path: test-output/K562/K562-lib1-rg1.sorted.bai
+    - path: test-output/K562/K562-lib1-rg1_clean.sorted.bam
+    - path: test-output/K562/K562-lib1-rg1_clean.sorted.bai
 
 - name: no-transcriptclean
   tags:
@@ -42,3 +52,9 @@
     - path: test-output/talonConfigFile.csv
     - path: test-output/GM12878/GM12878-lib1-rg1-fastqc/GM12878.subset_fastqc.html
     - path: test-output/K562/K562-lib1-rg1-fastqc/K562.subset_fastqc.html
+    - path: test-output/grch38.fasta.fai
+    - path: test-output/grch38.fasta.dict
+    - path: test-output/GM12878/GM12878-lib1-rg1.sorted.bam
+    - path: test-output/GM12878/GM12878-lib1-rg1.sorted.bai
+    - path: test-output/K562/K562-lib1-rg1.sorted.bam
+    - path: test-output/K562/K562-lib1-rg1.sorted.bai
