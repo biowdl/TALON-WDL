@@ -173,6 +173,10 @@ workflow TalonWDL {
         File outputTalonConfigFile = executeTalon.outputConfigFile
         Array[File] outputHtmlReport = flatten(executeSampleWorkflow.outputHtmlReport)
         Array[File] outputZipReport = flatten(executeSampleWorkflow.outputZipReport)
+        Array[File] outputFlagstats = flatten(executeSampleWorkflow.outputFlagstats)
+        Array[File] outputPicardMetricsFiles = flatten(executeSampleWorkflow.outputPicardMetricsFiles)
+        Array[File] outputRnaMetrics = flatten(executeSampleWorkflow.outputRnaMetrics)
+        Array[File] outputTargetedPcrMetrics = flatten(executeSampleWorkflow.outputTargetedPcrMetrics)
         File? outputSpliceJunctionsFile = if (runTranscriptClean)
               then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
               else NoneFile

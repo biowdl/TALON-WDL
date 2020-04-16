@@ -21,6 +21,7 @@ version 1.0
 # SOFTWARE.
 
 import "structs.wdl" as structs
+import "BamMetrics/bammetrics.wdl" as metrics
 import "tasks/fastqc.wdl" as fastqc
 import "tasks/minimap2.wdl" as minimap2
 import "tasks/transcriptclean.wdl" as transcriptClean
@@ -71,7 +72,16 @@ workflow SampleWorkflow {
                 dockerImage = dockerImages["samtools"]
         }
 
-        
+        call metrics.BamMetrics as bamMetricsMinimap2 {
+            input:
+                bam = executeSamtoolsMinimap2.outputSortedBAM,
+                bamIndex = executeSamtoolsMinimap2.outputSortedBai,
+                outputDir = outputDirectory + "/metrics-minimap2",
+                referenceFasta = referenceGenome,
+                referenceFastaFai = referenceGenomeIndex,
+                referenceFastaDict = referenceGenomeDict,
+                dockerImages = dockerImages
+        }
 
         if (runTranscriptClean) {
             call transcriptClean.TranscriptClean as executeTranscriptClean {
@@ -97,6 +107,10 @@ workflow SampleWorkflow {
     output {
         Array[File] outputHtmlReport = fastqcTask.htmlReport
         Array[File] outputZipReport = fastqcTask.reportZip
+        Array[File] outputFlagstats = bamMetricsMinimap2.flagstats
+        Array[File] outputPicardMetricsFiles = flatten(bamMetricsMinimap2.picardMetricsFiles)
+        Array[File] outputRnaMetrics = flatten(bamMetricsMinimap2.rnaMetrics)
+        Array[File] outputTargetedPcrMetrics = flatten(bamMetricsMinimap2.targetedPcrMetrics)
         Array[File] outputSAMsampleWorkflow = if (runTranscriptClean) 
                     then select_all(executeTranscriptClean.outputTranscriptCleanSAM)
                     else executeMinimap2.outputAlignmentFile
