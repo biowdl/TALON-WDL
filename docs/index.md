@@ -52,7 +52,8 @@ Optional settings:
     "TalonWDL.novelIDprefix": "A prefix for novel transcript discoveries.",
     "TalonWDL.executeSampleWorkflow.howToFindGTAG": "How to find canonical splicing sites GT-AG - f: transcript strand; b: both strands; n: no attempt to match GT-AG.",
     "TalonWDL.spliceJunctionsFile": "A pre-generated splice junction annotation file.",
-    "TalonWDL.talonDatabase": "A pre-generated TALON database file."
+    "TalonWDL.talonDatabase": "A pre-generated TALON database file.",
+    "TalonWDL.annotationGTFrefflat": "A refflat file of the annotation GTF used."
 }
 ```
 
@@ -112,6 +113,7 @@ The following is an example of what an inputs JSON might look like:
     "TalonWDL.pipelineRunName": "testRun",
     "TalonWDL.dockerImagesFile": "dockerImages.yml",
     "TalonWDL.runTranscriptClean": "true",
+    "TalonWDL.annotationGTFrefflat": "tests/data/gencode.v29.annotation.refflat",
     "TalonWDL.executeSampleWorkflow.presetOption": "splice",
     "TalonWDL.executeSampleWorkflow.variantVCF": "tests/data/common.variants.vcf",
     "TalonWDL.executeSampleWorkflow.howToFindGTAG": "f"

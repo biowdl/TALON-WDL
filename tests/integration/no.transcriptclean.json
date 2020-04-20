@@ -9,6 +9,7 @@
     "TalonWDL.pipelineRunName": "nanoporeTestRun",
     "TalonWDL.dockerImagesFile": "dockerImages.yml",
     "TalonWDL.runTranscriptClean": "false",
+    "TalonWDL.annotationGTFrefflat": "tests/data/gencode.v29.annotation.refflat",
     "TalonWDL.executeSampleWorkflow.presetOption": "splice",
     "TalonWDL.executeSampleWorkflow.howToFindGTAG": "f"
 }
