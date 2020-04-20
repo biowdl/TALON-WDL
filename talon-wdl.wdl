@@ -46,6 +46,7 @@ workflow TalonWDL {
 
         File? talonDatabase
         File? spliceJunctionsFile
+        File? annotationGTFrefflat
 
         File? NoneFile #FIXME
     }
@@ -120,6 +121,7 @@ workflow TalonWDL {
                                       then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
                                       else NoneFile,
                 runTranscriptClean = runTranscriptClean,
+                annotationGTFrefflat = annotationGTFrefflat,
                 dockerImages = dockerImages
         }
     }
@@ -165,6 +167,9 @@ workflow TalonWDL {
         File outputReferenceIndex = executeSamtoolsFaidx.outputIndex
         File outputReferenceDict = executePicardDict.outputDict
         Array[File] outputMinimap2 = flatten(executeSampleWorkflow.outputMinimap2)
+        Array[File] outputMinimap2BAM = flatten(executeSamtoolsMinimap2.outputBAM)
+        Array[File] outputMinimap2SortedBAM = flatten(executeSamtoolsMinimap2.outputSortedBAM)
+        Array[File] outputMinimap2SortedBai = flatten(executeSamtoolsMinimap2.outputSortedBai)
         File outputTalonDatabase = executeTalon.outputUpdatedDatabase
         File outputAbundance = createAbundanceFile.outputAbundanceFile
         File outputSummary = createSummaryFile.outputSummaryFile
@@ -184,6 +189,9 @@ workflow TalonWDL {
         Array[File?] outputTranscriptCleanLog = flatten(executeSampleWorkflow.outputTranscriptCleanLog)
         Array[File?] outputTranscriptCleanSAM = flatten(executeSampleWorkflow.outputTranscriptCleanSAM)
         Array[File?] outputTranscriptCleanTElog = flatten(executeSampleWorkflow.outputTranscriptCleanTElog)
+        Array[File?] outputTranscriptCleanBAM = flatten(executeSamtoolsTranscriptClean.outputBAM)
+        Array[File?] outputTranscriptCleanSortedBAM = flatten(executeSamtoolsTranscriptClean.outputSortedBAM)
+        Array[File?] outputTranscriptCleanSortedBai = flatten(executeSamtoolsTranscriptClean.outputSortedBai)
     }
 
     parameter_meta {
@@ -200,12 +208,18 @@ workflow TalonWDL {
         dockerImagesFile: {description: "The docker image used for this workflow. Changing this may result in errors which the developers may choose not to address.", category: "required"}
         novelIDprefix: {description: "Prefix for naming novel discoveries in eventual TALON runs.", category: "common"}
         runTranscriptClean: {description: "Option to run TranscriptClean after Minimap2 alignment.", category: "common"}
+        runMultiQC: {description: "Whether or not MultiQC should be run.", category: "advanced"}
         talonDatabase: {description: "A pre-generated TALON database file.", category: "advanced"}
         spliceJunctionsFile: {description: "A pre-generated splice junction annotation file.", category: "advanced"}
-        runMultiQC: {description: "Whether or not MultiQC should be run.", category: "advanced"}
+        annotationGTFrefflat: {description: "A refflat file of the annotation GTF used.", category: "common"}
 
         # outputs
+        outputReferenceIndex: {description: "Index file of the reference genome."}
+        outputReferenceDict: {description: "Dictionary file of the reference genome."}
         outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
+        outputMinimap2BAM: {description: "Minimap2 BAM file(s) converted from SAM file(s)."}
+        outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
+        outputMinimap2SortedBai: {description: "Index of sorted minimap2 BAM file(s)."}
         outputTalonDatabase: {description: "TALON database."}
         outputAbundance: {description: "Abundance for each transcript in the TALON database across datasets."}
         outputSummary: {description: "Tab-delimited file of gene and transcript counts for each dataset."}
@@ -214,11 +228,18 @@ workflow TalonWDL {
         outputTalonConfigFile: {description: "The TALON configuration file."}
         outputHtmlReport: {description: "FastQC output HTML files."}
         outputZipReport: {description: "FastQC output support files."}
+        outputFlagstats: {description: "Samtools flagstat output for minimap2 BAM file(s)."}
+        outputPicardMetricsFiles: {description: "Picard metrics output for minimap2 BAM file(s)."}
+        outputRnaMetrics: {description: "RNA metrics output for minimap2 BAM file(s)."}
+        outputTargetedPcrMetrics: {description: "Targeted PCR metrics output for minimap2 BAM file(s)."}
         outputSpliceJunctionsFile: {description: "Splice junction annotation file."}
         outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
         outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
         outputTranscriptCleanSAM: {description: "SAM file(s) containing corrected aligned reads."}
         outputTranscriptCleanTElog: {description: "TE log file(s) of TranscriptClean run."}
+        outputTranscriptCleanBAM: {description: "TranscriptClean BAM file(s) converted from SAM file(s)."}
+        outputTranscriptCleanSortedBAM: {description: "TranscriptClean BAM file(s) sorted on position."}
+        outputTranscriptCleanSortedBai: {description: "Index of sorted TranscriptClean BAM file(s)."}
     }
 
     meta {

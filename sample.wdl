@@ -40,6 +40,7 @@ workflow SampleWorkflow {
         File? variantVCF
         String? howToFindGTAG
         File? spliceJunctionsFile
+        File? annotationGTFrefflat
     }
 
     Array[Readgroup] readgroups = sample.readgroups
@@ -80,6 +81,7 @@ workflow SampleWorkflow {
                 referenceFasta = referenceGenome,
                 referenceFastaFai = referenceGenomeIndex,
                 referenceFastaDict = referenceGenomeDict,
+                refRefflat = annotationGTFrefflat,
                 dockerImages = dockerImages
         }
 
@@ -140,16 +142,27 @@ workflow SampleWorkflow {
         variantVCF: {description: "VCF formatted file of variants.", category: "common"}
         howToFindGTAG: {description: "How to find GT-AG. f:transcript strand, b:both strands, n:don't match GT-AG.", category: "common"}
         spliceJunctionsFile: {description: "A pre-generated splice junction annotation file.", category: "advanced"}
+        annotationGTFrefflat: {description: "A refflat file of the annotation GTF used.", category: "common"}
 
         # outputs
-        outputHtmlReport: {description: "FastQC output HTML files."}
-        outputZipReport: {description: "FastQC output support files."}
+        outputHtmlReport: {description: "FastQC output HTML file(s)."}
+        outputZipReport: {description: "FastQC output support file(s)."}
+        outputFlagstats: {description: "Samtools flagstat output for minimap2 BAM file(s)."}
+        outputPicardMetricsFiles: {description: "Picard metrics output for minimap2 BAM file(s)."}
+        outputRnaMetrics: {description: "RNA metrics output for minimap2 BAM file(s)."}
+        outputTargetedPcrMetrics: {description: "Targeted PCR metrics output for minimap2 BAM file(s)."}
         outputSAMsampleWorkflow: {description: "Either the minimap2 or TranscriptClean SAM file(s)."}
         outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
+        outputMinimap2BAM: {description: "Minimap2 BAM file(s) converted from SAM file(s)."}
+        outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
+        outputMinimap2SortedBai: {description: "Index of sorted minimap2 BAM file(s)."}
         outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
         outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
         outputTranscriptCleanSAM: {description: "SAM file(s) containing corrected aligned reads."}
         outputTranscriptCleanTElog: {description: "TE log file(s) of TranscriptClean run."}
+        outputTranscriptCleanBAM: {description: "TranscriptClean BAM file(s) converted from SAM file(s)."}
+        outputTranscriptCleanSortedBAM: {description: "TranscriptClean BAM file(s) sorted on position."}
+        outputTranscriptCleanSortedBai: {description: "Index of sorted TranscriptClean BAM file(s)."}
     }
 }
 
