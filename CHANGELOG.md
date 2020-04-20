@@ -10,9 +10,10 @@ that users understand how the changes affect the new version.
 
 version develop
 ---------------------------
-+ Add BamMetrics.
++ Add multiqc to collect all stats.
++ Add BamMetrics for stats on minimap2 alignment..
 + Add indexing of sam files and reference genome.
-+ Add fastqc & multiqc.
++ Add fastqc task for stats on input files.
 + Update documentation with more specific example of sample sheet CSV file.
 + Update TALON to version 4.4.2.
 + Add prepulling docker images to Jenkins.
