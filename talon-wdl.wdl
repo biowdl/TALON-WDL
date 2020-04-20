@@ -167,9 +167,9 @@ workflow TalonWDL {
         File outputReferenceIndex = executeSamtoolsFaidx.outputIndex
         File outputReferenceDict = executePicardDict.outputDict
         Array[File] outputMinimap2 = flatten(executeSampleWorkflow.outputMinimap2)
-        Array[File] outputMinimap2BAM = flatten(executeSamtoolsMinimap2.outputBAM)
-        Array[File] outputMinimap2SortedBAM = flatten(executeSamtoolsMinimap2.outputSortedBAM)
-        Array[File] outputMinimap2SortedBai = flatten(executeSamtoolsMinimap2.outputSortedBai)
+        Array[File] outputMinimap2BAM = flatten(executeSampleWorkflow.outputMinimap2BAM)
+        Array[File] outputMinimap2SortedBAM = flatten(executeSampleWorkflow.outputMinimap2SortedBAM)
+        Array[File] outputMinimap2SortedBai = flatten(executeSampleWorkflow.outputMinimap2SortedBai)
         File outputTalonDatabase = executeTalon.outputUpdatedDatabase
         File outputAbundance = createAbundanceFile.outputAbundanceFile
         File outputSummary = createSummaryFile.outputSummaryFile
@@ -189,9 +189,9 @@ workflow TalonWDL {
         Array[File?] outputTranscriptCleanLog = flatten(executeSampleWorkflow.outputTranscriptCleanLog)
         Array[File?] outputTranscriptCleanSAM = flatten(executeSampleWorkflow.outputTranscriptCleanSAM)
         Array[File?] outputTranscriptCleanTElog = flatten(executeSampleWorkflow.outputTranscriptCleanTElog)
-        Array[File?] outputTranscriptCleanBAM = flatten(executeSamtoolsTranscriptClean.outputBAM)
-        Array[File?] outputTranscriptCleanSortedBAM = flatten(executeSamtoolsTranscriptClean.outputSortedBAM)
-        Array[File?] outputTranscriptCleanSortedBai = flatten(executeSamtoolsTranscriptClean.outputSortedBai)
+        Array[File?] outputTranscriptCleanBAM = flatten(executeSampleWorkflow.outputTranscriptCleanBAM)
+        Array[File?] outputTranscriptCleanSortedBAM = flatten(executeSampleWorkflow.outputTranscriptCleanSortedBAM)
+        Array[File?] outputTranscriptCleanSortedBai = flatten(executeSampleWorkflow.outputTranscriptCleanSortedBai)
     }
 
     parameter_meta {
