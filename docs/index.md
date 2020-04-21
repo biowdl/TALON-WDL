@@ -3,14 +3,15 @@ layout: default
 title: Home
 ---
 
-This pipeline can be used to process RNA sequenced by either the Pacific
-Biosciences or Oxford Nanopore sequencer, starting from FastQ files. It will
-perform mapping to a reference genome (using minimap2), INDEL/mismatch and
-noncanonical splice junction correction (using TranscriptClean) and identify
-and count known and novel genes/transcripts (using TALON).
+This pipeline can be used to process RNA sequenced by either a Pacific
+Biosciences sequencer or Oxford Nanopore sequencer, starting from fastq files.
+It will perform mapping to a reference genome (using minimap2), INDEL/mismatch
+and noncanonical splice junction correction (using TranscriptClean) and
+identify and count known and novel genes/transcripts (using TALON).
 
 This pipeline is part of [BioWDL](https://biowdl.github.io/)
-developed by the SASC team at [Leiden University Medical Center](https://www.lumc.nl/).
+developed by the SASC team
+at [Leiden University Medical Center](https://www.lumc.nl/).
 
 ## Usage
 You can run the pipeline using
