@@ -20,20 +20,10 @@
         <i>File &mdash; Default: None</i><br />
         The docker image used for this workflow. Changing this may result in errors which the developers may choose not to address.
 </p>
-<p name="TalonWDL.executePicardDict.basenameInputFile">
-        <b>TalonWDL.executePicardDict.basenameInputFile</b><br />
-        <i>String &mdash; Default: basename(inputFile)</i><br />
-        The basename of the input file.
-</p>
 <p name="TalonWDL.executeSampleWorkflow.presetOption">
         <b>TalonWDL.executeSampleWorkflow.presetOption</b><br />
         <i>String &mdash; Default: None</i><br />
         This option applies multiple options at the same time in minimap2.
-</p>
-<p name="TalonWDL.executeSamtoolsFaidx.basenameInputFile">
-        <b>TalonWDL.executeSamtoolsFaidx.basenameInputFile</b><br />
-        <i>String &mdash; Default: basename(inputFile)</i><br />
-        The basename of the input file.
 </p>
 <p name="TalonWDL.genomeBuild">
         <b>TalonWDL.genomeBuild</b><br />
@@ -231,9 +221,14 @@
         <i>Boolean &mdash; Default: false</i><br />
         Print out the counts in terminal.
 </p>
+<p name="TalonWDL.executePicardDict.javaXmx">
+        <b>TalonWDL.executePicardDict.javaXmx</b><br />
+        <i>String &mdash; Default: "2G"</i><br />
+        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
+</p>
 <p name="TalonWDL.executePicardDict.memory">
         <b>TalonWDL.executePicardDict.memory</b><br />
-        <i>String &mdash; Default: "2G"</i><br />
+        <i>String &mdash; Default: "3G"</i><br />
         The amount of memory available to the job.
 </p>
 <p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.ampliconIntervalsLists.javaXmx">
@@ -376,25 +371,25 @@
         <i>Boolean &mdash; Default: false</i><br />
         Skip self and dual mappings (for the all-vs-all mode).
 </p>
-<p name="TalonWDL.executeSampleWorkflow.executeSamtoolsMinimap2.cores">
-        <b>TalonWDL.executeSampleWorkflow.executeSamtoolsMinimap2.cores</b><br />
+<p name="TalonWDL.executeSampleWorkflow.executeSortMinimap2.compressionLevel">
+        <b>TalonWDL.executeSampleWorkflow.executeSortMinimap2.compressionLevel</b><br />
         <i>Int &mdash; Default: 1</i><br />
-        The number of cores to be used.
+        Compression level from 0 (uncompressed) to 9 (best).
 </p>
-<p name="TalonWDL.executeSampleWorkflow.executeSamtoolsMinimap2.memory">
-        <b>TalonWDL.executeSampleWorkflow.executeSamtoolsMinimap2.memory</b><br />
+<p name="TalonWDL.executeSampleWorkflow.executeSortMinimap2.memory">
+        <b>TalonWDL.executeSampleWorkflow.executeSortMinimap2.memory</b><br />
         <i>String &mdash; Default: "2G"</i><br />
         The amount of memory available to the job.
 </p>
-<p name="TalonWDL.executeSampleWorkflow.executeSamtoolsTranscriptClean.cores">
-        <b>TalonWDL.executeSampleWorkflow.executeSamtoolsTranscriptClean.cores</b><br />
-        <i>Int &mdash; Default: 1</i><br />
-        The number of cores to be used.
+<p name="TalonWDL.executeSampleWorkflow.executeSortMinimap2.sortByName">
+        <b>TalonWDL.executeSampleWorkflow.executeSortMinimap2.sortByName</b><br />
+        <i>Boolean &mdash; Default: false</i><br />
+        Sort the inputBam by read name instead of position.
 </p>
-<p name="TalonWDL.executeSampleWorkflow.executeSamtoolsTranscriptClean.memory">
-        <b>TalonWDL.executeSampleWorkflow.executeSamtoolsTranscriptClean.memory</b><br />
-        <i>String &mdash; Default: "2G"</i><br />
-        The amount of memory available to the job.
+<p name="TalonWDL.executeSampleWorkflow.executeSortMinimap2.threads">
+        <b>TalonWDL.executeSampleWorkflow.executeSortMinimap2.threads</b><br />
+        <i>Int? &mdash; Default: None</i><br />
+        The number of additional threads that will be used for this task.
 </p>
 <p name="TalonWDL.executeSampleWorkflow.executeTranscriptClean.canonOnly">
         <b>TalonWDL.executeSampleWorkflow.executeTranscriptClean.canonOnly</b><br />

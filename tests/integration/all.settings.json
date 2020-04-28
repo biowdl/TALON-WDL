@@ -12,6 +12,5 @@
     "TalonWDL.annotationGTFrefflat": "tests/data/gencode.v29.annotation.refflat",
     "TalonWDL.executeSampleWorkflow.presetOption": "splice",
     "TalonWDL.executeSampleWorkflow.variantVCF": "tests/data/common.variants.vcf",
-    "TalonWDL.executeSampleWorkflow.howToFindGTAG": "f",
-    "TalonWDL.outputDirectory": "/exports/sasc/jboom/test-test-test"
+    "TalonWDL.executeSampleWorkflow.howToFindGTAG": "f"
 }

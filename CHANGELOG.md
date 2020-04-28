@@ -12,7 +12,7 @@ version develop
 ---------------------------
 + Remove Jenkinsfile from repo.
 + Add multiqc to collect all stats.
-+ Add BamMetrics for stats on minimap2 alignment..
++ Add BamMetrics for stats on minimap2 alignment.
 + Add indexing of sam files and reference genome.
 + Add fastqc task for stats on input files.
 + Update documentation with more specific example of sample sheet CSV file.

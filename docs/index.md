@@ -139,6 +139,8 @@ The workflow will output mapped reads by minimap2 in a .sam file, a
 cleaned .sam file and log information from TranscriptClean, a database
 containing transcript information together with a log file of
 read/transcript comparison and a abundance plus summary file of the database.
+It will also output fastqc and picard statistics based on the fastq and
+minimap2 alignment file, combined into a multiqc report.
 
 ## Contact
 <p>
