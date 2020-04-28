@@ -24,6 +24,7 @@ import "structs.wdl" as structs
 import "BamMetrics/bammetrics.wdl" as metrics
 import "tasks/fastqc.wdl" as fastqc
 import "tasks/minimap2.wdl" as minimap2
+import "tasks/samtools.wdl" as samtools
 import "tasks/transcriptclean.wdl" as transcriptClean
 
 workflow SampleWorkflow {
@@ -66,17 +67,24 @@ workflow SampleWorkflow {
                 dockerImage = dockerImages["minimap2"]
         }
 
-        call SortAndIndex as executeSamtoolsMinimap2 {
+        call samtools.Sort as executeSortMinimap2 {
             input:
-                inputFile = executeMinimap2.outputAlignmentFile,
-                outputPrefix = outputDirectory + "/" + readgroupIdentifier,
+                inputBam = executeMinimap2.outputAlignmentFile,
+                outputPath = outputDirectory + "/" + readgroupIdentifier + ".sorted.bam",
+                dockerImage = dockerImages["samtools"]
+        }
+
+        call samtools.Index as executeIndexMinimap2 {
+            input:
+                bamFile = executeSortMinimap2.outputSortedBam,
+                outputBamPath = outputDirectory + "/" + readgroupIdentifier + ".sorted.bam",
                 dockerImage = dockerImages["samtools"]
         }
 
         call metrics.BamMetrics as bamMetricsMinimap2 {
             input:
-                bam = executeSamtoolsMinimap2.outputSortedBAM,
-                bamIndex = executeSamtoolsMinimap2.outputSortedBai,
+                bam = executeIndexMinimap2.indexedBam,
+                bamIndex = executeIndexMinimap2.index,
                 outputDir = outputDirectory + "/metrics-minimap2",
                 referenceFasta = referenceGenome,
                 referenceFastaFai = referenceGenomeIndex,
@@ -96,13 +104,6 @@ workflow SampleWorkflow {
                     primaryOnly = true,
                     dockerImage = dockerImages["transcriptclean"]
             }
-
-            call SortAndIndex as executeSamtoolsTranscriptClean {
-                input:
-                    inputFile = executeTranscriptClean.outputTranscriptCleanSAM,
-                    outputPrefix = outputDirectory + "/" + readgroupIdentifier + "_clean",
-                    dockerImage = dockerImages["samtools"]
-            }
         }
     }
 
@@ -117,16 +118,10 @@ workflow SampleWorkflow {
                     then select_all(executeTranscriptClean.outputTranscriptCleanSAM)
                     else executeMinimap2.outputAlignmentFile
         Array[File] outputMinimap2 = executeMinimap2.outputAlignmentFile
-        Array[File] outputMinimap2BAM = executeSamtoolsMinimap2.outputBAM
-        Array[File] outputMinimap2SortedBAM = executeSamtoolsMinimap2.outputSortedBAM
-        Array[File] outputMinimap2SortedBai = executeSamtoolsMinimap2.outputSortedBai
         Array[File?] outputTranscriptCleanFasta = executeTranscriptClean.outputTranscriptCleanFasta
         Array[File?] outputTranscriptCleanLog = executeTranscriptClean.outputTranscriptCleanLog
         Array[File?] outputTranscriptCleanSAM = executeTranscriptClean.outputTranscriptCleanSAM
         Array[File?] outputTranscriptCleanTElog = executeTranscriptClean.outputTranscriptCleanTElog
-        Array[File?] outputTranscriptCleanBAM = executeSamtoolsTranscriptClean.outputBAM
-        Array[File?] outputTranscriptCleanSortedBAM = executeSamtoolsTranscriptClean.outputSortedBAM
-        Array[File?] outputTranscriptCleanSortedBai = executeSamtoolsTranscriptClean.outputSortedBai
     }
 
     parameter_meta {
@@ -153,72 +148,9 @@ workflow SampleWorkflow {
         outputTargetedPcrMetrics: {description: "Targeted PCR metrics output for minimap2 BAM file(s)."}
         outputSAMsampleWorkflow: {description: "Either the minimap2 or TranscriptClean SAM file(s)."}
         outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
-        outputMinimap2BAM: {description: "Minimap2 BAM file(s) converted from SAM file(s)."}
-        outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
-        outputMinimap2SortedBai: {description: "Index of sorted minimap2 BAM file(s)."}
         outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
         outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
         outputTranscriptCleanSAM: {description: "SAM file(s) containing corrected aligned reads."}
         outputTranscriptCleanTElog: {description: "TE log file(s) of TranscriptClean run."}
-        outputTranscriptCleanBAM: {description: "TranscriptClean BAM file(s) converted from SAM file(s)."}
-        outputTranscriptCleanSortedBAM: {description: "TranscriptClean BAM file(s) sorted on position."}
-        outputTranscriptCleanSortedBai: {description: "Index of sorted TranscriptClean BAM file(s)."}
-    }
-}
-
-task SortAndIndex {
-    input {
-        File inputFile
-        String outputPrefix
-
-        Int cores = 1
-        String memory = "2G"
-        String dockerImage = "quay.io/biocontainers/samtools:1.10--h9402c20_2"
-    }
-
-    command {
-        set -e
-        mkdir -p "$(dirname ~{outputPrefix})"
-        samtools view \
-        --threads ~{cores} \
-        -S \
-        -b \
-        -o "~{outputPrefix}.bam" \
-        ~{inputFile}
-        samtools sort \
-        --threads ~{cores} \
-        -o "~{outputPrefix}.sorted.bam" \
-        "~{outputPrefix}.bam"
-        samtools index \
-        -@ ~{cores} \
-        -b \
-        "~{outputPrefix}.sorted.bam" \
-        "~{outputPrefix}.sorted.bai"
-    }
-
-    output {
-        File outputBAM = outputPrefix + ".bam"
-        File outputSortedBAM = outputPrefix + ".sorted.bam"
-        File outputSortedBai = outputPrefix + ".sorted.bai"
-    }
-
-    runtime {
-        cpu: cores
-        memory: memory
-        docker: dockerImage
-    }
-
-    parameter_meta {
-        # inputs
-        inputFile: {description: "The input SAM file.", category: "required"}
-        outputPrefix: {description: "Output directory path + output file prefix.", category: "required"}
-        cores: {description: "The number of cores to be used.", category: "advanced"}
-        memory: {description: "The amount of memory available to the job.", category: "advanced"}
-        dockerImage: {description: "The docker image used for this task. Changing this may result in errors which the developers may choose not to address.", category: "advanced"}
-
-        # outputs
-        outputBAM: {description: "BAM file converted from SAM file."}
-        outputSortedBAM: {description: "Sorted BAM file."}
-        outputSortedBai: {description: "Index of the sorted BAM file."}
     }
 }

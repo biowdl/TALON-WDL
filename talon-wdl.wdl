@@ -26,6 +26,8 @@ import "tasks/biowdl.wdl" as biowdl
 import "tasks/common.wdl" as common
 import "tasks/talon.wdl" as talon
 import "tasks/transcriptclean.wdl" as transcriptClean
+import "tasks/samtools.wdl" as samtools
+import "tasks/picard.wdl" as picard
 import "tasks/multiqc.wdl" as multiqc
 
 workflow TalonWDL {
@@ -95,14 +97,14 @@ workflow TalonWDL {
         }
     }
 
-    call Faidx as executeSamtoolsFaidx {
+    call samtools.Faidx as executeSamtoolsFaidx {
         input:
             inputFile = referenceGenome,
             outputDir = outputDirectory,
             dockerImage = dockerImages["samtools"]
     }
 
-    call CreateSequenceDictionary as executePicardDict {
+    call picard.CreateSequenceDictionary as executePicardDict {
         input:
             inputFile = referenceGenome,
             outputDir = outputDirectory,
@@ -167,9 +169,6 @@ workflow TalonWDL {
         File outputReferenceIndex = executeSamtoolsFaidx.outputIndex
         File outputReferenceDict = executePicardDict.outputDict
         Array[File] outputMinimap2 = flatten(executeSampleWorkflow.outputMinimap2)
-        Array[File] outputMinimap2BAM = flatten(executeSampleWorkflow.outputMinimap2BAM)
-        Array[File] outputMinimap2SortedBAM = flatten(executeSampleWorkflow.outputMinimap2SortedBAM)
-        Array[File] outputMinimap2SortedBai = flatten(executeSampleWorkflow.outputMinimap2SortedBai)
         File outputTalonDatabase = executeTalon.outputUpdatedDatabase
         File outputAbundance = createAbundanceFile.outputAbundanceFile
         File outputSummary = createSummaryFile.outputSummaryFile
@@ -189,9 +188,6 @@ workflow TalonWDL {
         Array[File?] outputTranscriptCleanLog = flatten(executeSampleWorkflow.outputTranscriptCleanLog)
         Array[File?] outputTranscriptCleanSAM = flatten(executeSampleWorkflow.outputTranscriptCleanSAM)
         Array[File?] outputTranscriptCleanTElog = flatten(executeSampleWorkflow.outputTranscriptCleanTElog)
-        Array[File?] outputTranscriptCleanBAM = flatten(executeSampleWorkflow.outputTranscriptCleanBAM)
-        Array[File?] outputTranscriptCleanSortedBAM = flatten(executeSampleWorkflow.outputTranscriptCleanSortedBAM)
-        Array[File?] outputTranscriptCleanSortedBai = flatten(executeSampleWorkflow.outputTranscriptCleanSortedBai)
     }
 
     parameter_meta {
@@ -217,9 +213,6 @@ workflow TalonWDL {
         outputReferenceIndex: {description: "Index file of the reference genome."}
         outputReferenceDict: {description: "Dictionary file of the reference genome."}
         outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
-        outputMinimap2BAM: {description: "Minimap2 BAM file(s) converted from SAM file(s)."}
-        outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
-        outputMinimap2SortedBai: {description: "Index of sorted minimap2 BAM file(s)."}
         outputTalonDatabase: {description: "TALON database."}
         outputAbundance: {description: "Abundance for each transcript in the TALON database across datasets."}
         outputSummary: {description: "Tab-delimited file of gene and transcript counts for each dataset."}
@@ -237,96 +230,11 @@ workflow TalonWDL {
         outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
         outputTranscriptCleanSAM: {description: "SAM file(s) containing corrected aligned reads."}
         outputTranscriptCleanTElog: {description: "TE log file(s) of TranscriptClean run."}
-        outputTranscriptCleanBAM: {description: "TranscriptClean BAM file(s) converted from SAM file(s)."}
-        outputTranscriptCleanSortedBAM: {description: "TranscriptClean BAM file(s) sorted on position."}
-        outputTranscriptCleanSortedBai: {description: "Index of sorted TranscriptClean BAM file(s)."}
     }
 
     meta {
         WDL_AID: {
             exclude: ["NoneFile"]
         }
-    }
-}
-
-task Faidx {
-    input {
-        File inputFile
-        String outputDir
-        String basenameInputFile = basename(inputFile)
-
-        String memory = "2G"
-        String dockerImage = "quay.io/biocontainers/samtools:1.10--h9402c20_2"
-    }
-
-    command {
-        set -e
-        mkdir -p "~{outputDir}"
-        ln -s ~{inputFile} "~{outputDir}/~{basenameInputFile}"
-        samtools faidx \
-        "~{outputDir}/~{basenameInputFile}"
-    }
-
-    output {
-        File outputIndex = outputDir + "/" + basenameInputFile + ".fai"
-    }
-
-    runtime {
-        memory: memory
-        docker: dockerImage
-    }
-
-    parameter_meta {
-        # inputs
-        inputFile: {description: "The input fasta file.", category: "required"}
-        outputDir: {description: "Output directory path.", category: "required"}
-        basenameInputFile: {description: "The basename of the input file.", category: "required"}
-        memory: {description: "The amount of memory available to the job.", category: "advanced"}
-        dockerImage: {description: "The docker image used for this task. Changing this may result in errors which the developers may choose not to address.", category: "advanced"}
-
-        # outputs
-        outputIndex: {description: "Index of the input fasta file."}
-    }
-}
-
-task CreateSequenceDictionary {
-    input {
-        File inputFile
-        String outputDir
-
-        String memory = "3G"
-        String javaXmx = "2G"
-        String dockerImage = "quay.io/biocontainers/picard:2.22.3--0"
-    }
-
-    command {
-        set -e
-        mkdir -p "~{outputDir}"
-        picard -Xmx~{javaXmx} \
-        -XX:ParallelGCThreads=1 \
-        CreateSequenceDictionary \
-        REFERENCE=~{inputFile} \
-        OUTPUT="~{outputDir}/$(basename ~{inputFile}).dict"
-    }
-
-    output {
-        File outputDict = outputDir + "/" + basename(inputFile) + ".dict"
-    }
-
-    runtime {
-        memory: memory
-        docker: dockerImage
-    }
-
-    parameter_meta {
-        # inputs
-        inputFile: {description: "The input fasta file.", category: "required"}
-        outputDir: {description: "Output directory path.", category: "required"}
-        memory: {description: "The amount of memory available to the job.", category: "advanced"}
-        javaXmx: {description: "The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.", category: "advanced"}
-        dockerImage: {description: "The docker image used for this task. Changing this may result in errors which the developers may choose not to address.", category: "advanced"}
-
-        # outputs
-        outputDict: {description: "Dictionary of the input fasta file."}
     }
 }
