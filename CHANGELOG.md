@@ -10,6 +10,7 @@ that users understand how the changes affect the new version.
 
 version develop
 ---------------------------
++ Renamed workflow from `pipeline` to `TalonWDL`.
 + Remove Jenkinsfile from repo.
 + Add multiqc to collect all stats.
 + Add BamMetrics for stats on minimap2 alignment.
