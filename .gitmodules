@@ -6,3 +6,7 @@
 	path = scripts
 	url = https://github.com/biowdl/scripts
 	branch = develop
+[submodule "BamMetrics"]
+	path = BamMetrics
+	url = https://github.com/biowdl/BamMetrics
+	branch = develop

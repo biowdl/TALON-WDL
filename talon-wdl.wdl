@@ -26,8 +26,11 @@ import "tasks/biowdl.wdl" as biowdl
 import "tasks/common.wdl" as common
 import "tasks/talon.wdl" as talon
 import "tasks/transcriptclean.wdl" as transcriptClean
+import "tasks/samtools.wdl" as samtools
+import "tasks/picard.wdl" as picard
+import "tasks/multiqc.wdl" as multiqc
 
-workflow Pipeline {
+workflow TalonWDL {
     input {
         File sampleConfigFile
         String outputDirectory = "."
@@ -41,9 +44,11 @@ workflow Pipeline {
         File dockerImagesFile
         String novelIDprefix = "TALON"
         Boolean runTranscriptClean = true
+        Boolean runMultiQC = if (outputDirectory == ".") then false else true
 
         File? talonDatabase
         File? spliceJunctionsFile
+        File? annotationGTFrefflat
 
         File? NoneFile #FIXME
     }
@@ -92,16 +97,33 @@ workflow Pipeline {
         }
     }
 
+    call samtools.Faidx as executeSamtoolsFaidx {
+        input:
+            inputFile = referenceGenome,
+            outputDir = outputDirectory,
+            dockerImage = dockerImages["samtools"]
+    }
+
+    call picard.CreateSequenceDictionary as executePicardDict {
+        input:
+            inputFile = referenceGenome,
+            outputDir = outputDirectory,
+            dockerImage = dockerImages["picard"]
+    }
+
     scatter (sample in allSamples) {
         call sampleWorkflow.SampleWorkflow as executeSampleWorkflow {
             input:
                 sample = sample,
                 outputDirectory = outputDirectory + "/" + sample.id,
                 referenceGenome = referenceGenome,
+                referenceGenomeIndex = executeSamtoolsFaidx.outputIndex,
+                referenceGenomeDict = executePicardDict.outputDict,
                 spliceJunctionsFile = if (runTranscriptClean)
                                       then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
                                       else NoneFile,
                 runTranscriptClean = runTranscriptClean,
+                annotationGTFrefflat = annotationGTFrefflat,
                 dockerImages = dockerImages
         }
     }
@@ -133,14 +155,34 @@ workflow Pipeline {
             dockerImage = dockerImages["talon"]
     }
 
+    if (runMultiQC) {
+        call multiqc.MultiQC as multiqcTask {
+            input:
+                dependencies = flatten(executeSampleWorkflow.outputHtmlReport),
+                outDir = outputDirectory + "/multiqc",
+                analysisDirectory = outputDirectory,
+                dockerImage = dockerImages["multiqc"]
+        }
+    }
+
     output {
+        File outputReferenceIndex = executeSamtoolsFaidx.outputIndex
+        File outputReferenceDict = executePicardDict.outputDict
         Array[File] outputMinimap2 = flatten(executeSampleWorkflow.outputMinimap2)
+        Array[File] outputMinimap2SortedBAM = flatten(executeSampleWorkflow.outputMinimap2SortedBAM)
+        Array[File] outputMinimap2SortedBAI = flatten(executeSampleWorkflow.outputMinimap2SortedBAI)
         File outputTalonDatabase = executeTalon.outputUpdatedDatabase
         File outputAbundance = createAbundanceFile.outputAbundanceFile
         File outputSummary = createSummaryFile.outputSummaryFile
         File outputTalonLog = executeTalon.outputLog
         File outputTalonReadAnnot = executeTalon.outputAnnot
         File outputTalonConfigFile = executeTalon.outputConfigFile
+        Array[File] outputHtmlReport = flatten(executeSampleWorkflow.outputHtmlReport)
+        Array[File] outputZipReport = flatten(executeSampleWorkflow.outputZipReport)
+        Array[File] outputFlagstats = flatten(executeSampleWorkflow.outputFlagstats)
+        Array[File] outputPicardMetricsFiles = flatten(executeSampleWorkflow.outputPicardMetricsFiles)
+        Array[File] outputRnaMetrics = flatten(executeSampleWorkflow.outputRnaMetrics)
+        Array[File] outputTargetedPcrMetrics = flatten(executeSampleWorkflow.outputTargetedPcrMetrics)
         File? outputSpliceJunctionsFile = if (runTranscriptClean)
               then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
               else NoneFile
@@ -164,17 +206,29 @@ workflow Pipeline {
         dockerImagesFile: {description: "The docker image used for this workflow. Changing this may result in errors which the developers may choose not to address.", category: "required"}
         novelIDprefix: {description: "Prefix for naming novel discoveries in eventual TALON runs.", category: "common"}
         runTranscriptClean: {description: "Option to run TranscriptClean after Minimap2 alignment.", category: "common"}
+        runMultiQC: {description: "Whether or not MultiQC should be run.", category: "advanced"}
         talonDatabase: {description: "A pre-generated TALON database file.", category: "advanced"}
         spliceJunctionsFile: {description: "A pre-generated splice junction annotation file.", category: "advanced"}
+        annotationGTFrefflat: {description: "A refflat file of the annotation GTF used.", category: "common"}
 
         # outputs
+        outputReferenceIndex: {description: "Index file of the reference genome."}
+        outputReferenceDict: {description: "Dictionary file of the reference genome."}
         outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
+        outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
+        outputMinimap2SortedBAI: {description: "Index of sorted minimap2 BAM file(s)."}
         outputTalonDatabase: {description: "TALON database."}
         outputAbundance: {description: "Abundance for each transcript in the TALON database across datasets."}
         outputSummary: {description: "Tab-delimited file of gene and transcript counts for each dataset."}
         outputTalonLog: {description: "Log file from TALON run."}
         outputTalonReadAnnot: {description: "Read annotation file from TALON run."}
         outputTalonConfigFile: {description: "The TALON configuration file."}
+        outputHtmlReport: {description: "FastQC output HTML files."}
+        outputZipReport: {description: "FastQC output support files."}
+        outputFlagstats: {description: "Samtools flagstat output for minimap2 BAM file(s)."}
+        outputPicardMetricsFiles: {description: "Picard metrics output for minimap2 BAM file(s)."}
+        outputRnaMetrics: {description: "RNA metrics output for minimap2 BAM file(s)."}
+        outputTargetedPcrMetrics: {description: "Targeted PCR metrics output for minimap2 BAM file(s)."}
         outputSpliceJunctionsFile: {description: "Splice junction annotation file."}
         outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
         outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}

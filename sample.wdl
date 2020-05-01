@@ -21,7 +21,10 @@ version 1.0
 # SOFTWARE.
 
 import "structs.wdl" as structs
+import "BamMetrics/bammetrics.wdl" as metrics
+import "tasks/fastqc.wdl" as fastqc
 import "tasks/minimap2.wdl" as minimap2
+import "tasks/samtools.wdl" as samtools
 import "tasks/transcriptclean.wdl" as transcriptClean
 
 workflow SampleWorkflow {
@@ -29,6 +32,8 @@ workflow SampleWorkflow {
         Sample sample
         String outputDirectory = "."
         File referenceGenome
+        File referenceGenomeIndex
+        File referenceGenomeDict
         String presetOption
         Boolean runTranscriptClean = true
         Map[String, String] dockerImages
@@ -36,12 +41,20 @@ workflow SampleWorkflow {
         File? variantVCF
         String? howToFindGTAG
         File? spliceJunctionsFile
+        File? annotationGTFrefflat
     }
 
     Array[Readgroup] readgroups = sample.readgroups
 
     scatter (readgroup in readgroups) {
         String readgroupIdentifier = sample.id + "-" + readgroup.lib_id + "-" + readgroup.id
+        call fastqc.Fastqc as fastqcTask {
+            input:
+                seqFile = readgroup.R1,
+                outdirPath = outputDirectory + "/" + readgroupIdentifier + "-fastqc",
+                dockerImage = dockerImages["fastqc"]
+        }
+
         call minimap2.Mapping as executeMinimap2 {
             input:
                 queryFile = readgroup.R1,
@@ -52,6 +65,32 @@ workflow SampleWorkflow {
                 howToFindGTAG = howToFindGTAG,
                 addMDtagToSAM = true,
                 dockerImage = dockerImages["minimap2"]
+        }
+
+        call samtools.Sort as executeSortMinimap2 {
+            input:
+                inputBam = executeMinimap2.outputAlignmentFile,
+                outputPath = outputDirectory + "/" + readgroupIdentifier + ".sorted.bam",
+                dockerImage = dockerImages["samtools"]
+        }
+
+        call samtools.Index as executeIndexMinimap2 {
+            input:
+                bamFile = executeSortMinimap2.outputSortedBam,
+                outputBamPath = outputDirectory + "/" + readgroupIdentifier + ".sorted.bam",
+                dockerImage = dockerImages["samtools"]
+        }
+
+        call metrics.BamMetrics as bamMetricsMinimap2 {
+            input:
+                bam = executeIndexMinimap2.indexedBam,
+                bamIndex = executeIndexMinimap2.index,
+                outputDir = outputDirectory + "/metrics-minimap2",
+                referenceFasta = referenceGenome,
+                referenceFastaFai = referenceGenomeIndex,
+                referenceFastaDict = referenceGenomeDict,
+                refRefflat = annotationGTFrefflat,
+                dockerImages = dockerImages
         }
 
         if (runTranscriptClean) {
@@ -69,10 +108,18 @@ workflow SampleWorkflow {
     }
 
     output {
+        Array[File] outputHtmlReport = fastqcTask.htmlReport
+        Array[File] outputZipReport = fastqcTask.reportZip
+        Array[File] outputFlagstats = bamMetricsMinimap2.flagstats
+        Array[File] outputPicardMetricsFiles = flatten(bamMetricsMinimap2.picardMetricsFiles)
+        Array[File] outputRnaMetrics = flatten(bamMetricsMinimap2.rnaMetrics)
+        Array[File] outputTargetedPcrMetrics = flatten(bamMetricsMinimap2.targetedPcrMetrics)
         Array[File] outputSAMsampleWorkflow = if (runTranscriptClean) 
                     then select_all(executeTranscriptClean.outputTranscriptCleanSAM)
                     else executeMinimap2.outputAlignmentFile
         Array[File] outputMinimap2 = executeMinimap2.outputAlignmentFile
+        Array[File] outputMinimap2SortedBAM = executeIndexMinimap2.indexedBam
+        Array[File] outputMinimap2SortedBAI = executeIndexMinimap2.index
         Array[File?] outputTranscriptCleanFasta = executeTranscriptClean.outputTranscriptCleanFasta
         Array[File?] outputTranscriptCleanLog = executeTranscriptClean.outputTranscriptCleanLog
         Array[File?] outputTranscriptCleanSAM = executeTranscriptClean.outputTranscriptCleanSAM
@@ -84,16 +131,27 @@ workflow SampleWorkflow {
         sample: {description: "The sample data.", category: "required"}
         outputDirectory: {description: "The directory to which the outputs will be written.", category: "common"}
         referenceGenome: {description: "Reference genome fasta file.", category: "required"}
+        referenceGenomeIndex: {description: "Reference genome index file.", category: "required"}
+        referenceGenomeDict: {description: "Reference genome dictionary file.", category: "required"}
         presetOption: {description: "This option applies multiple options at the same time in minimap2.", category: "common"}
         runTranscriptClean: {description: "Option to run TranscriptClean after Minimap2 alignment.", category: "common"}
         dockerImages: {description: "The docker image used for this workflow. Changing this may result in errors which the developers may choose not to address.", category: "advanced"}
         variantVCF: {description: "VCF formatted file of variants.", category: "common"}
         howToFindGTAG: {description: "How to find GT-AG. f:transcript strand, b:both strands, n:don't match GT-AG.", category: "common"}
         spliceJunctionsFile: {description: "A pre-generated splice junction annotation file.", category: "advanced"}
+        annotationGTFrefflat: {description: "A refflat file of the annotation GTF used.", category: "common"}
 
         # outputs
+        outputHtmlReport: {description: "FastQC output HTML file(s)."}
+        outputZipReport: {description: "FastQC output support file(s)."}
+        outputFlagstats: {description: "Samtools flagstat output for minimap2 BAM file(s)."}
+        outputPicardMetricsFiles: {description: "Picard metrics output for minimap2 BAM file(s)."}
+        outputRnaMetrics: {description: "RNA metrics output for minimap2 BAM file(s)."}
+        outputTargetedPcrMetrics: {description: "Targeted PCR metrics output for minimap2 BAM file(s)."}
         outputSAMsampleWorkflow: {description: "Either the minimap2 or TranscriptClean SAM file(s)."}
         outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
+        outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
+        outputMinimap2SortedBAI: {description: "Index of sorted minimap2 BAM file(s)."}
         outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
         outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
         outputTranscriptCleanSAM: {description: "SAM file(s) containing corrected aligned reads."}

@@ -3,14 +3,15 @@ layout: default
 title: Home
 ---
 
-This pipeline can be used to process RNA sequenced by either the Pacific
-Biosciences or Oxford Nanopore sequencer, starting from FastQ files. It will
-perform mapping to a reference genome (using minimap2), INDEL/mismatch and
-noncanonical splice junction correction (using TranscriptClean) and identify
-and count known and novel genes/transcripts (using TALON).
+This pipeline can be used to process RNA sequenced by either a Pacific
+Biosciences sequencer or Oxford Nanopore sequencer, starting from fastq files.
+It will perform mapping to a reference genome (using minimap2), INDEL/mismatch
+and noncanonical splice junction correction (using TranscriptClean) and
+identify and count known and novel genes/transcripts (using TALON).
 
 This pipeline is part of [BioWDL](https://biowdl.github.io/)
-developed by the SASC team at [Leiden University Medical Center](https://www.lumc.nl/).
+developed by the SASC team
+at [Leiden University Medical Center](https://www.lumc.nl/).
 
 ## Usage
 You can run the pipeline using
@@ -30,29 +31,30 @@ For an overview of all available inputs, see [this page](./inputs.html).
 
 ```json
 {
-    "Pipeline.sampleConfigFile": "A sample configuration file (see below).",
-    "Pipeline.outputDirectory": "The path to the output directory.",
-    "Pipeline.annotationGTF": "GTF annotation containing genes, transcripts, and edges.",
-    "Pipeline.genomeBuild": "Name of genome build that the GTF file is based on (ie hg38).",
-    "Pipeline.annotationVersion": "Name of supplied annotation (will be used to label data).",
-    "Pipeline.referenceGenome": "Reference genome fasta file.",
-    "Pipeline.sequencingPlatform": "The sequencing platform used to generate long reads.",
-    "Pipeline.organismName": "The name of the organism from which the samples originated.",
-    "Pipeline.pipelineRunName": "A short name to distinguish a run.",
-    "Pipeline.dockerImagesFile": "A file listing the used docker images.",
-    "Pipeline.runTranscriptClean": "Set to true in order to run TranscriptClean, set to false in order to disable TranscriptClean.",
-    "Pipeline.executeSampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2, this should be either 'splice'(directRNA) or 'splice:hq'(cDNA).",
-    "Pipeline.executeSampleWorkflow.variantVCF": "A VCF file with common variants should be supplied when running TranscriptClean, this will make sure TranscriptClean does not correct those known variants.",
+    "TalonWDL.sampleConfigFile": "A sample configuration file (see below).",
+    "TalonWDL.outputDirectory": "The path to the output directory.",
+    "TalonWDL.annotationGTF": "GTF annotation containing genes, transcripts, and edges.",
+    "TalonWDL.genomeBuild": "Name of genome build that the GTF file is based on (ie hg38).",
+    "TalonWDL.annotationVersion": "Name of supplied annotation (will be used to label data).",
+    "TalonWDL.referenceGenome": "Reference genome fasta file.",
+    "TalonWDL.sequencingPlatform": "The sequencing platform used to generate long reads.",
+    "TalonWDL.organismName": "The name of the organism from which the samples originated.",
+    "TalonWDL.pipelineRunName": "A short name to distinguish a run.",
+    "TalonWDL.dockerImagesFile": "A file listing the used docker images.",
+    "TalonWDL.runTranscriptClean": "Set to true in order to run TranscriptClean, set to false in order to disable TranscriptClean.",
+    "TalonWDL.executeSampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2, this should be either 'splice'(directRNA) or 'splice:hq'(cDNA).",
+    "TalonWDL.executeSampleWorkflow.variantVCF": "A VCF file with common variants should be supplied when running TranscriptClean, this will make sure TranscriptClean does not correct those known variants.",
 }
 ```
 
 Optional settings:
 ```json
 {
-    "Pipeline.novelIDprefix": "A prefix for novel transcript discoveries.",
-    "Pipeline.executeSampleWorkflow.howToFindGTAG": "How to find canonical splicing sites GT-AG - f: transcript strand; b: both strands; n: no attempt to match GT-AG.",
-    "Pipeline.spliceJunctionsFile": "A pre-generated splice junction annotation file.",
-    "Pipeline.talonDatabase": "A pre-generated TALON database file."
+    "TalonWDL.novelIDprefix": "A prefix for novel transcript discoveries.",
+    "TalonWDL.executeSampleWorkflow.howToFindGTAG": "How to find canonical splicing sites GT-AG - f: transcript strand; b: both strands; n: no attempt to match GT-AG.",
+    "TalonWDL.spliceJunctionsFile": "A pre-generated splice junction annotation file.",
+    "TalonWDL.talonDatabase": "A pre-generated TALON database file.",
+    "TalonWDL.annotationGTFrefflat": "A refflat file of the annotation GTF used."
 }
 ```
 
@@ -101,20 +103,21 @@ The following is an example of what an inputs JSON might look like:
 
 ```json
 {
-    "Pipeline.sampleConfigFile": "tests/samplesheets/GM12878.K562.csv",
-    "Pipeline.outputDirectory": "tests/test-output",
-    "Pipeline.annotationGTF": "tests/data/gencode.v29.annotation.gtf",
-    "Pipeline.genomeBuild": "hg38",
-    "Pipeline.annotationVersion": "gencode_v29",
-    "Pipeline.referenceGenome": "tests/data/grch38.fasta",
-    "Pipeline.sequencingPlatform": "Nanopore",
-    "Pipeline.organismName": "Human",
-    "Pipeline.pipelineRunName": "testRun",
-    "Pipeline.dockerImagesFile": "dockerImages.yml",
-    "Pipeline.runTranscriptClean": "true",
-    "Pipeline.executeSampleWorkflow.presetOption": "splice",
-    "Pipeline.executeSampleWorkflow.variantVCF": "tests/data/common.variants.vcf",
-    "Pipeline.executeSampleWorkflow.howToFindGTAG": "f"
+    "TalonWDL.sampleConfigFile": "tests/samplesheets/GM12878.K562.csv",
+    "TalonWDL.outputDirectory": "tests/test-output",
+    "TalonWDL.annotationGTF": "tests/data/gencode.v29.annotation.gtf",
+    "TalonWDL.genomeBuild": "hg38",
+    "TalonWDL.annotationVersion": "gencode_v29",
+    "TalonWDL.referenceGenome": "tests/data/grch38.fasta",
+    "TalonWDL.sequencingPlatform": "Nanopore",
+    "TalonWDL.organismName": "Human",
+    "TalonWDL.pipelineRunName": "testRun",
+    "TalonWDL.dockerImagesFile": "dockerImages.yml",
+    "TalonWDL.runTranscriptClean": "true",
+    "TalonWDL.annotationGTFrefflat": "tests/data/gencode.v29.annotation.refflat",
+    "TalonWDL.executeSampleWorkflow.presetOption": "splice",
+    "TalonWDL.executeSampleWorkflow.variantVCF": "tests/data/common.variants.vcf",
+    "TalonWDL.executeSampleWorkflow.howToFindGTAG": "f"
 }
 ```
 
@@ -136,6 +139,8 @@ The workflow will output mapped reads by minimap2 in a .sam file, a
 cleaned .sam file and log information from TranscriptClean, a database
 containing transcript information together with a log file of
 read/transcript comparison and a abundance plus summary file of the database.
+It will also output fastqc and picard statistics based on the fastq and
+minimap2 alignment file, combined into a multiqc report.
 
 ## Contact
 <p>
