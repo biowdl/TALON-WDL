@@ -190,6 +190,8 @@ workflow TalonWDL {
         Array[File?] outputTranscriptCleanLog = flatten(executeSampleWorkflow.outputTranscriptCleanLog)
         Array[File?] outputTranscriptCleanSAM = flatten(executeSampleWorkflow.outputTranscriptCleanSAM)
         Array[File?] outputTranscriptCleanTElog = flatten(executeSampleWorkflow.outputTranscriptCleanTElog)
+        Array[File?] outputTranscriptCleanSortedBAM = flatten(executeSampleWorkflow.outputTranscriptCleanSortedBAM)
+        Array[File?] outputTranscriptCleanSortedBAI = flatten(executeSampleWorkflow.outputTranscriptCleanSortedBAI)
     }
 
     parameter_meta {

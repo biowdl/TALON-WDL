@@ -104,6 +104,20 @@ workflow SampleWorkflow {
                     primaryOnly = true,
                     dockerImage = dockerImages["transcriptclean"]
             }
+
+            call samtools.Sort as executeSortTranscriptClean {
+                input:
+                    inputBam = executeTranscriptClean.outputTranscriptCleanSAM,
+                    outputPath = outputDirectory + "/" + readgroupIdentifier + "_clean" + ".sorted.bam",
+                    dockerImage = dockerImages["samtools"]
+            }
+
+            call samtools.Index as executeIndexTranscriptClean {
+                input:
+                    bamFile = executeSortTranscriptClean.outputSortedBam,
+                    outputBamPath = outputDirectory + "/" + readgroupIdentifier + "_clean" + ".sorted.bam",
+                    dockerImage = dockerImages["samtools"]
+            }
         }
     }
 
@@ -124,6 +138,8 @@ workflow SampleWorkflow {
         Array[File?] outputTranscriptCleanLog = executeTranscriptClean.outputTranscriptCleanLog
         Array[File?] outputTranscriptCleanSAM = executeTranscriptClean.outputTranscriptCleanSAM
         Array[File?] outputTranscriptCleanTElog = executeTranscriptClean.outputTranscriptCleanTElog
+        Array[File?] outputTranscriptCleanSortedBAM = executeIndexTranscriptClean.indexedBam
+        Array[File?] outputTranscriptCleanSortedBAI = executeIndexTranscriptClean.index
     }
 
     parameter_meta {

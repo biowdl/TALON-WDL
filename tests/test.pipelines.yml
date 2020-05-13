@@ -30,6 +30,10 @@
     - path: test-output/GM12878/GM12878-lib1-rg1.sorted.bai
     - path: test-output/K562/K562-lib1-rg1.sorted.bam
     - path: test-output/K562/K562-lib1-rg1.sorted.bai
+    - path: test-output/GM12878/GM12878-lib1-rg1_clean.sorted.bam
+    - path: test-output/GM12878/GM12878-lib1-rg1_clean.sorted.bai
+    - path: test-output/K562/K562-lib1-rg1_clean.sorted.bam
+    - path: test-output/K562/K562-lib1-rg1_clean.sorted.bai
 
 - name: no-transcriptclean
   tags:
