@@ -118,6 +118,20 @@ workflow SampleWorkflow {
                     outputBamPath = outputDirectory + "/" + readgroupIdentifier + "_clean" + ".sorted.bam",
                     dockerImage = dockerImages["samtools"]
             }
+
+            call metrics.BamMetrics as bamMetricsTranscriptClean {
+                input:
+                    bam = executeIndexTranscriptClean.indexedBam,
+                    bamIndex = executeIndexTranscriptClean.index,
+                    outputDir = outputDirectory + "/metrics-transcriptclean",
+                    referenceFasta = referenceGenome,
+                    referenceFastaFai = referenceGenomeIndex,
+                    referenceFastaDict = referenceGenomeDict,
+                    refRefflat = annotationGTFrefflat,
+                    collectAlignmentSummaryMetrics = false,
+                    meanQualityByCycle = false,
+                    dockerImages = dockerImages
+            }
         }
     }
 
