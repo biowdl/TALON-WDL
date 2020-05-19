@@ -49,7 +49,6 @@ workflow TalonWDL {
         File? talonDatabase
         File? spliceJunctionsFile
         File? annotationGTFrefflat
-
         File? NoneFile #FIXME
     }
 
@@ -168,9 +167,6 @@ workflow TalonWDL {
     output {
         File outputReferenceIndex = executeSamtoolsFaidx.outputIndex
         File outputReferenceDict = executePicardDict.outputDict
-        Array[File] outputMinimap2 = flatten(executeSampleWorkflow.outputMinimap2)
-        Array[File] outputMinimap2SortedBAM = flatten(executeSampleWorkflow.outputMinimap2SortedBAM)
-        Array[File] outputMinimap2SortedBAI = flatten(executeSampleWorkflow.outputMinimap2SortedBAI)
         File outputTalonDatabase = executeTalon.outputUpdatedDatabase
         File outputAbundance = createAbundanceFile.outputAbundanceFile
         File outputSummary = createSummaryFile.outputSummaryFile
@@ -179,10 +175,13 @@ workflow TalonWDL {
         File outputTalonConfigFile = executeTalon.outputConfigFile
         Array[File] outputHtmlReport = flatten(executeSampleWorkflow.outputHtmlReport)
         Array[File] outputZipReport = flatten(executeSampleWorkflow.outputZipReport)
-        Array[File] outputFlagstats = flatten(executeSampleWorkflow.outputFlagstats)
-        Array[File] outputPicardMetricsFiles = flatten(executeSampleWorkflow.outputPicardMetricsFiles)
-        Array[File] outputRnaMetrics = flatten(executeSampleWorkflow.outputRnaMetrics)
-        Array[File] outputTargetedPcrMetrics = flatten(executeSampleWorkflow.outputTargetedPcrMetrics)
+        Array[File] outputMinimap2 = flatten(executeSampleWorkflow.outputMinimap2)
+        Array[File] outputMinimap2SortedBAM = flatten(executeSampleWorkflow.outputMinimap2SortedBAM)
+        Array[File] outputMinimap2SortedBAI = flatten(executeSampleWorkflow.outputMinimap2SortedBAI)
+        Array[File] outputFlagstatsMinimap2 = flatten(executeSampleWorkflow.outputFlagstatsMinimap2)
+        Array[File] outputPicardMetricsFilesMinimap2 = flatten(executeSampleWorkflow.outputPicardMetricsFilesMinimap2)
+        Array[File] outputRnaMetricsMinimap2 = flatten(executeSampleWorkflow.outputRnaMetricsMinimap2)
+        Array[File] outputTargetedPcrMetricsMinimap2 = flatten(executeSampleWorkflow.outputTargetedPcrMetricsMinimap2)
         File? outputSpliceJunctionsFile = if (runTranscriptClean)
               then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
               else NoneFile
@@ -192,6 +191,10 @@ workflow TalonWDL {
         Array[File?] outputTranscriptCleanTElog = flatten(executeSampleWorkflow.outputTranscriptCleanTElog)
         Array[File?] outputTranscriptCleanSortedBAM = flatten(executeSampleWorkflow.outputTranscriptCleanSortedBAM)
         Array[File?] outputTranscriptCleanSortedBAI = flatten(executeSampleWorkflow.outputTranscriptCleanSortedBAI)
+        Array[File?] outputFlagstatsTranscriptClean = flatten(executeSampleWorkflow.outputFlagstatsTranscriptClean)
+        Array[File?] outputPicardMetricsFilesTranscriptClean = flatten(executeSampleWorkflow.outputPicardMetricsFilesTranscriptClean)
+        Array[File?] outputRnaMetricsTranscriptClean = flatten(executeSampleWorkflow.outputRnaMetricsTranscriptClean)
+        Array[File?] outputTargetedPcrMetricsTranscriptClean = flatten(executeSampleWorkflow.outputTargetedPcrMetricsTranscriptClean)
     }
 
     parameter_meta {
@@ -227,15 +230,22 @@ workflow TalonWDL {
         outputTalonConfigFile: {description: "The TALON configuration file."}
         outputHtmlReport: {description: "FastQC output HTML files."}
         outputZipReport: {description: "FastQC output support files."}
-        outputFlagstats: {description: "Samtools flagstat output for minimap2 BAM file(s)."}
-        outputPicardMetricsFiles: {description: "Picard metrics output for minimap2 BAM file(s)."}
-        outputRnaMetrics: {description: "RNA metrics output for minimap2 BAM file(s)."}
-        outputTargetedPcrMetrics: {description: "Targeted PCR metrics output for minimap2 BAM file(s)."}
+        outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
+        outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
+        outputMinimap2SortedBAI: {description: "Index of sorted minimap2 BAM file(s)."}
+        outputFlagstatsMinimap2: {description: "Samtools flagstat output for minimap2 BAM file(s)."}
+        outputPicardMetricsFilesMinimap2: {description: "Picard metrics output for minimap2 BAM file(s)."}
+        outputRnaMetricsMinimap2: {description: "RNA metrics output for minimap2 BAM file(s)."}
+        outputTargetedPcrMetricsMinimap2: {description: "Targeted PCR metrics output for minimap2 BAM file(s)."}
         outputSpliceJunctionsFile: {description: "Splice junction annotation file."}
         outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
         outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
         outputTranscriptCleanSAM: {description: "SAM file(s) containing corrected aligned reads."}
         outputTranscriptCleanTElog: {description: "TE log file(s) of TranscriptClean run."}
+        outputFlagstatsTranscriptClean: {description: "Samtools flagstat output for TranscriptClean BAM file(s)."}
+        outputPicardMetricsFilesTranscriptClean: {description: "Picard metrics output for TranscriptClean BAM file(s)."}
+        outputRnaMetricsTranscriptClean: {description: "RNA metrics output for TranscriptClean BAM file(s)."}
+        outputTargetedPcrMetricsTranscriptClean: {description: "Targeted PCR metrics output for TranscriptClean BAM file(s)."}
     }
 
     meta {

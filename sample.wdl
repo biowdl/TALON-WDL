@@ -127,7 +127,6 @@ workflow SampleWorkflow {
                     referenceFasta = referenceGenome,
                     referenceFastaFai = referenceGenomeIndex,
                     referenceFastaDict = referenceGenomeDict,
-                    refRefflat = annotationGTFrefflat,
                     collectAlignmentSummaryMetrics = false,
                     meanQualityByCycle = false,
                     dockerImages = dockerImages
@@ -138,10 +137,10 @@ workflow SampleWorkflow {
     output {
         Array[File] outputHtmlReport = fastqcTask.htmlReport
         Array[File] outputZipReport = fastqcTask.reportZip
-        Array[File] outputFlagstats = bamMetricsMinimap2.flagstats
-        Array[File] outputPicardMetricsFiles = flatten(bamMetricsMinimap2.picardMetricsFiles)
-        Array[File] outputRnaMetrics = flatten(bamMetricsMinimap2.rnaMetrics)
-        Array[File] outputTargetedPcrMetrics = flatten(bamMetricsMinimap2.targetedPcrMetrics)
+        Array[File] outputFlagstatsMinimap2 = bamMetricsMinimap2.flagstats
+        Array[File] outputPicardMetricsFilesMinimap2 = flatten(bamMetricsMinimap2.picardMetricsFiles)
+        Array[File] outputRnaMetricsMinimap2 = flatten(bamMetricsMinimap2.rnaMetrics)
+        Array[File] outputTargetedPcrMetricsMinimap2 = flatten(bamMetricsMinimap2.targetedPcrMetrics)
         Array[File] outputSAMsampleWorkflow = if (runTranscriptClean) 
                     then select_all(executeTranscriptClean.outputTranscriptCleanSAM)
                     else executeMinimap2.outputAlignmentFile
@@ -154,6 +153,10 @@ workflow SampleWorkflow {
         Array[File?] outputTranscriptCleanTElog = executeTranscriptClean.outputTranscriptCleanTElog
         Array[File?] outputTranscriptCleanSortedBAM = executeIndexTranscriptClean.indexedBam
         Array[File?] outputTranscriptCleanSortedBAI = executeIndexTranscriptClean.index
+        Array[File?] outputFlagstatsTranscriptClean = bamMetricsTranscriptClean.flagstats
+        Array[File?] outputPicardMetricsFilesTranscriptClean = flatten(bamMetricsTranscriptClean.picardMetricsFiles)
+        Array[File?] outputRnaMetricsTranscriptClean = bamMetricsTranscriptClean.rnaMetrics
+        Array[File?] outputTargetedPcrMetricsTranscriptClean = bamMetricsTranscriptClean.targetedPcrMetrics
     }
 
     parameter_meta {
@@ -174,10 +177,10 @@ workflow SampleWorkflow {
         # outputs
         outputHtmlReport: {description: "FastQC output HTML file(s)."}
         outputZipReport: {description: "FastQC output support file(s)."}
-        outputFlagstats: {description: "Samtools flagstat output for minimap2 BAM file(s)."}
-        outputPicardMetricsFiles: {description: "Picard metrics output for minimap2 BAM file(s)."}
-        outputRnaMetrics: {description: "RNA metrics output for minimap2 BAM file(s)."}
-        outputTargetedPcrMetrics: {description: "Targeted PCR metrics output for minimap2 BAM file(s)."}
+        outputFlagstatsMinimap2: {description: "Samtools flagstat output for minimap2 BAM file(s)."}
+        outputPicardMetricsFilesMinimap2: {description: "Picard metrics output for minimap2 BAM file(s)."}
+        outputRnaMetricsMinimap2: {description: "RNA metrics output for minimap2 BAM file(s)."}
+        outputTargetedPcrMetricsMinimap2: {description: "Targeted PCR metrics output for minimap2 BAM file(s)."}
         outputSAMsampleWorkflow: {description: "Either the minimap2 or TranscriptClean SAM file(s)."}
         outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
         outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
@@ -186,5 +189,9 @@ workflow SampleWorkflow {
         outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
         outputTranscriptCleanSAM: {description: "SAM file(s) containing corrected aligned reads."}
         outputTranscriptCleanTElog: {description: "TE log file(s) of TranscriptClean run."}
+        outputFlagstatsTranscriptClean: {description: "Samtools flagstat output for TranscriptClean BAM file(s)."}
+        outputPicardMetricsFilesTranscriptClean: {description: "Picard metrics output for TranscriptClean BAM file(s)."}
+        outputRnaMetricsTranscriptClean: {description: "RNA metrics output for TranscriptClean BAM file(s)."}
+        outputTargetedPcrMetricsTranscriptClean: {description: "Targeted PCR metrics output for TranscriptClean BAM file(s)."}
     }
 }

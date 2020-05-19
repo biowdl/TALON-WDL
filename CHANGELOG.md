@@ -10,6 +10,7 @@ that users understand how the changes affect the new version.
 
 version develop
 ---------------------------
++ Add BamMetrics for stats on TranscriptClean alignment.
 + Renamed workflow from `pipeline` to `TalonWDL`.
 + Remove Jenkinsfile from repo.
 + Add multiqc to collect all stats.
