@@ -216,9 +216,6 @@ workflow TalonWDL {
         # outputs
         outputReferenceIndex: {description: "Index file of the reference genome."}
         outputReferenceDict: {description: "Dictionary file of the reference genome."}
-        outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
-        outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
-        outputMinimap2SortedBAI: {description: "Index of sorted minimap2 BAM file(s)."}
         outputTalonDatabase: {description: "TALON database."}
         outputAbundance: {description: "Abundance for each transcript in the TALON database across datasets."}
         outputSummary: {description: "Tab-delimited file of gene and transcript counts for each dataset."}
