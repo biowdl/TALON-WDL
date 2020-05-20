@@ -154,9 +154,6 @@ workflow SampleWorkflow {
         Array[File?] outputTranscriptCleanSortedBAM = executeIndexTranscriptClean.indexedBam
         Array[File?] outputTranscriptCleanSortedBAI = executeIndexTranscriptClean.index
         Array[File?] outputFlagstatsTranscriptClean = bamMetricsTranscriptClean.flagstats
-        Array[File?] outputPicardMetricsFilesTranscriptClean = flatten(bamMetricsTranscriptClean.picardMetricsFiles)
-        Array[File?] outputRnaMetricsTranscriptClean = bamMetricsTranscriptClean.rnaMetrics
-        Array[File?] outputTargetedPcrMetricsTranscriptClean = bamMetricsTranscriptClean.targetedPcrMetrics
     }
 
     parameter_meta {
@@ -190,8 +187,5 @@ workflow SampleWorkflow {
         outputTranscriptCleanSAM: {description: "SAM file(s) containing corrected aligned reads."}
         outputTranscriptCleanTElog: {description: "TE log file(s) of TranscriptClean run."}
         outputFlagstatsTranscriptClean: {description: "Samtools flagstat output for TranscriptClean BAM file(s)."}
-        outputPicardMetricsFilesTranscriptClean: {description: "Picard metrics output for TranscriptClean BAM file(s)."}
-        outputRnaMetricsTranscriptClean: {description: "RNA metrics output for TranscriptClean BAM file(s)."}
-        outputTargetedPcrMetricsTranscriptClean: {description: "Targeted PCR metrics output for TranscriptClean BAM file(s)."}
     }
 }

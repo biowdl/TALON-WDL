@@ -192,9 +192,6 @@ workflow TalonWDL {
         Array[File?] outputTranscriptCleanSortedBAM = flatten(executeSampleWorkflow.outputTranscriptCleanSortedBAM)
         Array[File?] outputTranscriptCleanSortedBAI = flatten(executeSampleWorkflow.outputTranscriptCleanSortedBAI)
         Array[File?] outputFlagstatsTranscriptClean = flatten(executeSampleWorkflow.outputFlagstatsTranscriptClean)
-        Array[File?] outputPicardMetricsFilesTranscriptClean = flatten(executeSampleWorkflow.outputPicardMetricsFilesTranscriptClean)
-        Array[File?] outputRnaMetricsTranscriptClean = flatten(executeSampleWorkflow.outputRnaMetricsTranscriptClean)
-        Array[File?] outputTargetedPcrMetricsTranscriptClean = flatten(executeSampleWorkflow.outputTargetedPcrMetricsTranscriptClean)
     }
 
     parameter_meta {
@@ -243,9 +240,6 @@ workflow TalonWDL {
         outputTranscriptCleanSAM: {description: "SAM file(s) containing corrected aligned reads."}
         outputTranscriptCleanTElog: {description: "TE log file(s) of TranscriptClean run."}
         outputFlagstatsTranscriptClean: {description: "Samtools flagstat output for TranscriptClean BAM file(s)."}
-        outputPicardMetricsFilesTranscriptClean: {description: "Picard metrics output for TranscriptClean BAM file(s)."}
-        outputRnaMetricsTranscriptClean: {description: "RNA metrics output for TranscriptClean BAM file(s)."}
-        outputTargetedPcrMetricsTranscriptClean: {description: "Targeted PCR metrics output for TranscriptClean BAM file(s)."}
     }
 
     meta {
