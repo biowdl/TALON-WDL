@@ -104,26 +104,53 @@ workflow SampleWorkflow {
                     primaryOnly = true,
                     dockerImage = dockerImages["transcriptclean"]
             }
+
+            call samtools.Sort as executeSortTranscriptClean {
+                input:
+                    inputBam = executeTranscriptClean.outputTranscriptCleanSAM,
+                    outputPath = outputDirectory + "/" + readgroupIdentifier + "_clean" + ".sorted.bam",
+                    dockerImage = dockerImages["samtools"]
+            }
+
+            call samtools.Index as executeIndexTranscriptClean {
+                input:
+                    bamFile = executeSortTranscriptClean.outputSortedBam,
+                    outputBamPath = outputDirectory + "/" + readgroupIdentifier + "_clean" + ".sorted.bam",
+                    dockerImage = dockerImages["samtools"]
+            }
+
+            call metrics.BamMetrics as bamMetricsTranscriptClean {
+                input:
+                    bam = executeIndexTranscriptClean.indexedBam,
+                    bamIndex = executeIndexTranscriptClean.index,
+                    outputDir = outputDirectory + "/metrics-transcriptclean",
+                    referenceFasta = referenceGenome,
+                    referenceFastaFai = referenceGenomeIndex,
+                    referenceFastaDict = referenceGenomeDict,
+                    collectAlignmentSummaryMetrics = false,
+                    meanQualityByCycle = false,
+                    dockerImages = dockerImages
+            }
         }
     }
 
     output {
         Array[File] outputHtmlReport = fastqcTask.htmlReport
         Array[File] outputZipReport = fastqcTask.reportZip
-        Array[File] outputFlagstats = bamMetricsMinimap2.flagstats
-        Array[File] outputPicardMetricsFiles = flatten(bamMetricsMinimap2.picardMetricsFiles)
-        Array[File] outputRnaMetrics = flatten(bamMetricsMinimap2.rnaMetrics)
-        Array[File] outputTargetedPcrMetrics = flatten(bamMetricsMinimap2.targetedPcrMetrics)
         Array[File] outputSAMsampleWorkflow = if (runTranscriptClean) 
                     then select_all(executeTranscriptClean.outputTranscriptCleanSAM)
                     else executeMinimap2.outputAlignmentFile
         Array[File] outputMinimap2 = executeMinimap2.outputAlignmentFile
         Array[File] outputMinimap2SortedBAM = executeIndexMinimap2.indexedBam
         Array[File] outputMinimap2SortedBAI = executeIndexMinimap2.index
+        Array[File] outputBamMetricsReportsMinimap2 = flatten(bamMetricsMinimap2.reports)
         Array[File?] outputTranscriptCleanFasta = executeTranscriptClean.outputTranscriptCleanFasta
         Array[File?] outputTranscriptCleanLog = executeTranscriptClean.outputTranscriptCleanLog
         Array[File?] outputTranscriptCleanSAM = executeTranscriptClean.outputTranscriptCleanSAM
         Array[File?] outputTranscriptCleanTElog = executeTranscriptClean.outputTranscriptCleanTElog
+        Array[File?] outputTranscriptCleanSortedBAM = executeIndexTranscriptClean.indexedBam
+        Array[File?] outputTranscriptCleanSortedBAI = executeIndexTranscriptClean.index
+        Array[File?] outputBamMetricsReportsTranscriptClean = flatten(select_all(bamMetricsTranscriptClean.reports))
     }
 
     parameter_meta {
@@ -144,17 +171,17 @@ workflow SampleWorkflow {
         # outputs
         outputHtmlReport: {description: "FastQC output HTML file(s)."}
         outputZipReport: {description: "FastQC output support file(s)."}
-        outputFlagstats: {description: "Samtools flagstat output for minimap2 BAM file(s)."}
-        outputPicardMetricsFiles: {description: "Picard metrics output for minimap2 BAM file(s)."}
-        outputRnaMetrics: {description: "RNA metrics output for minimap2 BAM file(s)."}
-        outputTargetedPcrMetrics: {description: "Targeted PCR metrics output for minimap2 BAM file(s)."}
         outputSAMsampleWorkflow: {description: "Either the minimap2 or TranscriptClean SAM file(s)."}
         outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
         outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
         outputMinimap2SortedBAI: {description: "Index of sorted minimap2 BAM file(s)."}
+        outputBamMetricsReportsMinimap2: {description: "All reports from the BamMetrics pipeline for the minimap2 alignment."}
         outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
         outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
         outputTranscriptCleanSAM: {description: "SAM file(s) containing corrected aligned reads."}
         outputTranscriptCleanTElog: {description: "TE log file(s) of TranscriptClean run."}
+        outputTranscriptCleanSortedBAM: {description: "TranscriptClean BAM file(s) sorted on position."}
+        outputTranscriptCleanSortedBAI: {description: "Index of sorted TranscriptClean BAM file(s)."}
+        outputBamMetricsReportsTranscriptClean: {description: "All reports from the BamMetrics pipeline for the TranscriptClean alignment."}
     }
 }
