@@ -217,6 +217,8 @@ workflow TalonWDL {
         outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
         outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
         outputMinimap2SortedBAI: {description: "Index of sorted minimap2 BAM file(s)."}
+        outputMultiqcReport: {description: "The MultiQC html report."}
+        outputSampleWorkflowReports: {description: "A collection of all metrics outputs."}
         outputSpliceJunctionsFile: {description: "Splice junction annotation file."}
         outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
         outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
@@ -224,7 +226,6 @@ workflow TalonWDL {
         outputTranscriptCleanTElog: {description: "TE log file(s) of TranscriptClean run."}
         outputTranscriptCleanSortedBAM: {description: "TranscriptClean BAM file(s) sorted on position."}
         outputTranscriptCleanSortedBAI: {description: "Index of sorted TranscriptClean BAM file(s)."}
-        outputMultiqcReport: {description: "The MultiQC html report."}
     }
 
     meta {

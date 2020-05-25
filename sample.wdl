@@ -183,6 +183,5 @@ workflow SampleWorkflow {
         outputTranscriptCleanSortedBAM: {description: "TranscriptClean BAM file(s) sorted on position."}
         outputTranscriptCleanSortedBAI: {description: "Index of sorted TranscriptClean BAM file(s)."}
         outputBamMetricsReportsTranscriptClean: {description: "All reports from the BamMetrics pipeline for the TranscriptClean alignment."}
-        outputReports: {description: "A collection of all metrics outputs."}
     }
 }
