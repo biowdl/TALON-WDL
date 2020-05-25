@@ -44,7 +44,6 @@ workflow TalonWDL {
         File dockerImagesFile
         String novelIDprefix = "TALON"
         Boolean runTranscriptClean = true
-        Boolean runMultiQC = if (outputDirectory == ".") then false else true
 
         File? talonDatabase
         File? spliceJunctionsFile
@@ -154,13 +153,13 @@ workflow TalonWDL {
             dockerImage = dockerImages["talon"]
     }
 
-    if (runMultiQC) {
-        call multiqc.MultiQC as multiqcTask {
-            input:
-                reports = executeSampleWorkflow.outputReports,
-                outDir = outputDirectory + "/multiqc",
-                dockerImage = dockerImages["multiqc"]
-        }
+    Array[File] outputReports = flatten([flatten(executeSampleWorkflow.outputHtmlReport), flatten(executeSampleWorkflow.outputZipReport), flatten(executeSampleWorkflow.outputBamMetricsReportsMinimap2), select_all(flatten(executeSampleWorkflow.outputBamMetricsReportsTranscriptClean))])
+
+    call multiqc.MultiQC as multiqcTask {
+        input:
+            reports = outputReports,
+            outDir = outputDirectory + "/multiqc",
+            dockerImage = dockerImages["multiqc"]
     }
 
     output {
@@ -172,12 +171,11 @@ workflow TalonWDL {
         File outputTalonLog = executeTalon.outputLog
         File outputTalonReadAnnot = executeTalon.outputAnnot
         File outputTalonConfigFile = executeTalon.outputConfigFile
-        Array[File] outputHtmlReport = flatten(executeSampleWorkflow.outputHtmlReport)
-        Array[File] outputZipReport = flatten(executeSampleWorkflow.outputZipReport)
         Array[File] outputMinimap2 = flatten(executeSampleWorkflow.outputMinimap2)
         Array[File] outputMinimap2SortedBAM = flatten(executeSampleWorkflow.outputMinimap2SortedBAM)
         Array[File] outputMinimap2SortedBAI = flatten(executeSampleWorkflow.outputMinimap2SortedBAI)
-        Array[File] outputBamMetricsReportsMinimap2 = executeSampleWorkflow.outputBamMetricsReportsMinimap2
+        File outputMultiqcReport = multiqcTask.multiqcReport
+        Array[File] outputSampleWorkflowReports = outputReports
         File? outputSpliceJunctionsFile = if (runTranscriptClean)
               then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
               else NoneFile
@@ -187,8 +185,6 @@ workflow TalonWDL {
         Array[File?] outputTranscriptCleanTElog = flatten(executeSampleWorkflow.outputTranscriptCleanTElog)
         Array[File?] outputTranscriptCleanSortedBAM = flatten(executeSampleWorkflow.outputTranscriptCleanSortedBAM)
         Array[File?] outputTranscriptCleanSortedBAI = flatten(executeSampleWorkflow.outputTranscriptCleanSortedBAI)
-        Array[File?] outputBamMetricsReportsTranscriptClean = executeSampleWorkflow.outputBamMetricsReportsTranscriptClean
-        File outputMultiqcReport = multiqcTask.multiqcReport
     }
 
     parameter_meta {
@@ -205,7 +201,6 @@ workflow TalonWDL {
         dockerImagesFile: {description: "The docker image used for this workflow. Changing this may result in errors which the developers may choose not to address.", category: "required"}
         novelIDprefix: {description: "Prefix for naming novel discoveries in eventual TALON runs.", category: "common"}
         runTranscriptClean: {description: "Option to run TranscriptClean after Minimap2 alignment.", category: "common"}
-        runMultiQC: {description: "Whether or not MultiQC should be run.", category: "advanced"}
         talonDatabase: {description: "A pre-generated TALON database file.", category: "advanced"}
         spliceJunctionsFile: {description: "A pre-generated splice junction annotation file.", category: "advanced"}
         annotationGTFrefflat: {description: "A refflat file of the annotation GTF used.", category: "common"}
@@ -219,12 +214,9 @@ workflow TalonWDL {
         outputTalonLog: {description: "Log file from TALON run."}
         outputTalonReadAnnot: {description: "Read annotation file from TALON run."}
         outputTalonConfigFile: {description: "The TALON configuration file."}
-        outputHtmlReport: {description: "FastQC output HTML files."}
-        outputZipReport: {description: "FastQC output support files."}
         outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
         outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
         outputMinimap2SortedBAI: {description: "Index of sorted minimap2 BAM file(s)."}
-        outputBamMetricsReportsMinimap2: {description: "All reports from the BamMetrics pipeline for the minimap2 alignment."}
         outputSpliceJunctionsFile: {description: "Splice junction annotation file."}
         outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
         outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
@@ -232,7 +224,6 @@ workflow TalonWDL {
         outputTranscriptCleanTElog: {description: "TE log file(s) of TranscriptClean run."}
         outputTranscriptCleanSortedBAM: {description: "TranscriptClean BAM file(s) sorted on position."}
         outputTranscriptCleanSortedBAI: {description: "Index of sorted TranscriptClean BAM file(s)."}
-        outputBamMetricsReportsTranscriptClean: {description: "All reports from the BamMetrics pipeline for the TranscriptClean alignment."}
         outputMultiqcReport: {description: "The MultiQC html report."}
     }
 

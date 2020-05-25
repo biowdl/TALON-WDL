@@ -143,15 +143,14 @@ workflow SampleWorkflow {
         Array[File] outputMinimap2 = executeMinimap2.outputAlignmentFile
         Array[File] outputMinimap2SortedBAM = executeIndexMinimap2.indexedBam
         Array[File] outputMinimap2SortedBAI = executeIndexMinimap2.index
-        Array[File] outputBamMetricsReportsMinimap2 = bamMetricsMinimap2.reports
+        Array[File] outputBamMetricsReportsMinimap2 = flatten(bamMetricsMinimap2.reports)
         Array[File?] outputTranscriptCleanFasta = executeTranscriptClean.outputTranscriptCleanFasta
         Array[File?] outputTranscriptCleanLog = executeTranscriptClean.outputTranscriptCleanLog
         Array[File?] outputTranscriptCleanSAM = executeTranscriptClean.outputTranscriptCleanSAM
         Array[File?] outputTranscriptCleanTElog = executeTranscriptClean.outputTranscriptCleanTElog
         Array[File?] outputTranscriptCleanSortedBAM = executeIndexTranscriptClean.indexedBam
         Array[File?] outputTranscriptCleanSortedBAI = executeIndexTranscriptClean.index
-        Array[File?] outputBamMetricsReportsTranscriptClean = bamMetricsTranscriptClean.reports
-        Array[File] outputReports = flatten(select_all([outputHtmlReport, outputZipReport, outputBamMetricsReportsMinimap2, outputBamMetricsReportsTranscriptClean]))
+        Array[File?] outputBamMetricsReportsTranscriptClean = flatten(select_all(bamMetricsTranscriptClean.reports))
     }
 
     parameter_meta {
