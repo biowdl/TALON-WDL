@@ -137,23 +137,21 @@ workflow SampleWorkflow {
     output {
         Array[File] outputHtmlReport = fastqcTask.htmlReport
         Array[File] outputZipReport = fastqcTask.reportZip
-        Array[File] outputFlagstatsMinimap2 = bamMetricsMinimap2.flagstats
-        Array[File] outputPicardMetricsFilesMinimap2 = flatten(bamMetricsMinimap2.picardMetricsFiles)
-        Array[File] outputRnaMetricsMinimap2 = flatten(bamMetricsMinimap2.rnaMetrics)
-        Array[File] outputTargetedPcrMetricsMinimap2 = flatten(bamMetricsMinimap2.targetedPcrMetrics)
         Array[File] outputSAMsampleWorkflow = if (runTranscriptClean) 
                     then select_all(executeTranscriptClean.outputTranscriptCleanSAM)
                     else executeMinimap2.outputAlignmentFile
         Array[File] outputMinimap2 = executeMinimap2.outputAlignmentFile
         Array[File] outputMinimap2SortedBAM = executeIndexMinimap2.indexedBam
         Array[File] outputMinimap2SortedBAI = executeIndexMinimap2.index
+        Array[File] outputBamMetricsReportsMinimap2 = bamMetricsMinimap2.reports
         Array[File?] outputTranscriptCleanFasta = executeTranscriptClean.outputTranscriptCleanFasta
         Array[File?] outputTranscriptCleanLog = executeTranscriptClean.outputTranscriptCleanLog
         Array[File?] outputTranscriptCleanSAM = executeTranscriptClean.outputTranscriptCleanSAM
         Array[File?] outputTranscriptCleanTElog = executeTranscriptClean.outputTranscriptCleanTElog
         Array[File?] outputTranscriptCleanSortedBAM = executeIndexTranscriptClean.indexedBam
         Array[File?] outputTranscriptCleanSortedBAI = executeIndexTranscriptClean.index
-        Array[File?] outputFlagstatsTranscriptClean = bamMetricsTranscriptClean.flagstats
+        Array[File?] outputBamMetricsReportsTranscriptClean = bamMetricsTranscriptClean.reports
+        Array[File] outputReports = flatten(select_all([outputHtmlReport, outputZipReport, outputBamMetricsReportsMinimap2, outputBamMetricsReportsTranscriptClean]))
     }
 
     parameter_meta {
@@ -174,18 +172,18 @@ workflow SampleWorkflow {
         # outputs
         outputHtmlReport: {description: "FastQC output HTML file(s)."}
         outputZipReport: {description: "FastQC output support file(s)."}
-        outputFlagstatsMinimap2: {description: "Samtools flagstat output for minimap2 BAM file(s)."}
-        outputPicardMetricsFilesMinimap2: {description: "Picard metrics output for minimap2 BAM file(s)."}
-        outputRnaMetricsMinimap2: {description: "RNA metrics output for minimap2 BAM file(s)."}
-        outputTargetedPcrMetricsMinimap2: {description: "Targeted PCR metrics output for minimap2 BAM file(s)."}
         outputSAMsampleWorkflow: {description: "Either the minimap2 or TranscriptClean SAM file(s)."}
         outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
         outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
         outputMinimap2SortedBAI: {description: "Index of sorted minimap2 BAM file(s)."}
+        outputBamMetricsReportsMinimap2: {description: "All reports from the BamMetrics pipeline for the minimap2 alignment."}
         outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
         outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
         outputTranscriptCleanSAM: {description: "SAM file(s) containing corrected aligned reads."}
         outputTranscriptCleanTElog: {description: "TE log file(s) of TranscriptClean run."}
-        outputFlagstatsTranscriptClean: {description: "Samtools flagstat output for TranscriptClean BAM file(s)."}
+        outputTranscriptCleanSortedBAM: {description: "TranscriptClean BAM file(s) sorted on position."}
+        outputTranscriptCleanSortedBAI: {description: "Index of sorted TranscriptClean BAM file(s)."}
+        outputBamMetricsReportsTranscriptClean: {description: "All reports from the BamMetrics pipeline for the TranscriptClean alignment."}
+        outputReports: {description: "A collection of all metrics outputs."}
     }
 }

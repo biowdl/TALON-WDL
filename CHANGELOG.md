@@ -10,6 +10,8 @@ that users understand how the changes affect the new version.
 
 version develop
 ---------------------------
++ Make the MultiQC task suitable for use with a `final_workflow_outputs_dir`
+  so it can be used on all of Cromwell's supported backends.
 + Add BamMetrics for stats on TranscriptClean alignment.
 + Renamed workflow from `pipeline` to `TalonWDL`.
 + Remove Jenkinsfile from repo.
