@@ -7,6 +7,7 @@
   files:
     - path: test-output/grch38.fasta.dict
     - path: test-output/grch38.fasta.fai
+    - path: test-output/multiqc/multiqc_data.zip
     - path: test-output/multiqc/multiqc_report.html
     - path: test-output/nanoporeTestRun.db
     - path: test-output/nanoporeTestRun_talon_abundance.tsv
@@ -49,6 +50,7 @@
   files:
     - path: test-output/grch38.fasta.dict
     - path: test-output/grch38.fasta.fai
+    - path: test-output/multiqc/multiqc_data.zip
     - path: test-output/multiqc/multiqc_report.html
     - path: test-output/nanoporeTestRun.db
     - path: test-output/nanoporeTestRun_talon_abundance.tsv
