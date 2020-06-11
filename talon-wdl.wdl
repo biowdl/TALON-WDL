@@ -176,8 +176,8 @@ workflow TalonWDL {
         Array[File] outputMinimap2SortedBAM = flatten(executeSampleWorkflow.outputMinimap2SortedBAM)
         Array[File] outputMinimap2SortedBAI = flatten(executeSampleWorkflow.outputMinimap2SortedBAI)
         File outputMultiqcReport = multiqcTask.multiqcReport
-        Array[File] outputSampleWorkflowReports = outputReports
         File? outputMultiqcReportZip = multiqcTask.multiqcDataDirZip
+        Array[File] outputSampleWorkflowReports = outputReports
         File? outputSpliceJunctionsFile = if (runTranscriptClean)
               then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
               else NoneFile
@@ -220,8 +220,8 @@ workflow TalonWDL {
         outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
         outputMinimap2SortedBAI: {description: "Index of sorted minimap2 BAM file(s)."}
         outputMultiqcReport: {description: "The MultiQC html report."}
-        outputSampleWorkflowReports: {description: "A collection of all metrics outputs."}
         outputMultiqcReportZip: {description: "The MultiQC data zip file."}
+        outputSampleWorkflowReports: {description: "A collection of all metrics outputs."}
         outputSpliceJunctionsFile: {description: "Splice junction annotation file."}
         outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
         outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
