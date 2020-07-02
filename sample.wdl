@@ -25,7 +25,7 @@ import "BamMetrics/bammetrics.wdl" as metrics
 import "tasks/fastqc.wdl" as fastqc
 import "tasks/minimap2.wdl" as minimap2
 import "tasks/samtools.wdl" as samtools
-import "/exports/sasc/jboom/WorkInProgress/tasks/talon.wdl" as talon
+import "tasks/talon.wdl" as talon
 import "tasks/transcriptclean.wdl" as transcriptClean
 
 workflow SampleWorkflow {
