@@ -25,6 +25,7 @@ import "BamMetrics/bammetrics.wdl" as metrics
 import "tasks/fastqc.wdl" as fastqc
 import "tasks/minimap2.wdl" as minimap2
 import "tasks/samtools.wdl" as samtools
+import "/exports/sasc/jboom/WorkInProgress/tasks/talon.wdl" as talon
 import "tasks/transcriptclean.wdl" as transcriptClean
 
 workflow SampleWorkflow {
@@ -93,6 +94,14 @@ workflow SampleWorkflow {
                 dockerImages = dockerImages
         }
 
+        call talon.LabelReads as executeLabelReadsMinimap2 {
+            input:
+                SAMfile = executeMinimap2.outputAlignmentFile,
+                referenceGenome = referenceGenome,
+                outputPrefix = outputDirectory + "/" + readgroupIdentifier,
+                dockerImage = dockerImages["talon"]
+        }
+
         if (runTranscriptClean) {
             call transcriptClean.TranscriptClean as executeTranscriptClean {
                 input:
@@ -131,6 +140,14 @@ workflow SampleWorkflow {
                     meanQualityByCycle = false,
                     dockerImages = dockerImages
             }
+
+            call talon.LabelReads as executeLabelReadsTranscriptClean {
+                input:
+                    SAMfile = executeTranscriptClean.outputTranscriptCleanSAM,
+                    referenceGenome = referenceGenome,
+                    outputPrefix = outputDirectory + "/" + readgroupIdentifier + "_clean",
+                    dockerImage = dockerImages["talon"]
+            }
         }
     }
 
@@ -138,12 +155,13 @@ workflow SampleWorkflow {
         Array[File] outputHtmlReport = fastqcTask.htmlReport
         Array[File] outputZipReport = fastqcTask.reportZip
         Array[File] outputSAMsampleWorkflow = if (runTranscriptClean) 
-                    then select_all(executeTranscriptClean.outputTranscriptCleanSAM)
-                    else executeMinimap2.outputAlignmentFile
+                    then select_all(executeLabelReadsTranscriptClean.outputLabeledSAM)
+                    else executeLabelReadsMinimap2.outputLabeledSAM
         Array[File] outputMinimap2 = executeMinimap2.outputAlignmentFile
         Array[File] outputMinimap2SortedBAM = executeIndexMinimap2.indexedBam
         Array[File] outputMinimap2SortedBAI = executeIndexMinimap2.index
         Array[File] outputBamMetricsReportsMinimap2 = flatten(bamMetricsMinimap2.reports)
+        Array[File] outputMinimap2Labeled = executeLabelReadsMinimap2.outputLabeledSAM
         Array[File?] outputTranscriptCleanFasta = executeTranscriptClean.outputTranscriptCleanFasta
         Array[File?] outputTranscriptCleanLog = executeTranscriptClean.outputTranscriptCleanLog
         Array[File?] outputTranscriptCleanSAM = executeTranscriptClean.outputTranscriptCleanSAM
@@ -151,6 +169,7 @@ workflow SampleWorkflow {
         Array[File?] outputTranscriptCleanSortedBAM = executeIndexTranscriptClean.indexedBam
         Array[File?] outputTranscriptCleanSortedBAI = executeIndexTranscriptClean.index
         Array[File?] outputBamMetricsReportsTranscriptClean = flatten(select_all(bamMetricsTranscriptClean.reports))
+        Array[File?] outputTranscriptCleanLabeled = executeLabelReadsTranscriptClean.outputLabeledSAM
     }
 
     parameter_meta {
@@ -176,6 +195,7 @@ workflow SampleWorkflow {
         outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
         outputMinimap2SortedBAI: {description: "Index of sorted minimap2 BAM file(s)."}
         outputBamMetricsReportsMinimap2: {description: "All reports from the BamMetrics pipeline for the minimap2 alignment."}
+        outputMinimap2Labeled: {description: "Minimap2 alignments labeled for internal priming."}
         outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
         outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
         outputTranscriptCleanSAM: {description: "SAM file(s) containing corrected aligned reads."}
@@ -183,5 +203,6 @@ workflow SampleWorkflow {
         outputTranscriptCleanSortedBAM: {description: "TranscriptClean BAM file(s) sorted on position."}
         outputTranscriptCleanSortedBAI: {description: "Index of sorted TranscriptClean BAM file(s)."}
         outputBamMetricsReportsTranscriptClean: {description: "All reports from the BamMetrics pipeline for the TranscriptClean alignment."}
+        outputTranscriptCleanLabeled: {description: "TranscriptClean alignments labeled for internal priming."}
     }
 }

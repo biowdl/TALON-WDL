@@ -175,6 +175,7 @@ workflow TalonWDL {
         Array[File] outputMinimap2 = flatten(executeSampleWorkflow.outputMinimap2)
         Array[File] outputMinimap2SortedBAM = flatten(executeSampleWorkflow.outputMinimap2SortedBAM)
         Array[File] outputMinimap2SortedBAI = flatten(executeSampleWorkflow.outputMinimap2SortedBAI)
+        Array[File] outputMinimap2Labeled = flatten(executeSampleWorkflow.outputMinimap2Labeled)
         File outputMultiqcReport = multiqcTask.multiqcReport
         File? outputMultiqcReportZip = multiqcTask.multiqcDataDirZip
         Array[File] outputSampleWorkflowReports = outputReports
@@ -187,6 +188,7 @@ workflow TalonWDL {
         Array[File?] outputTranscriptCleanTElog = flatten(executeSampleWorkflow.outputTranscriptCleanTElog)
         Array[File?] outputTranscriptCleanSortedBAM = flatten(executeSampleWorkflow.outputTranscriptCleanSortedBAM)
         Array[File?] outputTranscriptCleanSortedBAI = flatten(executeSampleWorkflow.outputTranscriptCleanSortedBAI)
+        Array[File?] outputTranscriptCleanLabeled = flatten(executeSampleWorkflow.outputTranscriptCleanLabeled)
     }
 
     parameter_meta {
@@ -219,6 +221,7 @@ workflow TalonWDL {
         outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
         outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
         outputMinimap2SortedBAI: {description: "Index of sorted minimap2 BAM file(s)."}
+        outputMinimap2Labeled: {description: "Minimap2 alignments labeled for internal priming."}
         outputMultiqcReport: {description: "The MultiQC html report."}
         outputMultiqcReportZip: {description: "The MultiQC data zip file."}
         outputSampleWorkflowReports: {description: "A collection of all metrics outputs."}
@@ -229,6 +232,7 @@ workflow TalonWDL {
         outputTranscriptCleanTElog: {description: "TE log file(s) of TranscriptClean run."}
         outputTranscriptCleanSortedBAM: {description: "TranscriptClean BAM file(s) sorted on position."}
         outputTranscriptCleanSortedBAI: {description: "Index of sorted TranscriptClean BAM file(s)."}
+        outputTranscriptCleanLabeled: {description: "TranscriptClean alignments labeled for internal priming."}
     }
 
     meta {

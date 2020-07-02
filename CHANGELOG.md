@@ -10,6 +10,7 @@ that users understand how the changes affect the new version.
 
 version develop
 ---------------------------
++ Update TALON to version 5.0.
 + Make the MultiQC task suitable for use with a `final_workflow_outputs_dir`
   so it can be used on all of Cromwell's supported backends.
 + Tasks were updated to contain the `time_minutes` runtime attribute and
