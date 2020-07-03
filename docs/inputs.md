@@ -102,6 +102,16 @@
         <i>Array[File]+? &mdash; Default: None</i><br />
         An interval list describing the coordinates of the targets sequenced. This should only be used for targeted sequencing or WES. If defined targeted PCR metrics will be collected. Requires `ampliconIntervals` to also be defined.
 </p>
+<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.fracaRangeSize">
+        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.fracaRangeSize</b><br />
+        <i>Int &mdash; Default: 20</i><br />
+        Size of post-transcript interval to compute fraction.
+</p>
+<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.fracaRangeSize">
+        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.fracaRangeSize</b><br />
+        <i>Int &mdash; Default: 20</i><br />
+        Size of post-transcript interval to compute fraction.
+</p>
 <p name="TalonWDL.executeSampleWorkflow.executeTranscriptClean.bufferSize">
         <b>TalonWDL.executeSampleWorkflow.executeTranscriptClean.bufferSize</b><br />
         <i>Int &mdash; Default: 100</i><br />
@@ -144,7 +154,7 @@
 </p>
 <p name="TalonWDL.executeTalon.minimumIdentity">
         <b>TalonWDL.executeTalon.minimumIdentity</b><br />
-        <i>Int &mdash; Default: 0</i><br />
+        <i>Float &mdash; Default: 0.8</i><br />
         Minimum alignment identity in order to use a SAM entry.
 </p>
 <p name="TalonWDL.novelIDprefix">
@@ -363,7 +373,7 @@
 </p>
 <p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.timeMinutes">
         <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.timeMinutes</b><br />
-        <i>Int &mdash; Default: 1 + ceil((size(inputBam,"G") * 6))</i><br />
+        <i>Int &mdash; Default: 1 + ceil((size(referenceFasta,"G") * 3 * 2)) + ceil((size(inputBam,"G") * 6))</i><br />
         The maximum amount of time the job will run in minutes.
 </p>
 <p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.rnaSeqMetrics.javaXmx">
@@ -378,7 +388,7 @@
 </p>
 <p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.rnaSeqMetrics.timeMinutes">
         <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.rnaSeqMetrics.timeMinutes</b><br />
-        <i>Int &mdash; Default: 1 + ceil((size(inputBam,"G") * 6))</i><br />
+        <i>Int &mdash; Default: 1 + ceil((size(inputBam,"G") * 12))</i><br />
         The maximum amount of time the job will run in minutes.
 </p>
 <p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.targetIntervalsLists.javaXmx">
@@ -478,7 +488,7 @@
 </p>
 <p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.timeMinutes">
         <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.timeMinutes</b><br />
-        <i>Int &mdash; Default: 1 + ceil((size(inputBam,"G") * 6))</i><br />
+        <i>Int &mdash; Default: 1 + ceil((size(referenceFasta,"G") * 3 * 2)) + ceil((size(inputBam,"G") * 6))</i><br />
         The maximum amount of time the job will run in minutes.
 </p>
 <p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.rnaSeqMetrics.javaXmx">
@@ -493,7 +503,7 @@
 </p>
 <p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.rnaSeqMetrics.timeMinutes">
         <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.rnaSeqMetrics.timeMinutes</b><br />
-        <i>Int &mdash; Default: 1 + ceil((size(inputBam,"G") * 6))</i><br />
+        <i>Int &mdash; Default: 1 + ceil((size(inputBam,"G") * 12))</i><br />
         The maximum amount of time the job will run in minutes.
 </p>
 <p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.targetIntervalsLists.javaXmx">
@@ -545,6 +555,56 @@
         <b>TalonWDL.executeSampleWorkflow.executeIndexTranscriptClean.timeMinutes</b><br />
         <i>Int &mdash; Default: 1 + ceil((size(bamFile,"G") * 4))</i><br />
         The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.deleteTmp">
+        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.deleteTmp</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        If set, tmp dir will be removed.
+</p>
+<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.memory">
+        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.memory</b><br />
+        <i>String &mdash; Default: "25G"</i><br />
+        The amount of memory available to the job.
+</p>
+<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.threads">
+        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.threads</b><br />
+        <i>Int &mdash; Default: 4</i><br />
+        The number of threads to be used.
+</p>
+<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.timeMinutes">
+        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.timeMinutes</b><br />
+        <i>Int &mdash; Default: 2880</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.tmpDir">
+        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.tmpDir</b><br />
+        <i>String &mdash; Default: "./tmp_label_reads"</i><br />
+        Path to directory for tmp files.
+</p>
+<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.deleteTmp">
+        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.deleteTmp</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        If set, tmp dir will be removed.
+</p>
+<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.memory">
+        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.memory</b><br />
+        <i>String &mdash; Default: "25G"</i><br />
+        The amount of memory available to the job.
+</p>
+<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.threads">
+        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.threads</b><br />
+        <i>Int &mdash; Default: 4</i><br />
+        The number of threads to be used.
+</p>
+<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.timeMinutes">
+        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.timeMinutes</b><br />
+        <i>Int &mdash; Default: 2880</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.tmpDir">
+        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.tmpDir</b><br />
+        <i>String &mdash; Default: "./tmp_label_reads"</i><br />
+        Path to directory for tmp files.
 </p>
 <p name="TalonWDL.executeSampleWorkflow.executeMinimap2.cores">
         <b>TalonWDL.executeSampleWorkflow.executeMinimap2.cores</b><br />
@@ -716,6 +776,11 @@
         <i>String? &mdash; Default: None</i><br />
         Equivalent to fastqc's --format option.
 </p>
+<p name="TalonWDL.executeSampleWorkflow.fastqcTask.javaXmx">
+        <b>TalonWDL.executeSampleWorkflow.fastqcTask.javaXmx</b><br />
+        <i>String &mdash; Default: "1750M"</i><br />
+        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
+</p>
 <p name="TalonWDL.executeSampleWorkflow.fastqcTask.kmers">
         <b>TalonWDL.executeSampleWorkflow.fastqcTask.kmers</b><br />
         <i>Int? &mdash; Default: None</i><br />
@@ -728,7 +793,7 @@
 </p>
 <p name="TalonWDL.executeSampleWorkflow.fastqcTask.memory">
         <b>TalonWDL.executeSampleWorkflow.fastqcTask.memory</b><br />
-        <i>String &mdash; Default: "~{250 + 250 * threads}M"</i><br />
+        <i>String &mdash; Default: "2G"</i><br />
         The amount of memory this job will use.
 </p>
 <p name="TalonWDL.executeSampleWorkflow.fastqcTask.minLength">
@@ -766,15 +831,15 @@
         <i>String &mdash; Default: "2G"</i><br />
         The amount of memory available to the job.
 </p>
-<p name="TalonWDL.executeTalon.cores">
-        <b>TalonWDL.executeTalon.cores</b><br />
-        <i>Int &mdash; Default: 4</i><br />
-        The number of cores to be used.
-</p>
 <p name="TalonWDL.executeTalon.memory">
         <b>TalonWDL.executeTalon.memory</b><br />
         <i>String &mdash; Default: "25G"</i><br />
         The amount of memory available to the job.
+</p>
+<p name="TalonWDL.executeTalon.threads">
+        <b>TalonWDL.executeTalon.threads</b><br />
+        <i>Int &mdash; Default: 4</i><br />
+        The number of threads to be used.
 </p>
 <p name="TalonWDL.executeTalon.timeMinutes">
         <b>TalonWDL.executeTalon.timeMinutes</b><br />
@@ -873,7 +938,7 @@
 </p>
 <p name="TalonWDL.multiqcTask.memory">
         <b>TalonWDL.multiqcTask.memory</b><br />
-        <i>String &mdash; Default: "4G"</i><br />
+        <i>String? &mdash; Default: None</i><br />
         The amount of memory this job will use.
 </p>
 <p name="TalonWDL.multiqcTask.module">
@@ -903,7 +968,7 @@
 </p>
 <p name="TalonWDL.multiqcTask.timeMinutes">
         <b>TalonWDL.multiqcTask.timeMinutes</b><br />
-        <i>Int &mdash; Default: 120</i><br />
+        <i>Int &mdash; Default: 2 + ceil((size(reports,"G") * 8))</i><br />
         The maximum amount of time the job will run in minutes.
 </p>
 <p name="TalonWDL.multiqcTask.title">
