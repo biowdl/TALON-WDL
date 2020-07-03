@@ -49,6 +49,6 @@ matrix:
       after_failure:
         - echo "Linting failed"
     - env:
-      - TEST="integration"
+      - TEST="integration.test"
     - env:
       - TEST="no.transcriptclean"

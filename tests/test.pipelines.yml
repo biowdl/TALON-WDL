@@ -1,9 +1,9 @@
-- name: integration
+- name: integration.test
   tags:
     - integration
   command: >-
     cromwell run -o tests/cromwell.options.json
-    -i tests/integration/integration.json talon-wdl.wdl
+    -i tests/integration/integration.test.json talon-wdl.wdl
   files:
     - path: test-output/grch38.fasta.dict
     - path: test-output/grch38.fasta.fai
