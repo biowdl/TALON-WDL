@@ -29,7 +29,7 @@
 
 biowdl-input-converter: "quay.io/biocontainers/biowdl-input-converter:0.2.1--py_0"
 fastqc: "quay.io/biocontainers/fastqc:0.11.9--0"
-minimap2: "quay.io/biocontainers/minimap2:2.17--h8b12597_1"
+minimap2: "quay.io/biocontainers/minimap2:2.17--hed695b0_2"
 multiqc: "quay.io/biocontainers/multiqc:1.9--pyh9f0ad1d_0"
 picard: "quay.io/biocontainers/picard:2.23.0--0"
 samtools: "quay.io/biocontainers/samtools:1.9--h10a08f8_12"
