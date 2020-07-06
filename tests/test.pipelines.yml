@@ -19,14 +19,12 @@
     - path: test-output/GM12878/GM12878-lib1-rg1_clean.fa
     - path: test-output/GM12878/GM12878-lib1-rg1_clean_labeled.sam
     - path: test-output/GM12878/GM12878-lib1-rg1_clean.log
-    - path: test-output/GM12878/GM12878-lib1-rg1_clean_read_labels.tsv
     - path: test-output/GM12878/GM12878-lib1-rg1_clean.sam
     - path: test-output/GM12878/GM12878-lib1-rg1_clean.sorted.bai
     - path: test-output/GM12878/GM12878-lib1-rg1_clean.sorted.bam
     - path: test-output/GM12878/GM12878-lib1-rg1_clean.TE.log
     - path: test-output/GM12878/GM12878-lib1-rg1-fastqc
     - path: test-output/GM12878/GM12878-lib1-rg1_labeled.sam
-    - path: test-output/GM12878/GM12878-lib1-rg1_read_labels.tsv
     - path: test-output/GM12878/GM12878-lib1-rg1.sam
     - path: test-output/GM12878/GM12878-lib1-rg1.sorted.bai
     - path: test-output/GM12878/GM12878-lib1-rg1.sorted.bam
@@ -35,14 +33,12 @@
     - path: test-output/K562/K562-lib1-rg1_clean.fa
     - path: test-output/K562/K562-lib1-rg1_clean_labeled.sam
     - path: test-output/K562/K562-lib1-rg1_clean.log
-    - path: test-output/K562/K562-lib1-rg1_clean_read_labels.tsv
     - path: test-output/K562/K562-lib1-rg1_clean.sam
     - path: test-output/K562/K562-lib1-rg1_clean.sorted.bai
     - path: test-output/K562/K562-lib1-rg1_clean.sorted.bam
     - path: test-output/K562/K562-lib1-rg1_clean.TE.log
     - path: test-output/K562/K562-lib1-rg1-fastqc
     - path: test-output/K562/K562-lib1-rg1_labeled.sam
-    - path: test-output/K562/K562-lib1-rg1_read_labels.tsv
     - path: test-output/K562/K562-lib1-rg1.sam
     - path: test-output/K562/K562-lib1-rg1.sorted.bai
     - path: test-output/K562/K562-lib1-rg1.sorted.bam
@@ -72,8 +68,6 @@
       should_exist: false
     - path: test-output/GM12878/GM12878-lib1-rg1_clean.log
       should_exist: false
-    - path: test-output/GM12878/GM12878-lib1-rg1_clean_read_labels.tsv
-      should_exist: false
     - path: test-output/GM12878/GM12878-lib1-rg1_clean.sam
       should_exist: false
     - path: test-output/GM12878/GM12878-lib1-rg1_clean.sorted.bai
@@ -84,7 +78,6 @@
       should_exist: false
     - path: test-output/GM12878/GM12878-lib1-rg1-fastqc
     - path: test-output/GM12878/GM12878-lib1-rg1_labeled.sam
-    - path: test-output/GM12878/GM12878-lib1-rg1_read_labels.tsv
     - path: test-output/GM12878/GM12878-lib1-rg1.sam
     - path: test-output/GM12878/GM12878-lib1-rg1.sorted.bai
     - path: test-output/GM12878/GM12878-lib1-rg1.sorted.bam
@@ -97,8 +90,6 @@
       should_exist: false
     - path: test-output/K562/K562-lib1-rg1_clean.log
       should_exist: false
-    - path: test-output/K562/K562-lib1-rg1_clean_read_labels.tsv
-      should_exist: false
     - path: test-output/K562/K562-lib1-rg1_clean.sam
       should_exist: false
     - path: test-output/K562/K562-lib1-rg1_clean.sorted.bai
@@ -109,7 +100,6 @@
       should_exist: false
     - path: test-output/K562/K562-lib1-rg1-fastqc
     - path: test-output/K562/K562-lib1-rg1_labeled.sam
-    - path: test-output/K562/K562-lib1-rg1_read_labels.tsv
     - path: test-output/K562/K562-lib1-rg1.sam
     - path: test-output/K562/K562-lib1-rg1.sorted.bai
     - path: test-output/K562/K562-lib1-rg1.sorted.bam
