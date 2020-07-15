@@ -1,5 +1,5 @@
 {
-    "TalonWDL.sampleConfigFile": "tests/samplesheets/samplesheet.csv",
+    "TalonWDL.sampleConfigFile": "tests/samplesheets/pacbio.csv",
     "TalonWDL.annotationGTF": "tests/data/gencode.v34.annotation.gtf",
     "TalonWDL.genomeBuild": "hg38",
     "TalonWDL.annotationVersion": "gencode_v34",
