@@ -10,6 +10,8 @@ that users understand how the changes affect the new version.
 
 version develop
 ---------------------------
++ Replace test files and tests for Nanopore.
++ Add new test files and tests for PacBio.
 + Add `LabelReads` task from TALON for labeling possible internal priming, both
   on Minimap2 and TranscriptClean alignments.
 + Update TALON to version 5.0.
