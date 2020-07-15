@@ -147,7 +147,8 @@ workflow SampleWorkflow {
         Array[File] outputMinimap2SortedBAM = executeSortMinimap2.outputBam
         Array[File] outputMinimap2SortedBAI = executeSortMinimap2.outputBamIndex
         Array[File] outputBamMetricsReportsMinimap2 = flatten(bamMetricsMinimap2.reports)
-        Array[File] outputMinimap2Labeled = executeLabelReadsMinimap2.outputLabeledSAM
+        Array[File] outputMinimap2LabeledSAM = executeLabelReadsMinimap2.outputLabeledSAM
+        Array[File] outputMinimap2ReadLabels = executeLabelReadsMinimap2.outputReadLabels
         Array[File?] outputTranscriptCleanFasta = executeTranscriptClean.outputTranscriptCleanFasta
         Array[File?] outputTranscriptCleanLog = executeTranscriptClean.outputTranscriptCleanLog
         Array[File?] outputTranscriptCleanSAM = executeTranscriptClean.outputTranscriptCleanSAM
@@ -155,7 +156,8 @@ workflow SampleWorkflow {
         Array[File?] outputTranscriptCleanSortedBAM = executeSortTranscriptClean.outputBam
         Array[File?] outputTranscriptCleanSortedBAI = executeSortTranscriptClean.outputBamIndex
         Array[File?] outputBamMetricsReportsTranscriptClean = flatten(select_all(bamMetricsTranscriptClean.reports))
-        Array[File?] outputTranscriptCleanLabeled = executeLabelReadsTranscriptClean.outputLabeledSAM
+        Array[File?] outputTranscriptCleanLabeledSAM = executeLabelReadsTranscriptClean.outputLabeledSAM
+        Array[File?] outputTranscriptCleanReadLabels = executeLabelReadsTranscriptClean.outputReadLabels
     }
 
     parameter_meta {
@@ -181,7 +183,8 @@ workflow SampleWorkflow {
         outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
         outputMinimap2SortedBAI: {description: "Index of sorted minimap2 BAM file(s)."}
         outputBamMetricsReportsMinimap2: {description: "All reports from the BamMetrics pipeline for the minimap2 alignment."}
-        outputMinimap2Labeled: {description: "Minimap2 alignments labeled for internal priming."}
+        outputMinimap2LabeledSAM: {description: "Minimap2 alignments labeled for internal priming."}
+        outputMinimap2ReadLabels: {description: "Tabular file with fraction description per read for Minimap2 alignment."}
         outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
         outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
         outputTranscriptCleanSAM: {description: "SAM file(s) containing corrected aligned reads."}
@@ -189,6 +192,7 @@ workflow SampleWorkflow {
         outputTranscriptCleanSortedBAM: {description: "TranscriptClean BAM file(s) sorted on position."}
         outputTranscriptCleanSortedBAI: {description: "Index of sorted TranscriptClean BAM file(s)."}
         outputBamMetricsReportsTranscriptClean: {description: "All reports from the BamMetrics pipeline for the TranscriptClean alignment."}
-        outputTranscriptCleanLabeled: {description: "TranscriptClean alignments labeled for internal priming."}
+        outputTranscriptCleanLabeledSAM: {description: "TranscriptClean alignments labeled for internal priming."}
+        outputTranscriptCleanReadLabels: {description: "Tabular file with fraction description per read for TranscriptClean alignment."}
     }
 }

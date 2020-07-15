@@ -47,4 +47,4 @@ matrix:
     - env:
       - TEST="pacbio.integration.test"
     - env:
-      - TEST="pacbio.no.transcriptclean.json"
+      - TEST="pacbio.no.transcriptclean"

@@ -10,6 +10,8 @@ that users understand how the changes affect the new version.
 
 version develop
 ---------------------------
++ Samtools index task was removed because samtools sort task now also creates
+  a index.
 + Replace test files and tests for Nanopore.
 + Add new test files and tests for PacBio.
 + Add `LabelReads` task from TALON for labeling possible internal priming, both
