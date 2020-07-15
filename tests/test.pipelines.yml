@@ -61,7 +61,6 @@
     - path: test-output/grch38.fasta.fai
     - path: test-output/multiqc/multiqc_data.zip
     - path: test-output/multiqc/multiqc_report.html
-
     - path: test-output/pacbio.1/metrics-minimap2
     - path: test-output/pacbio.1/metrics-transcriptclean
       should_exist: false
