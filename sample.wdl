@@ -75,17 +75,10 @@ workflow SampleWorkflow {
                 dockerImage = dockerImages["samtools"]
         }
 
-        call samtools.Index as executeIndexMinimap2 {
-            input:
-                bamFile = executeSortMinimap2.outputSortedBam,
-                outputBamPath = outputDirectory + "/" + readgroupIdentifier + ".sorted.bam",
-                dockerImage = dockerImages["samtools"]
-        }
-
         call metrics.BamMetrics as bamMetricsMinimap2 {
             input:
-                bam = executeIndexMinimap2.indexedBam,
-                bamIndex = executeIndexMinimap2.index,
+                bam = executeSortMinimap2.outputBam,
+                bamIndex = executeSortMinimap2.outputBamIndex,
                 outputDir = outputDirectory + "/metrics-minimap2",
                 referenceFasta = referenceGenome,
                 referenceFastaFai = referenceGenomeIndex,
@@ -121,17 +114,10 @@ workflow SampleWorkflow {
                     dockerImage = dockerImages["samtools"]
             }
 
-            call samtools.Index as executeIndexTranscriptClean {
-                input:
-                    bamFile = executeSortTranscriptClean.outputSortedBam,
-                    outputBamPath = outputDirectory + "/" + readgroupIdentifier + "_clean" + ".sorted.bam",
-                    dockerImage = dockerImages["samtools"]
-            }
-
             call metrics.BamMetrics as bamMetricsTranscriptClean {
                 input:
-                    bam = executeIndexTranscriptClean.indexedBam,
-                    bamIndex = executeIndexTranscriptClean.index,
+                    bam = executeSortTranscriptClean.outputBam,
+                    bamIndex = executeSortTranscriptClean.outputBamIndex,
                     outputDir = outputDirectory + "/metrics-transcriptclean",
                     referenceFasta = referenceGenome,
                     referenceFastaFai = referenceGenomeIndex,
@@ -158,16 +144,16 @@ workflow SampleWorkflow {
                     then select_all(executeLabelReadsTranscriptClean.outputLabeledSAM)
                     else executeLabelReadsMinimap2.outputLabeledSAM
         Array[File] outputMinimap2 = executeMinimap2.outputAlignmentFile
-        Array[File] outputMinimap2SortedBAM = executeIndexMinimap2.indexedBam
-        Array[File] outputMinimap2SortedBAI = executeIndexMinimap2.index
+        Array[File] outputMinimap2SortedBAM = executeSortMinimap2.outputBam
+        Array[File] outputMinimap2SortedBAI = executeSortMinimap2.outputBamIndex
         Array[File] outputBamMetricsReportsMinimap2 = flatten(bamMetricsMinimap2.reports)
         Array[File] outputMinimap2Labeled = executeLabelReadsMinimap2.outputLabeledSAM
         Array[File?] outputTranscriptCleanFasta = executeTranscriptClean.outputTranscriptCleanFasta
         Array[File?] outputTranscriptCleanLog = executeTranscriptClean.outputTranscriptCleanLog
         Array[File?] outputTranscriptCleanSAM = executeTranscriptClean.outputTranscriptCleanSAM
         Array[File?] outputTranscriptCleanTElog = executeTranscriptClean.outputTranscriptCleanTElog
-        Array[File?] outputTranscriptCleanSortedBAM = executeIndexTranscriptClean.indexedBam
-        Array[File?] outputTranscriptCleanSortedBAI = executeIndexTranscriptClean.index
+        Array[File?] outputTranscriptCleanSortedBAM = executeSortTranscriptClean.outputBam
+        Array[File?] outputTranscriptCleanSortedBAI = executeSortTranscriptClean.outputBamIndex
         Array[File?] outputBamMetricsReportsTranscriptClean = flatten(select_all(bamMetricsTranscriptClean.reports))
         Array[File?] outputTranscriptCleanLabeled = executeLabelReadsTranscriptClean.outputLabeledSAM
     }
