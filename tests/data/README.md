@@ -19,14 +19,11 @@
   * `samtools fastq chr1.sam > chr1.fastq`
   * `cat chr1.fastq | head -n 3000 > pacbio.subset.1.fastq`
   * `cat chr1.fastq | tail -n 3000 > pacbio.subset.2.fastq`
-
-
-
-
-
-* [ONT_GM12878_SUBSET.fastq](https://sra-pub-src-1.s3.amazonaws.com/SRR9304714/ONT_GM12878_3.fastq.gz.1)
+* [ONT_GM12878_3](https://sra-pub-src-1.s3.amazonaws.com/SRR9304714/ONT_GM12878_3.fastq.gz.1)
   * `minimap2 -ax splice --secondary=no --MD -uf -o GM12878.sam GRCh38.fasta ONT_GM12878_3.fastq`
   * `samtools sort -o GM12878.sorted.bam --output-fmt BAM GM12878.sam`
-  * 
-
-  * `cat ONT_K562_1.fastq | head -n 3000 > ONT_K562_SUBSET.fastq`
+  * `samtools index GM12878.sorted.bam`
+  * `samtools view -h -o chr1.sam GM12878.sorted.bam chr1`
+  * `samtools fastq chr1.sam > chr1.fastq`
+  * `cat chr1.fastq | head -n 3000 > nanopore.subset.1.fastq`
+  * `cat chr1.fastq | tail -n 3000 > nanopore.subset.2.fastq`

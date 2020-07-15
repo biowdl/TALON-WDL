@@ -48,3 +48,7 @@ matrix:
       - TEST="pacbio.integration.test"
     - env:
       - TEST="pacbio.no.transcriptclean"
+    - env:
+      - TEST="nanopore.integration.test"
+    - env:
+      - TEST="nanopore.no.transcriptclean"

@@ -118,3 +118,124 @@
     - path: test-output/spliceJunctionsFile.tsv
       should_exist: false
     - path: test-output/talonConfigFile.csv
+
+- name: nanopore.integration.test
+  tags:
+    - integration
+  command: >-
+    cromwell run -o tests/cromwell.options.json
+    -i tests/integration/nanopore.integration.test.json talon-wdl.wdl
+  files:
+    - path: test-output/grch38.fasta.dict
+    - path: test-output/grch38.fasta.fai
+    - path: test-output/multiqc/multiqc_data.zip
+    - path: test-output/multiqc/multiqc_report.html
+    - path: test-output/nanopore.1/metrics-minimap2
+    - path: test-output/nanopore.1/metrics-transcriptclean
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.fa
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean_labeled.sam
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.log
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean_read_labels.tsv
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.sam
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.sorted.bai
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.sorted.bam
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.TE.log
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1-fastqc
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_labeled.sam
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_read_labels.tsv
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sam
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sorted.bai
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sorted.bam
+    - path: test-output/nanopore.2/metrics-minimap2
+    - path: test-output/nanopore.2/metrics-transcriptclean
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.fa
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean_labeled.sam
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.log
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean_read_labels.tsv
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.sam
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.sorted.bai
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.sorted.bam
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.TE.log
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1-fastqc
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_labeled.sam
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_read_labels.tsv
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sam
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sorted.bai
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sorted.bam
+    - path: test-output/nanopore-test.db
+    - path: test-output/nanopore-test_talon_abundance.tsv
+    - path: test-output/nanopore-test_talon_summary.tsv
+    - path: test-output/run_QC.log
+    - path: test-output/run_talon_read_annot.tsv
+    - path: test-output/spliceJunctionsFile.tsv
+    - path: test-output/talonConfigFile.csv
+
+- name: nanopore.no.transcriptclean
+  tags:
+    - integration
+  command: >-
+    cromwell run -o tests/cromwell.options.json
+    -i tests/integration/nanopore.no.transcriptclean.json talon-wdl.wdl
+  files:
+    - path: test-output/grch38.fasta.dict
+    - path: test-output/grch38.fasta.fai
+    - path: test-output/multiqc/multiqc_data.zip
+    - path: test-output/multiqc/multiqc_report.html
+    - path: test-output/nanopore.1/metrics-minimap2
+    - path: test-output/nanopore.1/metrics-transcriptclean
+      should_exist: false
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.fa
+      should_exist: false
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean_labeled.sam
+      should_exist: false
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.log
+      should_exist: false
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean_read_labels.tsv
+      should_exist: false
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.sam
+      should_exist: false
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.sorted.bai
+      should_exist: false
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.sorted.bam
+      should_exist: false
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.TE.log
+      should_exist: false
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1-fastqc
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_labeled.sam
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_read_labels.tsv
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sam
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sorted.bai
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sorted.bam
+    - path: test-output/nanopore.2/metrics-minimap2
+    - path: test-output/nanopore.2/metrics-transcriptclean
+      should_exist: false
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.fa
+      should_exist: false
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean_labeled.sam
+      should_exist: false
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.log
+      should_exist: false
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean_read_labels.tsv
+      should_exist: false
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.sam
+      should_exist: false
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.sorted.bai
+      should_exist: false
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.sorted.bam
+      should_exist: false
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.TE.log
+      should_exist: false
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1-fastqc
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_labeled.sam
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_read_labels.tsv
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sam
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sorted.bai
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sorted.bam
+    - path: test-output/nanopore-test.db
+    - path: test-output/nanopore-test_talon_abundance.tsv
+    - path: test-output/nanopore-test_talon_summary.tsv
+    - path: test-output/run_QC.log
+    - path: test-output/run_talon_read_annot.tsv
+    - path: test-output/spliceJunctionsFile.tsv
+      should_exist: false
+    - path: test-output/talonConfigFile.csv
