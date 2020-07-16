@@ -95,14 +95,14 @@ workflow TalonWDL {
         }
     }
 
-    call samtools.Faidx as executeSamtoolsFaidx {
+    call samtools.Faidx as samtoolsFaidx {
         input:
             inputFile = referenceGenome,
             outputDir = outputDirectory,
             dockerImage = dockerImages["samtools"]
     }
 
-    call picard.CreateSequenceDictionary as executePicardDict {
+    call picard.CreateSequenceDictionary as picardDict {
         input:
             inputFile = referenceGenome,
             outputDir = outputDirectory,
@@ -110,13 +110,13 @@ workflow TalonWDL {
     }
 
     scatter (sample in allSamples) {
-        call sampleWorkflow.SampleWorkflow as executeSampleWorkflow {
+        call sampleWorkflow.SampleWorkflow as sampleWorkflow {
             input:
                 sample = sample,
                 outputDirectory = outputDirectory + "/" + sample.id,
                 referenceGenome = referenceGenome,
-                referenceGenomeIndex = executeSamtoolsFaidx.outputIndex,
-                referenceGenomeDict = executePicardDict.outputDict,
+                referenceGenomeIndex = samtoolsFaidx.outputIndex,
+                referenceGenomeDict = picardDict.outputDict,
                 spliceJunctionsFile = if (runTranscriptClean)
                                       then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
                                       else NoneFile,
@@ -126,9 +126,9 @@ workflow TalonWDL {
         }
     }
 
-    call talon.Talon as executeTalon {
+    call talon.Talon as talon {
         input:
-            SAMfiles = flatten(executeSampleWorkflow.outputSAMsampleWorkflow),
+            SAMfiles = flatten(sampleWorkflow.outputSAMsampleWorkflow),
             organism = organismName,
             sequencingPlatform = sequencingPlatform,
             databaseFile = select_first([talonDatabase, createDatabase.outputDatabase]),
@@ -139,7 +139,7 @@ workflow TalonWDL {
 
     call talon.CreateAbundanceFileFromDatabase as createAbundanceFile {
         input:
-            databaseFile = executeTalon.outputUpdatedDatabase,
+            databaseFile = talon.outputUpdatedDatabase,
             annotationVersion = annotationVersion,
             genomeBuild = genomeBuild,
             outputPrefix = outputDirectory + "/" + pipelineRunName,
@@ -148,12 +148,12 @@ workflow TalonWDL {
 
     call talon.SummarizeDatasets as createSummaryFile {
         input:
-            databaseFile = executeTalon.outputUpdatedDatabase,
+            databaseFile = talon.outputUpdatedDatabase,
             outputPrefix = outputDirectory + "/" + pipelineRunName,
             dockerImage = dockerImages["talon"]
     }
 
-    Array[File] outputReports = flatten([flatten(executeSampleWorkflow.outputHtmlReport), flatten(executeSampleWorkflow.outputZipReport), flatten(executeSampleWorkflow.outputBamMetricsReportsMinimap2), select_all(flatten(executeSampleWorkflow.outputBamMetricsReportsTranscriptClean))])
+    Array[File] outputReports = flatten([flatten(sampleWorkflow.outputHtmlReport), flatten(sampleWorkflow.outputZipReport), flatten(sampleWorkflow.outputBamMetricsReportsMinimap2), select_all(flatten(sampleWorkflow.outputBamMetricsReportsTranscriptClean))])
 
     call multiqc.MultiQC as multiqcTask {
         input:
@@ -164,33 +164,33 @@ workflow TalonWDL {
     }
 
     output {
-        File outputReferenceIndex = executeSamtoolsFaidx.outputIndex
-        File outputReferenceDict = executePicardDict.outputDict
-        File outputTalonDatabase = executeTalon.outputUpdatedDatabase
+        File outputReferenceIndex = samtoolsFaidx.outputIndex
+        File outputReferenceDict = picardDict.outputDict
+        File outputTalonDatabase = talon.outputUpdatedDatabase
         File outputAbundance = createAbundanceFile.outputAbundanceFile
         File outputSummary = createSummaryFile.outputSummaryFile
-        File outputTalonLog = executeTalon.outputLog
-        File outputTalonReadAnnot = executeTalon.outputAnnot
-        File outputTalonConfigFile = executeTalon.outputConfigFile
-        Array[File] outputMinimap2 = flatten(executeSampleWorkflow.outputMinimap2)
-        Array[File] outputMinimap2SortedBAM = flatten(executeSampleWorkflow.outputMinimap2SortedBAM)
-        Array[File] outputMinimap2SortedBAI = flatten(executeSampleWorkflow.outputMinimap2SortedBAI)
-        Array[File] outputMinimap2LabeledSAM = flatten(executeSampleWorkflow.outputMinimap2LabeledSAM)
-        Array[File] outputMinimap2ReadLabels = flatten(executeSampleWorkflow.outputMinimap2ReadLabels)
+        File outputTalonLog = talon.outputLog
+        File outputTalonReadAnnot = talon.outputAnnot
+        File outputTalonConfigFile = talon.outputConfigFile
+        Array[File] outputMinimap2 = flatten(sampleWorkflow.outputMinimap2)
+        Array[File] outputMinimap2SortedBAM = flatten(sampleWorkflow.outputMinimap2SortedBAM)
+        Array[File] outputMinimap2SortedBAI = flatten(sampleWorkflow.outputMinimap2SortedBAI)
+        Array[File] outputMinimap2LabeledSAM = flatten(sampleWorkflow.outputMinimap2LabeledSAM)
+        Array[File] outputMinimap2ReadLabels = flatten(sampleWorkflow.outputMinimap2ReadLabels)
         File outputMultiqcReport = multiqcTask.multiqcReport
         File? outputMultiqcReportZip = multiqcTask.multiqcDataDirZip
         Array[File] outputSampleWorkflowReports = outputReports
         File? outputSpliceJunctionsFile = if (runTranscriptClean)
               then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
               else NoneFile
-        Array[File?] outputTranscriptCleanFasta = flatten(executeSampleWorkflow.outputTranscriptCleanFasta)
-        Array[File?] outputTranscriptCleanLog = flatten(executeSampleWorkflow.outputTranscriptCleanLog)
-        Array[File?] outputTranscriptCleanSAM = flatten(executeSampleWorkflow.outputTranscriptCleanSAM)
-        Array[File?] outputTranscriptCleanTElog = flatten(executeSampleWorkflow.outputTranscriptCleanTElog)
-        Array[File?] outputTranscriptCleanSortedBAM = flatten(executeSampleWorkflow.outputTranscriptCleanSortedBAM)
-        Array[File?] outputTranscriptCleanSortedBAI = flatten(executeSampleWorkflow.outputTranscriptCleanSortedBAI)
-        Array[File?] outputTranscriptCleanLabeledSAM = flatten(executeSampleWorkflow.outputTranscriptCleanLabeledSAM)
-        Array[File?] outputTranscriptCleanReadLabels = flatten(executeSampleWorkflow.outputTranscriptCleanReadLabels)
+        Array[File?] outputTranscriptCleanFasta = flatten(sampleWorkflow.outputTranscriptCleanFasta)
+        Array[File?] outputTranscriptCleanLog = flatten(sampleWorkflow.outputTranscriptCleanLog)
+        Array[File?] outputTranscriptCleanSAM = flatten(sampleWorkflow.outputTranscriptCleanSAM)
+        Array[File?] outputTranscriptCleanTElog = flatten(sampleWorkflow.outputTranscriptCleanTElog)
+        Array[File?] outputTranscriptCleanSortedBAM = flatten(sampleWorkflow.outputTranscriptCleanSortedBAM)
+        Array[File?] outputTranscriptCleanSortedBAI = flatten(sampleWorkflow.outputTranscriptCleanSortedBAI)
+        Array[File?] outputTranscriptCleanLabeledSAM = flatten(sampleWorkflow.outputTranscriptCleanLabeledSAM)
+        Array[File?] outputTranscriptCleanReadLabels = flatten(sampleWorkflow.outputTranscriptCleanReadLabels)
     }
 
     parameter_meta {

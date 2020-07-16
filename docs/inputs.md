@@ -20,11 +20,6 @@
         <i>File &mdash; Default: None</i><br />
         The docker image used for this workflow. Changing this may result in errors which the developers may choose not to address.
 </p>
-<p name="TalonWDL.executeSampleWorkflow.presetOption">
-        <b>TalonWDL.executeSampleWorkflow.presetOption</b><br />
-        <i>String &mdash; Default: None</i><br />
-        This option applies multiple options at the same time in minimap2.
-</p>
 <p name="TalonWDL.genomeBuild">
         <b>TalonWDL.genomeBuild</b><br />
         <i>String &mdash; Default: None</i><br />
@@ -50,6 +45,11 @@
         <i>File &mdash; Default: None</i><br />
         Samplesheet describing input fasta/fastq files.
 </p>
+<p name="TalonWDL.sampleWorkflow.presetOption">
+        <b>TalonWDL.sampleWorkflow.presetOption</b><br />
+        <i>String &mdash; Default: None</i><br />
+        This option applies multiple options at the same time in minimap2.
+</p>
 <p name="TalonWDL.sequencingPlatform">
         <b>TalonWDL.sequencingPlatform</b><br />
         <i>String &mdash; Default: None</i><br />
@@ -67,96 +67,6 @@
         <i>Int &mdash; Default: 300</i><br />
         Minimum required transcript length.
 </p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.ampliconIntervals">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.ampliconIntervals</b><br />
-        <i>File? &mdash; Default: None</i><br />
-        An interval list describinig the coordinates of the amplicons sequenced. This should only be used for targeted sequencing or WES. Required if `ampliconIntervals` is defined.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.strandedness">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.strandedness</b><br />
-        <i>String &mdash; Default: "None"</i><br />
-        The strandedness of the RNA sequencing library preparation. One of "None" (unstranded), "FR" (forward-reverse: first read equal transcript) or "RF" (reverse-forward: second read equals transcript).
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.targetIntervals">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.targetIntervals</b><br />
-        <i>Array[File]+? &mdash; Default: None</i><br />
-        An interval list describing the coordinates of the targets sequenced. This should only be used for targeted sequencing or WES. If defined targeted PCR metrics will be collected. Requires `ampliconIntervals` to also be defined.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.ampliconIntervals">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.ampliconIntervals</b><br />
-        <i>File? &mdash; Default: None</i><br />
-        An interval list describinig the coordinates of the amplicons sequenced. This should only be used for targeted sequencing or WES. Required if `ampliconIntervals` is defined.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.refRefflat">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.refRefflat</b><br />
-        <i>File? &mdash; Default: None</i><br />
-        A refflat file containing gene annotations. If defined RNA sequencing metrics will be collected.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.strandedness">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.strandedness</b><br />
-        <i>String &mdash; Default: "None"</i><br />
-        The strandedness of the RNA sequencing library preparation. One of "None" (unstranded), "FR" (forward-reverse: first read equal transcript) or "RF" (reverse-forward: second read equals transcript).
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.targetIntervals">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.targetIntervals</b><br />
-        <i>Array[File]+? &mdash; Default: None</i><br />
-        An interval list describing the coordinates of the targets sequenced. This should only be used for targeted sequencing or WES. If defined targeted PCR metrics will be collected. Requires `ampliconIntervals` to also be defined.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.fracaRangeSize">
-        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.fracaRangeSize</b><br />
-        <i>Int &mdash; Default: 20</i><br />
-        Size of post-transcript interval to compute fraction.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.fracaRangeSize">
-        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.fracaRangeSize</b><br />
-        <i>Int &mdash; Default: 20</i><br />
-        Size of post-transcript interval to compute fraction.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeTranscriptClean.bufferSize">
-        <b>TalonWDL.executeSampleWorkflow.executeTranscriptClean.bufferSize</b><br />
-        <i>Int &mdash; Default: 100</i><br />
-        Number of lines to output to file at once by each thread during run.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeTranscriptClean.correctIndels">
-        <b>TalonWDL.executeSampleWorkflow.executeTranscriptClean.correctIndels</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        Set this to make TranscriptClean correct indels.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeTranscriptClean.correctMismatches">
-        <b>TalonWDL.executeSampleWorkflow.executeTranscriptClean.correctMismatches</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        Set this to make TranscriptClean correct mismatches.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeTranscriptClean.correctSJs">
-        <b>TalonWDL.executeSampleWorkflow.executeTranscriptClean.correctSJs</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        Set this to make TranscriptClean correct splice junctions.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeTranscriptClean.deleteTmp">
-        <b>TalonWDL.executeSampleWorkflow.executeTranscriptClean.deleteTmp</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        The temporary directory generated by TranscriptClean will be removed.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.howToFindGTAG">
-        <b>TalonWDL.executeSampleWorkflow.howToFindGTAG</b><br />
-        <i>String? &mdash; Default: None</i><br />
-        How to find GT-AG. f:transcript strand, b:both strands, n:don't match GT-AG.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.variantVCF">
-        <b>TalonWDL.executeSampleWorkflow.variantVCF</b><br />
-        <i>File? &mdash; Default: None</i><br />
-        VCF formatted file of variants.
-</p>
-<p name="TalonWDL.executeTalon.minimumCoverage">
-        <b>TalonWDL.executeTalon.minimumCoverage</b><br />
-        <i>Float &mdash; Default: 0.9</i><br />
-        Minimum alignment coverage in order to use a SAM entry.
-</p>
-<p name="TalonWDL.executeTalon.minimumIdentity">
-        <b>TalonWDL.executeTalon.minimumIdentity</b><br />
-        <i>Float &mdash; Default: 0.8</i><br />
-        Minimum alignment identity in order to use a SAM entry.
-</p>
 <p name="TalonWDL.novelIDprefix">
         <b>TalonWDL.novelIDprefix</b><br />
         <i>String &mdash; Default: "TALON"</i><br />
@@ -171,6 +81,96 @@
         <b>TalonWDL.runTranscriptClean</b><br />
         <i>Boolean &mdash; Default: true</i><br />
         Option to run TranscriptClean after Minimap2 alignment.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.ampliconIntervals">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.ampliconIntervals</b><br />
+        <i>File? &mdash; Default: None</i><br />
+        An interval list describinig the coordinates of the amplicons sequenced. This should only be used for targeted sequencing or WES. Required if `ampliconIntervals` is defined.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.strandedness">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.strandedness</b><br />
+        <i>String &mdash; Default: "None"</i><br />
+        The strandedness of the RNA sequencing library preparation. One of "None" (unstranded), "FR" (forward-reverse: first read equal transcript) or "RF" (reverse-forward: second read equals transcript).
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.targetIntervals">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.targetIntervals</b><br />
+        <i>Array[File]+? &mdash; Default: None</i><br />
+        An interval list describing the coordinates of the targets sequenced. This should only be used for targeted sequencing or WES. If defined targeted PCR metrics will be collected. Requires `ampliconIntervals` to also be defined.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.ampliconIntervals">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.ampliconIntervals</b><br />
+        <i>File? &mdash; Default: None</i><br />
+        An interval list describinig the coordinates of the amplicons sequenced. This should only be used for targeted sequencing or WES. Required if `ampliconIntervals` is defined.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.refRefflat">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.refRefflat</b><br />
+        <i>File? &mdash; Default: None</i><br />
+        A refflat file containing gene annotations. If defined RNA sequencing metrics will be collected.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.strandedness">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.strandedness</b><br />
+        <i>String &mdash; Default: "None"</i><br />
+        The strandedness of the RNA sequencing library preparation. One of "None" (unstranded), "FR" (forward-reverse: first read equal transcript) or "RF" (reverse-forward: second read equals transcript).
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.targetIntervals">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.targetIntervals</b><br />
+        <i>Array[File]+? &mdash; Default: None</i><br />
+        An interval list describing the coordinates of the targets sequenced. This should only be used for targeted sequencing or WES. If defined targeted PCR metrics will be collected. Requires `ampliconIntervals` to also be defined.
+</p>
+<p name="TalonWDL.sampleWorkflow.howToFindGTAG">
+        <b>TalonWDL.sampleWorkflow.howToFindGTAG</b><br />
+        <i>String? &mdash; Default: None</i><br />
+        How to find GT-AG. f:transcript strand, b:both strands, n:don't match GT-AG.
+</p>
+<p name="TalonWDL.sampleWorkflow.labelReadsMinimap2.fracaRangeSize">
+        <b>TalonWDL.sampleWorkflow.labelReadsMinimap2.fracaRangeSize</b><br />
+        <i>Int &mdash; Default: 20</i><br />
+        Size of post-transcript interval to compute fraction.
+</p>
+<p name="TalonWDL.sampleWorkflow.labelReadsTranscriptClean.fracaRangeSize">
+        <b>TalonWDL.sampleWorkflow.labelReadsTranscriptClean.fracaRangeSize</b><br />
+        <i>Int &mdash; Default: 20</i><br />
+        Size of post-transcript interval to compute fraction.
+</p>
+<p name="TalonWDL.sampleWorkflow.transcriptClean.bufferSize">
+        <b>TalonWDL.sampleWorkflow.transcriptClean.bufferSize</b><br />
+        <i>Int &mdash; Default: 100</i><br />
+        Number of lines to output to file at once by each thread during run.
+</p>
+<p name="TalonWDL.sampleWorkflow.transcriptClean.correctIndels">
+        <b>TalonWDL.sampleWorkflow.transcriptClean.correctIndels</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Set this to make TranscriptClean correct indels.
+</p>
+<p name="TalonWDL.sampleWorkflow.transcriptClean.correctMismatches">
+        <b>TalonWDL.sampleWorkflow.transcriptClean.correctMismatches</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Set this to make TranscriptClean correct mismatches.
+</p>
+<p name="TalonWDL.sampleWorkflow.transcriptClean.correctSJs">
+        <b>TalonWDL.sampleWorkflow.transcriptClean.correctSJs</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Set this to make TranscriptClean correct splice junctions.
+</p>
+<p name="TalonWDL.sampleWorkflow.transcriptClean.deleteTmp">
+        <b>TalonWDL.sampleWorkflow.transcriptClean.deleteTmp</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        The temporary directory generated by TranscriptClean will be removed.
+</p>
+<p name="TalonWDL.sampleWorkflow.variantVCF">
+        <b>TalonWDL.sampleWorkflow.variantVCF</b><br />
+        <i>File? &mdash; Default: None</i><br />
+        VCF formatted file of variants.
+</p>
+<p name="TalonWDL.talon.minimumCoverage">
+        <b>TalonWDL.talon.minimumCoverage</b><br />
+        <i>Float &mdash; Default: 0.9</i><br />
+        Minimum alignment coverage in order to use a SAM entry.
+</p>
+<p name="TalonWDL.talon.minimumIdentity">
+        <b>TalonWDL.talon.minimumIdentity</b><br />
+        <i>Float &mdash; Default: 0.8</i><br />
+        Minimum alignment identity in order to use a SAM entry.
 </p>
 
 ### Advanced inputs
@@ -284,566 +284,6 @@
 <p name="TalonWDL.createSummaryFile.timeMinutes">
         <b>TalonWDL.createSummaryFile.timeMinutes</b><br />
         <i>Int &mdash; Default: 50</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executePicardDict.javaXmx">
-        <b>TalonWDL.executePicardDict.javaXmx</b><br />
-        <i>String &mdash; Default: "2G"</i><br />
-        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
-</p>
-<p name="TalonWDL.executePicardDict.memory">
-        <b>TalonWDL.executePicardDict.memory</b><br />
-        <i>String &mdash; Default: "3G"</i><br />
-        The amount of memory available to the job.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.ampliconIntervalsLists.javaXmx">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.ampliconIntervalsLists.javaXmx</b><br />
-        <i>String &mdash; Default: "3G"</i><br />
-        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.ampliconIntervalsLists.memory">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.ampliconIntervalsLists.memory</b><br />
-        <i>String &mdash; Default: "4G"</i><br />
-        The amount of memory this job will use.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.ampliconIntervalsLists.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.ampliconIntervalsLists.timeMinutes</b><br />
-        <i>Int &mdash; Default: 5</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.collectAlignmentSummaryMetrics">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.collectAlignmentSummaryMetrics</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        Equivalent to the `PROGRAM=CollectAlignmentSummaryMetrics` argument in Picard.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.Flagstat.memory">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.Flagstat.memory</b><br />
-        <i>String &mdash; Default: "1G"</i><br />
-        The amount of memory needed for the job.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.Flagstat.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.Flagstat.timeMinutes</b><br />
-        <i>Int &mdash; Default: 1 + ceil(size(inputBam,"G"))</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.meanQualityByCycle">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.meanQualityByCycle</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        Equivalent to the `PROGRAM=MeanQualityByCycle` argument in Picard.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.collectBaseDistributionByCycle">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.collectBaseDistributionByCycle</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        Equivalent to the `PROGRAM=CollectBaseDistributionByCycle` argument.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.collectGcBiasMetrics">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.collectGcBiasMetrics</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        Equivalent to the `PROGRAM=CollectGcBiasMetrics` argument.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.collectInsertSizeMetrics">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.collectInsertSizeMetrics</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        Equivalent to the `PROGRAM=CollectInsertSizeMetrics` argument.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.collectQualityYieldMetrics">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.collectQualityYieldMetrics</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        Equivalent to the `PROGRAM=CollectQualityYieldMetrics` argument.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.collectSequencingArtifactMetrics">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.collectSequencingArtifactMetrics</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        Equivalent to the `PROGRAM=CollectSequencingArtifactMetrics` argument.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.javaXmx">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.javaXmx</b><br />
-        <i>String &mdash; Default: "8G"</i><br />
-        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.memory">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.memory</b><br />
-        <i>String &mdash; Default: "9G"</i><br />
-        The amount of memory this job will use.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.qualityScoreDistribution">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.qualityScoreDistribution</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        Equivalent to the `PROGRAM=QualityScoreDistribution` argument.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.picardMetrics.timeMinutes</b><br />
-        <i>Int &mdash; Default: 1 + ceil((size(referenceFasta,"G") * 3 * 2)) + ceil((size(inputBam,"G") * 6))</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.rnaSeqMetrics.javaXmx">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.rnaSeqMetrics.javaXmx</b><br />
-        <i>String &mdash; Default: "8G"</i><br />
-        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.rnaSeqMetrics.memory">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.rnaSeqMetrics.memory</b><br />
-        <i>String &mdash; Default: "9G"</i><br />
-        The amount of memory this job will use.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.rnaSeqMetrics.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.rnaSeqMetrics.timeMinutes</b><br />
-        <i>Int &mdash; Default: 1 + ceil((size(inputBam,"G") * 12))</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.targetIntervalsLists.javaXmx">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.targetIntervalsLists.javaXmx</b><br />
-        <i>String &mdash; Default: "3G"</i><br />
-        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.targetIntervalsLists.memory">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.targetIntervalsLists.memory</b><br />
-        <i>String &mdash; Default: "4G"</i><br />
-        The amount of memory this job will use.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.targetIntervalsLists.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.targetIntervalsLists.timeMinutes</b><br />
-        <i>Int &mdash; Default: 5</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.targetMetrics.javaXmx">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.targetMetrics.javaXmx</b><br />
-        <i>String &mdash; Default: "3G"</i><br />
-        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.targetMetrics.memory">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.targetMetrics.memory</b><br />
-        <i>String &mdash; Default: "4G"</i><br />
-        The amount of memory this job will use.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.targetMetrics.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsMinimap2.targetMetrics.timeMinutes</b><br />
-        <i>Int &mdash; Default: 1 + ceil((size(inputBam,"G") * 6))</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.ampliconIntervalsLists.javaXmx">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.ampliconIntervalsLists.javaXmx</b><br />
-        <i>String &mdash; Default: "3G"</i><br />
-        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.ampliconIntervalsLists.memory">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.ampliconIntervalsLists.memory</b><br />
-        <i>String &mdash; Default: "4G"</i><br />
-        The amount of memory this job will use.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.ampliconIntervalsLists.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.ampliconIntervalsLists.timeMinutes</b><br />
-        <i>Int &mdash; Default: 5</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.Flagstat.memory">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.Flagstat.memory</b><br />
-        <i>String &mdash; Default: "1G"</i><br />
-        The amount of memory needed for the job.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.Flagstat.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.Flagstat.timeMinutes</b><br />
-        <i>Int &mdash; Default: 1 + ceil(size(inputBam,"G"))</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectBaseDistributionByCycle">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectBaseDistributionByCycle</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        Equivalent to the `PROGRAM=CollectBaseDistributionByCycle` argument.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectGcBiasMetrics">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectGcBiasMetrics</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        Equivalent to the `PROGRAM=CollectGcBiasMetrics` argument.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectInsertSizeMetrics">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectInsertSizeMetrics</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        Equivalent to the `PROGRAM=CollectInsertSizeMetrics` argument.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectQualityYieldMetrics">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectQualityYieldMetrics</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        Equivalent to the `PROGRAM=CollectQualityYieldMetrics` argument.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectSequencingArtifactMetrics">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectSequencingArtifactMetrics</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        Equivalent to the `PROGRAM=CollectSequencingArtifactMetrics` argument.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.javaXmx">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.javaXmx</b><br />
-        <i>String &mdash; Default: "8G"</i><br />
-        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.memory">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.memory</b><br />
-        <i>String &mdash; Default: "9G"</i><br />
-        The amount of memory this job will use.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.qualityScoreDistribution">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.qualityScoreDistribution</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        Equivalent to the `PROGRAM=QualityScoreDistribution` argument.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.picardMetrics.timeMinutes</b><br />
-        <i>Int &mdash; Default: 1 + ceil((size(referenceFasta,"G") * 3 * 2)) + ceil((size(inputBam,"G") * 6))</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.rnaSeqMetrics.javaXmx">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.rnaSeqMetrics.javaXmx</b><br />
-        <i>String &mdash; Default: "8G"</i><br />
-        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.rnaSeqMetrics.memory">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.rnaSeqMetrics.memory</b><br />
-        <i>String &mdash; Default: "9G"</i><br />
-        The amount of memory this job will use.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.rnaSeqMetrics.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.rnaSeqMetrics.timeMinutes</b><br />
-        <i>Int &mdash; Default: 1 + ceil((size(inputBam,"G") * 12))</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.targetIntervalsLists.javaXmx">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.targetIntervalsLists.javaXmx</b><br />
-        <i>String &mdash; Default: "3G"</i><br />
-        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.targetIntervalsLists.memory">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.targetIntervalsLists.memory</b><br />
-        <i>String &mdash; Default: "4G"</i><br />
-        The amount of memory this job will use.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.targetIntervalsLists.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.targetIntervalsLists.timeMinutes</b><br />
-        <i>Int &mdash; Default: 5</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.targetMetrics.javaXmx">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.targetMetrics.javaXmx</b><br />
-        <i>String &mdash; Default: "3G"</i><br />
-        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.targetMetrics.memory">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.targetMetrics.memory</b><br />
-        <i>String &mdash; Default: "4G"</i><br />
-        The amount of memory this job will use.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.targetMetrics.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.bamMetricsTranscriptClean.targetMetrics.timeMinutes</b><br />
-        <i>Int &mdash; Default: 1 + ceil((size(inputBam,"G") * 6))</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeIndexMinimap2.memory">
-        <b>TalonWDL.executeSampleWorkflow.executeIndexMinimap2.memory</b><br />
-        <i>String &mdash; Default: "2G"</i><br />
-        The amount of memory needed for the job.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeIndexMinimap2.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.executeIndexMinimap2.timeMinutes</b><br />
-        <i>Int &mdash; Default: 1 + ceil((size(bamFile,"G") * 4))</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeIndexTranscriptClean.memory">
-        <b>TalonWDL.executeSampleWorkflow.executeIndexTranscriptClean.memory</b><br />
-        <i>String &mdash; Default: "2G"</i><br />
-        The amount of memory needed for the job.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeIndexTranscriptClean.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.executeIndexTranscriptClean.timeMinutes</b><br />
-        <i>Int &mdash; Default: 1 + ceil((size(bamFile,"G") * 4))</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.deleteTmp">
-        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.deleteTmp</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        If set, tmp dir will be removed.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.memory">
-        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.memory</b><br />
-        <i>String &mdash; Default: "25G"</i><br />
-        The amount of memory available to the job.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.threads">
-        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.threads</b><br />
-        <i>Int &mdash; Default: 4</i><br />
-        The number of threads to be used.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.timeMinutes</b><br />
-        <i>Int &mdash; Default: 2880</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.tmpDir">
-        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsMinimap2.tmpDir</b><br />
-        <i>String &mdash; Default: "./tmp_label_reads"</i><br />
-        Path to directory for tmp files.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.deleteTmp">
-        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.deleteTmp</b><br />
-        <i>Boolean &mdash; Default: true</i><br />
-        If set, tmp dir will be removed.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.memory">
-        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.memory</b><br />
-        <i>String &mdash; Default: "25G"</i><br />
-        The amount of memory available to the job.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.threads">
-        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.threads</b><br />
-        <i>Int &mdash; Default: 4</i><br />
-        The number of threads to be used.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.timeMinutes</b><br />
-        <i>Int &mdash; Default: 2880</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.tmpDir">
-        <b>TalonWDL.executeSampleWorkflow.executeLabelReadsTranscriptClean.tmpDir</b><br />
-        <i>String &mdash; Default: "./tmp_label_reads"</i><br />
-        Path to directory for tmp files.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeMinimap2.cores">
-        <b>TalonWDL.executeSampleWorkflow.executeMinimap2.cores</b><br />
-        <i>Int &mdash; Default: 4</i><br />
-        The number of cores to be used.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeMinimap2.kmerSize">
-        <b>TalonWDL.executeSampleWorkflow.executeMinimap2.kmerSize</b><br />
-        <i>Int &mdash; Default: 15</i><br />
-        K-mer size (no larger than 28).
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeMinimap2.matchingScore">
-        <b>TalonWDL.executeSampleWorkflow.executeMinimap2.matchingScore</b><br />
-        <i>Int? &mdash; Default: None</i><br />
-        Matching score.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeMinimap2.maxFragmentLength">
-        <b>TalonWDL.executeSampleWorkflow.executeMinimap2.maxFragmentLength</b><br />
-        <i>Int? &mdash; Default: None</i><br />
-        Max fragment length (effective with -xsr or in the fragment mode).
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeMinimap2.maxIntronLength">
-        <b>TalonWDL.executeSampleWorkflow.executeMinimap2.maxIntronLength</b><br />
-        <i>Int? &mdash; Default: None</i><br />
-        Max intron length (effective with -xsplice; changing -r).
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeMinimap2.memory">
-        <b>TalonWDL.executeSampleWorkflow.executeMinimap2.memory</b><br />
-        <i>String &mdash; Default: "30G"</i><br />
-        The amount of memory available to the job.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeMinimap2.mismatchPenalty">
-        <b>TalonWDL.executeSampleWorkflow.executeMinimap2.mismatchPenalty</b><br />
-        <i>Int? &mdash; Default: None</i><br />
-        Mismatch penalty.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeMinimap2.retainMaxSecondaryAlignments">
-        <b>TalonWDL.executeSampleWorkflow.executeMinimap2.retainMaxSecondaryAlignments</b><br />
-        <i>Int? &mdash; Default: None</i><br />
-        Retain at most INT secondary alignments.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeMinimap2.secondaryAlignment">
-        <b>TalonWDL.executeSampleWorkflow.executeMinimap2.secondaryAlignment</b><br />
-        <i>Boolean &mdash; Default: false</i><br />
-        Whether to output secondary alignments.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeMinimap2.skipSelfAndDualMappings">
-        <b>TalonWDL.executeSampleWorkflow.executeMinimap2.skipSelfAndDualMappings</b><br />
-        <i>Boolean &mdash; Default: false</i><br />
-        Skip self and dual mappings (for the all-vs-all mode).
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeMinimap2.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.executeMinimap2.timeMinutes</b><br />
-        <i>Int &mdash; Default: 1 + ceil((size(queryFile,"G") * 200 / cores))</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeSortMinimap2.compressionLevel">
-        <b>TalonWDL.executeSampleWorkflow.executeSortMinimap2.compressionLevel</b><br />
-        <i>Int &mdash; Default: 1</i><br />
-        Compression level from 0 (uncompressed) to 9 (best).
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeSortMinimap2.memory">
-        <b>TalonWDL.executeSampleWorkflow.executeSortMinimap2.memory</b><br />
-        <i>String &mdash; Default: "2G"</i><br />
-        The amount of memory available to the job.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeSortMinimap2.sortByName">
-        <b>TalonWDL.executeSampleWorkflow.executeSortMinimap2.sortByName</b><br />
-        <i>Boolean &mdash; Default: false</i><br />
-        Sort the inputBam by read name instead of position.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeSortMinimap2.threads">
-        <b>TalonWDL.executeSampleWorkflow.executeSortMinimap2.threads</b><br />
-        <i>Int? &mdash; Default: None</i><br />
-        The number of additional threads that will be used for this task.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeSortMinimap2.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.executeSortMinimap2.timeMinutes</b><br />
-        <i>Int &mdash; Default: 1 + ceil((size(inputBam,"G") * 2))</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeSortTranscriptClean.compressionLevel">
-        <b>TalonWDL.executeSampleWorkflow.executeSortTranscriptClean.compressionLevel</b><br />
-        <i>Int &mdash; Default: 1</i><br />
-        Compression level from 0 (uncompressed) to 9 (best).
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeSortTranscriptClean.memory">
-        <b>TalonWDL.executeSampleWorkflow.executeSortTranscriptClean.memory</b><br />
-        <i>String &mdash; Default: "2G"</i><br />
-        The amount of memory available to the job.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeSortTranscriptClean.sortByName">
-        <b>TalonWDL.executeSampleWorkflow.executeSortTranscriptClean.sortByName</b><br />
-        <i>Boolean &mdash; Default: false</i><br />
-        Sort the inputBam by read name instead of position.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeSortTranscriptClean.threads">
-        <b>TalonWDL.executeSampleWorkflow.executeSortTranscriptClean.threads</b><br />
-        <i>Int? &mdash; Default: None</i><br />
-        The number of additional threads that will be used for this task.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeSortTranscriptClean.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.executeSortTranscriptClean.timeMinutes</b><br />
-        <i>Int &mdash; Default: 1 + ceil((size(inputBam,"G") * 2))</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeTranscriptClean.canonOnly">
-        <b>TalonWDL.executeSampleWorkflow.executeTranscriptClean.canonOnly</b><br />
-        <i>Boolean &mdash; Default: false</i><br />
-        Only output canonical transcripts and transcript containing annotated noncanonical junctions.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeTranscriptClean.cores">
-        <b>TalonWDL.executeSampleWorkflow.executeTranscriptClean.cores</b><br />
-        <i>Int &mdash; Default: 1</i><br />
-        The number of cores to be used.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeTranscriptClean.dryRun">
-        <b>TalonWDL.executeSampleWorkflow.executeTranscriptClean.dryRun</b><br />
-        <i>Boolean &mdash; Default: false</i><br />
-        TranscriptClean will read in the data but don't do any correction.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeTranscriptClean.maxLenIndel">
-        <b>TalonWDL.executeSampleWorkflow.executeTranscriptClean.maxLenIndel</b><br />
-        <i>Int &mdash; Default: 5</i><br />
-        Maximum size indel to correct.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeTranscriptClean.maxSJoffset">
-        <b>TalonWDL.executeSampleWorkflow.executeTranscriptClean.maxSJoffset</b><br />
-        <i>Int &mdash; Default: 5</i><br />
-        Maximum distance from annotated splice junction to correct.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeTranscriptClean.memory">
-        <b>TalonWDL.executeSampleWorkflow.executeTranscriptClean.memory</b><br />
-        <i>String &mdash; Default: "25G"</i><br />
-        The amount of memory available to the job.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.executeTranscriptClean.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.executeTranscriptClean.timeMinutes</b><br />
-        <i>Int &mdash; Default: 2880</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.fastqcTask.adapters">
-        <b>TalonWDL.executeSampleWorkflow.fastqcTask.adapters</b><br />
-        <i>File? &mdash; Default: None</i><br />
-        Equivalent to fastqc's --adapters option.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.fastqcTask.casava">
-        <b>TalonWDL.executeSampleWorkflow.fastqcTask.casava</b><br />
-        <i>Boolean &mdash; Default: false</i><br />
-        Equivalent to fastqc's --casava flag.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.fastqcTask.contaminants">
-        <b>TalonWDL.executeSampleWorkflow.fastqcTask.contaminants</b><br />
-        <i>File? &mdash; Default: None</i><br />
-        Equivalent to fastqc's --contaminants option.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.fastqcTask.dir">
-        <b>TalonWDL.executeSampleWorkflow.fastqcTask.dir</b><br />
-        <i>String? &mdash; Default: None</i><br />
-        Equivalent to fastqc's --dir option.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.fastqcTask.extract">
-        <b>TalonWDL.executeSampleWorkflow.fastqcTask.extract</b><br />
-        <i>Boolean &mdash; Default: false</i><br />
-        Equivalent to fastqc's --extract flag.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.fastqcTask.format">
-        <b>TalonWDL.executeSampleWorkflow.fastqcTask.format</b><br />
-        <i>String? &mdash; Default: None</i><br />
-        Equivalent to fastqc's --format option.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.fastqcTask.javaXmx">
-        <b>TalonWDL.executeSampleWorkflow.fastqcTask.javaXmx</b><br />
-        <i>String &mdash; Default: "1750M"</i><br />
-        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.fastqcTask.kmers">
-        <b>TalonWDL.executeSampleWorkflow.fastqcTask.kmers</b><br />
-        <i>Int? &mdash; Default: None</i><br />
-        Equivalent to fastqc's --kmers option.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.fastqcTask.limits">
-        <b>TalonWDL.executeSampleWorkflow.fastqcTask.limits</b><br />
-        <i>File? &mdash; Default: None</i><br />
-        Equivalent to fastqc's --limits option.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.fastqcTask.memory">
-        <b>TalonWDL.executeSampleWorkflow.fastqcTask.memory</b><br />
-        <i>String &mdash; Default: "2G"</i><br />
-        The amount of memory this job will use.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.fastqcTask.minLength">
-        <b>TalonWDL.executeSampleWorkflow.fastqcTask.minLength</b><br />
-        <i>Int? &mdash; Default: None</i><br />
-        Equivalent to fastqc's --min_length option.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.fastqcTask.nano">
-        <b>TalonWDL.executeSampleWorkflow.fastqcTask.nano</b><br />
-        <i>Boolean &mdash; Default: false</i><br />
-        Equivalent to fastqc's --nano flag.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.fastqcTask.noFilter">
-        <b>TalonWDL.executeSampleWorkflow.fastqcTask.noFilter</b><br />
-        <i>Boolean &mdash; Default: false</i><br />
-        Equivalent to fastqc's --nofilter flag.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.fastqcTask.nogroup">
-        <b>TalonWDL.executeSampleWorkflow.fastqcTask.nogroup</b><br />
-        <i>Boolean &mdash; Default: false</i><br />
-        Equivalent to fastqc's --nogroup flag.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.fastqcTask.threads">
-        <b>TalonWDL.executeSampleWorkflow.fastqcTask.threads</b><br />
-        <i>Int &mdash; Default: 1</i><br />
-        The number of cores to use.
-</p>
-<p name="TalonWDL.executeSampleWorkflow.fastqcTask.timeMinutes">
-        <b>TalonWDL.executeSampleWorkflow.fastqcTask.timeMinutes</b><br />
-        <i>Int &mdash; Default: 1 + ceil(size(seqFile,"G")) * 4</i><br />
-        The maximum amount of time the job will run in minutes.
-</p>
-<p name="TalonWDL.executeSamtoolsFaidx.memory">
-        <b>TalonWDL.executeSamtoolsFaidx.memory</b><br />
-        <i>String &mdash; Default: "2G"</i><br />
-        The amount of memory available to the job.
-</p>
-<p name="TalonWDL.executeTalon.memory">
-        <b>TalonWDL.executeTalon.memory</b><br />
-        <i>String &mdash; Default: "25G"</i><br />
-        The amount of memory available to the job.
-</p>
-<p name="TalonWDL.executeTalon.threads">
-        <b>TalonWDL.executeTalon.threads</b><br />
-        <i>Int &mdash; Default: 4</i><br />
-        The number of threads to be used.
-</p>
-<p name="TalonWDL.executeTalon.timeMinutes">
-        <b>TalonWDL.executeTalon.timeMinutes</b><br />
-        <i>Int &mdash; Default: 2880</i><br />
         The maximum amount of time the job will run in minutes.
 </p>
 <p name="TalonWDL.multiqcTask.clConfig">
@@ -981,10 +421,560 @@
         <i>Boolean &mdash; Default: true</i><br />
         Equivalent to MultiQC's `--zip-data-dir` flag.
 </p>
+<p name="TalonWDL.picardDict.javaXmx">
+        <b>TalonWDL.picardDict.javaXmx</b><br />
+        <i>String &mdash; Default: "2G"</i><br />
+        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
+</p>
+<p name="TalonWDL.picardDict.memory">
+        <b>TalonWDL.picardDict.memory</b><br />
+        <i>String &mdash; Default: "3G"</i><br />
+        The amount of memory available to the job.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.ampliconIntervalsLists.javaXmx">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.ampliconIntervalsLists.javaXmx</b><br />
+        <i>String &mdash; Default: "3G"</i><br />
+        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.ampliconIntervalsLists.memory">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.ampliconIntervalsLists.memory</b><br />
+        <i>String &mdash; Default: "4G"</i><br />
+        The amount of memory this job will use.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.ampliconIntervalsLists.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.ampliconIntervalsLists.timeMinutes</b><br />
+        <i>Int &mdash; Default: 5</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.collectAlignmentSummaryMetrics">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.collectAlignmentSummaryMetrics</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Equivalent to the `PROGRAM=CollectAlignmentSummaryMetrics` argument in Picard.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.Flagstat.memory">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.Flagstat.memory</b><br />
+        <i>String &mdash; Default: "256M"</i><br />
+        The amount of memory needed for the job.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.Flagstat.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.Flagstat.timeMinutes</b><br />
+        <i>Int &mdash; Default: 1 + ceil(size(inputBam,"G"))</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.meanQualityByCycle">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.meanQualityByCycle</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Equivalent to the `PROGRAM=MeanQualityByCycle` argument in Picard.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.picardMetrics.collectBaseDistributionByCycle">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.picardMetrics.collectBaseDistributionByCycle</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Equivalent to the `PROGRAM=CollectBaseDistributionByCycle` argument.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.picardMetrics.collectGcBiasMetrics">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.picardMetrics.collectGcBiasMetrics</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Equivalent to the `PROGRAM=CollectGcBiasMetrics` argument.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.picardMetrics.collectInsertSizeMetrics">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.picardMetrics.collectInsertSizeMetrics</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Equivalent to the `PROGRAM=CollectInsertSizeMetrics` argument.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.picardMetrics.collectQualityYieldMetrics">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.picardMetrics.collectQualityYieldMetrics</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Equivalent to the `PROGRAM=CollectQualityYieldMetrics` argument.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.picardMetrics.collectSequencingArtifactMetrics">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.picardMetrics.collectSequencingArtifactMetrics</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Equivalent to the `PROGRAM=CollectSequencingArtifactMetrics` argument.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.picardMetrics.javaXmxMb">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.picardMetrics.javaXmxMb</b><br />
+        <i>Int &mdash; Default: 3072</i><br />
+        The maximum memory available to the program in megabytes. Should be lower than `memoryMb` to accommodate JVM overhead.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.picardMetrics.memoryMb">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.picardMetrics.memoryMb</b><br />
+        <i>Int &mdash; Default: javaXmxMb + 512</i><br />
+        The amount of memory this job will use in megabytes.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.picardMetrics.qualityScoreDistribution">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.picardMetrics.qualityScoreDistribution</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Equivalent to the `PROGRAM=QualityScoreDistribution` argument.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.picardMetrics.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.picardMetrics.timeMinutes</b><br />
+        <i>Int &mdash; Default: 1 + ceil((size(referenceFasta,"G") * 3 * 2)) + ceil((size(inputBam,"G") * 6))</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.rnaSeqMetrics.javaXmx">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.rnaSeqMetrics.javaXmx</b><br />
+        <i>String &mdash; Default: "8G"</i><br />
+        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.rnaSeqMetrics.memory">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.rnaSeqMetrics.memory</b><br />
+        <i>String &mdash; Default: "9G"</i><br />
+        The amount of memory this job will use.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.rnaSeqMetrics.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.rnaSeqMetrics.timeMinutes</b><br />
+        <i>Int &mdash; Default: 1 + ceil((size(inputBam,"G") * 12))</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.targetIntervalsLists.javaXmx">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.targetIntervalsLists.javaXmx</b><br />
+        <i>String &mdash; Default: "3G"</i><br />
+        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.targetIntervalsLists.memory">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.targetIntervalsLists.memory</b><br />
+        <i>String &mdash; Default: "4G"</i><br />
+        The amount of memory this job will use.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.targetIntervalsLists.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.targetIntervalsLists.timeMinutes</b><br />
+        <i>Int &mdash; Default: 5</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.targetMetrics.javaXmx">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.targetMetrics.javaXmx</b><br />
+        <i>String &mdash; Default: "3G"</i><br />
+        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.targetMetrics.memory">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.targetMetrics.memory</b><br />
+        <i>String &mdash; Default: "4G"</i><br />
+        The amount of memory this job will use.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.targetMetrics.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.targetMetrics.timeMinutes</b><br />
+        <i>Int &mdash; Default: 1 + ceil((size(inputBam,"G") * 6))</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.ampliconIntervalsLists.javaXmx">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.ampliconIntervalsLists.javaXmx</b><br />
+        <i>String &mdash; Default: "3G"</i><br />
+        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.ampliconIntervalsLists.memory">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.ampliconIntervalsLists.memory</b><br />
+        <i>String &mdash; Default: "4G"</i><br />
+        The amount of memory this job will use.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.ampliconIntervalsLists.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.ampliconIntervalsLists.timeMinutes</b><br />
+        <i>Int &mdash; Default: 5</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.Flagstat.memory">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.Flagstat.memory</b><br />
+        <i>String &mdash; Default: "256M"</i><br />
+        The amount of memory needed for the job.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.Flagstat.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.Flagstat.timeMinutes</b><br />
+        <i>Int &mdash; Default: 1 + ceil(size(inputBam,"G"))</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectBaseDistributionByCycle">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectBaseDistributionByCycle</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Equivalent to the `PROGRAM=CollectBaseDistributionByCycle` argument.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectGcBiasMetrics">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectGcBiasMetrics</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Equivalent to the `PROGRAM=CollectGcBiasMetrics` argument.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectInsertSizeMetrics">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectInsertSizeMetrics</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Equivalent to the `PROGRAM=CollectInsertSizeMetrics` argument.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectQualityYieldMetrics">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectQualityYieldMetrics</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Equivalent to the `PROGRAM=CollectQualityYieldMetrics` argument.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectSequencingArtifactMetrics">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.picardMetrics.collectSequencingArtifactMetrics</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Equivalent to the `PROGRAM=CollectSequencingArtifactMetrics` argument.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.picardMetrics.javaXmxMb">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.picardMetrics.javaXmxMb</b><br />
+        <i>Int &mdash; Default: 3072</i><br />
+        The maximum memory available to the program in megabytes. Should be lower than `memoryMb` to accommodate JVM overhead.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.picardMetrics.memoryMb">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.picardMetrics.memoryMb</b><br />
+        <i>Int &mdash; Default: javaXmxMb + 512</i><br />
+        The amount of memory this job will use in megabytes.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.picardMetrics.qualityScoreDistribution">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.picardMetrics.qualityScoreDistribution</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Equivalent to the `PROGRAM=QualityScoreDistribution` argument.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.picardMetrics.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.picardMetrics.timeMinutes</b><br />
+        <i>Int &mdash; Default: 1 + ceil((size(referenceFasta,"G") * 3 * 2)) + ceil((size(inputBam,"G") * 6))</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.rnaSeqMetrics.javaXmx">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.rnaSeqMetrics.javaXmx</b><br />
+        <i>String &mdash; Default: "8G"</i><br />
+        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.rnaSeqMetrics.memory">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.rnaSeqMetrics.memory</b><br />
+        <i>String &mdash; Default: "9G"</i><br />
+        The amount of memory this job will use.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.rnaSeqMetrics.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.rnaSeqMetrics.timeMinutes</b><br />
+        <i>Int &mdash; Default: 1 + ceil((size(inputBam,"G") * 12))</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.targetIntervalsLists.javaXmx">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.targetIntervalsLists.javaXmx</b><br />
+        <i>String &mdash; Default: "3G"</i><br />
+        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.targetIntervalsLists.memory">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.targetIntervalsLists.memory</b><br />
+        <i>String &mdash; Default: "4G"</i><br />
+        The amount of memory this job will use.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.targetIntervalsLists.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.targetIntervalsLists.timeMinutes</b><br />
+        <i>Int &mdash; Default: 5</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.targetMetrics.javaXmx">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.targetMetrics.javaXmx</b><br />
+        <i>String &mdash; Default: "3G"</i><br />
+        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.targetMetrics.memory">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.targetMetrics.memory</b><br />
+        <i>String &mdash; Default: "4G"</i><br />
+        The amount of memory this job will use.
+</p>
+<p name="TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.targetMetrics.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.bamMetricsTranscriptClean.targetMetrics.timeMinutes</b><br />
+        <i>Int &mdash; Default: 1 + ceil((size(inputBam,"G") * 6))</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.fastqcTask.adapters">
+        <b>TalonWDL.sampleWorkflow.fastqcTask.adapters</b><br />
+        <i>File? &mdash; Default: None</i><br />
+        Equivalent to fastqc's --adapters option.
+</p>
+<p name="TalonWDL.sampleWorkflow.fastqcTask.casava">
+        <b>TalonWDL.sampleWorkflow.fastqcTask.casava</b><br />
+        <i>Boolean &mdash; Default: false</i><br />
+        Equivalent to fastqc's --casava flag.
+</p>
+<p name="TalonWDL.sampleWorkflow.fastqcTask.contaminants">
+        <b>TalonWDL.sampleWorkflow.fastqcTask.contaminants</b><br />
+        <i>File? &mdash; Default: None</i><br />
+        Equivalent to fastqc's --contaminants option.
+</p>
+<p name="TalonWDL.sampleWorkflow.fastqcTask.dir">
+        <b>TalonWDL.sampleWorkflow.fastqcTask.dir</b><br />
+        <i>String? &mdash; Default: None</i><br />
+        Equivalent to fastqc's --dir option.
+</p>
+<p name="TalonWDL.sampleWorkflow.fastqcTask.extract">
+        <b>TalonWDL.sampleWorkflow.fastqcTask.extract</b><br />
+        <i>Boolean &mdash; Default: false</i><br />
+        Equivalent to fastqc's --extract flag.
+</p>
+<p name="TalonWDL.sampleWorkflow.fastqcTask.format">
+        <b>TalonWDL.sampleWorkflow.fastqcTask.format</b><br />
+        <i>String? &mdash; Default: None</i><br />
+        Equivalent to fastqc's --format option.
+</p>
+<p name="TalonWDL.sampleWorkflow.fastqcTask.javaXmx">
+        <b>TalonWDL.sampleWorkflow.fastqcTask.javaXmx</b><br />
+        <i>String &mdash; Default: "1750M"</i><br />
+        The maximum memory available to the program. Should be lower than `memory` to accommodate JVM overhead.
+</p>
+<p name="TalonWDL.sampleWorkflow.fastqcTask.kmers">
+        <b>TalonWDL.sampleWorkflow.fastqcTask.kmers</b><br />
+        <i>Int? &mdash; Default: None</i><br />
+        Equivalent to fastqc's --kmers option.
+</p>
+<p name="TalonWDL.sampleWorkflow.fastqcTask.limits">
+        <b>TalonWDL.sampleWorkflow.fastqcTask.limits</b><br />
+        <i>File? &mdash; Default: None</i><br />
+        Equivalent to fastqc's --limits option.
+</p>
+<p name="TalonWDL.sampleWorkflow.fastqcTask.memory">
+        <b>TalonWDL.sampleWorkflow.fastqcTask.memory</b><br />
+        <i>String &mdash; Default: "2G"</i><br />
+        The amount of memory this job will use.
+</p>
+<p name="TalonWDL.sampleWorkflow.fastqcTask.minLength">
+        <b>TalonWDL.sampleWorkflow.fastqcTask.minLength</b><br />
+        <i>Int? &mdash; Default: None</i><br />
+        Equivalent to fastqc's --min_length option.
+</p>
+<p name="TalonWDL.sampleWorkflow.fastqcTask.nano">
+        <b>TalonWDL.sampleWorkflow.fastqcTask.nano</b><br />
+        <i>Boolean &mdash; Default: false</i><br />
+        Equivalent to fastqc's --nano flag.
+</p>
+<p name="TalonWDL.sampleWorkflow.fastqcTask.noFilter">
+        <b>TalonWDL.sampleWorkflow.fastqcTask.noFilter</b><br />
+        <i>Boolean &mdash; Default: false</i><br />
+        Equivalent to fastqc's --nofilter flag.
+</p>
+<p name="TalonWDL.sampleWorkflow.fastqcTask.nogroup">
+        <b>TalonWDL.sampleWorkflow.fastqcTask.nogroup</b><br />
+        <i>Boolean &mdash; Default: false</i><br />
+        Equivalent to fastqc's --nogroup flag.
+</p>
+<p name="TalonWDL.sampleWorkflow.fastqcTask.threads">
+        <b>TalonWDL.sampleWorkflow.fastqcTask.threads</b><br />
+        <i>Int &mdash; Default: 1</i><br />
+        The number of cores to use.
+</p>
+<p name="TalonWDL.sampleWorkflow.fastqcTask.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.fastqcTask.timeMinutes</b><br />
+        <i>Int &mdash; Default: 1 + ceil(size(seqFile,"G")) * 4</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.labelReadsMinimap2.deleteTmp">
+        <b>TalonWDL.sampleWorkflow.labelReadsMinimap2.deleteTmp</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        If set, tmp dir will be removed.
+</p>
+<p name="TalonWDL.sampleWorkflow.labelReadsMinimap2.memory">
+        <b>TalonWDL.sampleWorkflow.labelReadsMinimap2.memory</b><br />
+        <i>String &mdash; Default: "25G"</i><br />
+        The amount of memory available to the job.
+</p>
+<p name="TalonWDL.sampleWorkflow.labelReadsMinimap2.threads">
+        <b>TalonWDL.sampleWorkflow.labelReadsMinimap2.threads</b><br />
+        <i>Int &mdash; Default: 4</i><br />
+        The number of threads to be used.
+</p>
+<p name="TalonWDL.sampleWorkflow.labelReadsMinimap2.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.labelReadsMinimap2.timeMinutes</b><br />
+        <i>Int &mdash; Default: 2880</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.labelReadsMinimap2.tmpDir">
+        <b>TalonWDL.sampleWorkflow.labelReadsMinimap2.tmpDir</b><br />
+        <i>String &mdash; Default: "./tmp_label_reads"</i><br />
+        Path to directory for tmp files.
+</p>
+<p name="TalonWDL.sampleWorkflow.labelReadsTranscriptClean.deleteTmp">
+        <b>TalonWDL.sampleWorkflow.labelReadsTranscriptClean.deleteTmp</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        If set, tmp dir will be removed.
+</p>
+<p name="TalonWDL.sampleWorkflow.labelReadsTranscriptClean.memory">
+        <b>TalonWDL.sampleWorkflow.labelReadsTranscriptClean.memory</b><br />
+        <i>String &mdash; Default: "25G"</i><br />
+        The amount of memory available to the job.
+</p>
+<p name="TalonWDL.sampleWorkflow.labelReadsTranscriptClean.threads">
+        <b>TalonWDL.sampleWorkflow.labelReadsTranscriptClean.threads</b><br />
+        <i>Int &mdash; Default: 4</i><br />
+        The number of threads to be used.
+</p>
+<p name="TalonWDL.sampleWorkflow.labelReadsTranscriptClean.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.labelReadsTranscriptClean.timeMinutes</b><br />
+        <i>Int &mdash; Default: 2880</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.labelReadsTranscriptClean.tmpDir">
+        <b>TalonWDL.sampleWorkflow.labelReadsTranscriptClean.tmpDir</b><br />
+        <i>String &mdash; Default: "./tmp_label_reads"</i><br />
+        Path to directory for tmp files.
+</p>
+<p name="TalonWDL.sampleWorkflow.minimap2.cores">
+        <b>TalonWDL.sampleWorkflow.minimap2.cores</b><br />
+        <i>Int &mdash; Default: 4</i><br />
+        The number of cores to be used.
+</p>
+<p name="TalonWDL.sampleWorkflow.minimap2.kmerSize">
+        <b>TalonWDL.sampleWorkflow.minimap2.kmerSize</b><br />
+        <i>Int &mdash; Default: 15</i><br />
+        K-mer size (no larger than 28).
+</p>
+<p name="TalonWDL.sampleWorkflow.minimap2.matchingScore">
+        <b>TalonWDL.sampleWorkflow.minimap2.matchingScore</b><br />
+        <i>Int? &mdash; Default: None</i><br />
+        Matching score.
+</p>
+<p name="TalonWDL.sampleWorkflow.minimap2.maxFragmentLength">
+        <b>TalonWDL.sampleWorkflow.minimap2.maxFragmentLength</b><br />
+        <i>Int? &mdash; Default: None</i><br />
+        Max fragment length (effective with -xsr or in the fragment mode).
+</p>
+<p name="TalonWDL.sampleWorkflow.minimap2.maxIntronLength">
+        <b>TalonWDL.sampleWorkflow.minimap2.maxIntronLength</b><br />
+        <i>Int? &mdash; Default: None</i><br />
+        Max intron length (effective with -xsplice; changing -r).
+</p>
+<p name="TalonWDL.sampleWorkflow.minimap2.memory">
+        <b>TalonWDL.sampleWorkflow.minimap2.memory</b><br />
+        <i>String &mdash; Default: "30G"</i><br />
+        The amount of memory available to the job.
+</p>
+<p name="TalonWDL.sampleWorkflow.minimap2.mismatchPenalty">
+        <b>TalonWDL.sampleWorkflow.minimap2.mismatchPenalty</b><br />
+        <i>Int? &mdash; Default: None</i><br />
+        Mismatch penalty.
+</p>
+<p name="TalonWDL.sampleWorkflow.minimap2.retainMaxSecondaryAlignments">
+        <b>TalonWDL.sampleWorkflow.minimap2.retainMaxSecondaryAlignments</b><br />
+        <i>Int? &mdash; Default: None</i><br />
+        Retain at most INT secondary alignments.
+</p>
+<p name="TalonWDL.sampleWorkflow.minimap2.secondaryAlignment">
+        <b>TalonWDL.sampleWorkflow.minimap2.secondaryAlignment</b><br />
+        <i>Boolean &mdash; Default: false</i><br />
+        Whether to output secondary alignments.
+</p>
+<p name="TalonWDL.sampleWorkflow.minimap2.skipSelfAndDualMappings">
+        <b>TalonWDL.sampleWorkflow.minimap2.skipSelfAndDualMappings</b><br />
+        <i>Boolean &mdash; Default: false</i><br />
+        Skip self and dual mappings (for the all-vs-all mode).
+</p>
+<p name="TalonWDL.sampleWorkflow.minimap2.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.minimap2.timeMinutes</b><br />
+        <i>Int &mdash; Default: 1 + ceil((size(queryFile,"G") * 200 / cores))</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.sortMinimap2.compressionLevel">
+        <b>TalonWDL.sampleWorkflow.sortMinimap2.compressionLevel</b><br />
+        <i>Int &mdash; Default: 1</i><br />
+        Compression level from 0 (uncompressed) to 9 (best).
+</p>
+<p name="TalonWDL.sampleWorkflow.sortMinimap2.memoryGb">
+        <b>TalonWDL.sampleWorkflow.sortMinimap2.memoryGb</b><br />
+        <i>Int &mdash; Default: 1 + threads * memoryPerThreadGb</i><br />
+        The amount of memory available to the job in gigabytes.
+</p>
+<p name="TalonWDL.sampleWorkflow.sortMinimap2.memoryPerThreadGb">
+        <b>TalonWDL.sampleWorkflow.sortMinimap2.memoryPerThreadGb</b><br />
+        <i>Int &mdash; Default: 4</i><br />
+        The amount of memory used per sort thread in gigabytes
+</p>
+<p name="TalonWDL.sampleWorkflow.sortMinimap2.sortByName">
+        <b>TalonWDL.sampleWorkflow.sortMinimap2.sortByName</b><br />
+        <i>Boolean &mdash; Default: false</i><br />
+        Sort the inputBam by read name instead of position.
+</p>
+<p name="TalonWDL.sampleWorkflow.sortMinimap2.threads">
+        <b>TalonWDL.sampleWorkflow.sortMinimap2.threads</b><br />
+        <i>Int &mdash; Default: 1</i><br />
+        The number of additional threads that will be used for this task.
+</p>
+<p name="TalonWDL.sampleWorkflow.sortMinimap2.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.sortMinimap2.timeMinutes</b><br />
+        <i>Int &mdash; Default: 1 + ceil((size(inputBam,"G") * 3))</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.sortTranscriptClean.compressionLevel">
+        <b>TalonWDL.sampleWorkflow.sortTranscriptClean.compressionLevel</b><br />
+        <i>Int &mdash; Default: 1</i><br />
+        Compression level from 0 (uncompressed) to 9 (best).
+</p>
+<p name="TalonWDL.sampleWorkflow.sortTranscriptClean.memoryGb">
+        <b>TalonWDL.sampleWorkflow.sortTranscriptClean.memoryGb</b><br />
+        <i>Int &mdash; Default: 1 + threads * memoryPerThreadGb</i><br />
+        The amount of memory available to the job in gigabytes.
+</p>
+<p name="TalonWDL.sampleWorkflow.sortTranscriptClean.memoryPerThreadGb">
+        <b>TalonWDL.sampleWorkflow.sortTranscriptClean.memoryPerThreadGb</b><br />
+        <i>Int &mdash; Default: 4</i><br />
+        The amount of memory used per sort thread in gigabytes
+</p>
+<p name="TalonWDL.sampleWorkflow.sortTranscriptClean.sortByName">
+        <b>TalonWDL.sampleWorkflow.sortTranscriptClean.sortByName</b><br />
+        <i>Boolean &mdash; Default: false</i><br />
+        Sort the inputBam by read name instead of position.
+</p>
+<p name="TalonWDL.sampleWorkflow.sortTranscriptClean.threads">
+        <b>TalonWDL.sampleWorkflow.sortTranscriptClean.threads</b><br />
+        <i>Int &mdash; Default: 1</i><br />
+        The number of additional threads that will be used for this task.
+</p>
+<p name="TalonWDL.sampleWorkflow.sortTranscriptClean.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.sortTranscriptClean.timeMinutes</b><br />
+        <i>Int &mdash; Default: 1 + ceil((size(inputBam,"G") * 3))</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.transcriptClean.canonOnly">
+        <b>TalonWDL.sampleWorkflow.transcriptClean.canonOnly</b><br />
+        <i>Boolean &mdash; Default: false</i><br />
+        Only output canonical transcripts and transcript containing annotated noncanonical junctions.
+</p>
+<p name="TalonWDL.sampleWorkflow.transcriptClean.cores">
+        <b>TalonWDL.sampleWorkflow.transcriptClean.cores</b><br />
+        <i>Int &mdash; Default: 1</i><br />
+        The number of cores to be used.
+</p>
+<p name="TalonWDL.sampleWorkflow.transcriptClean.dryRun">
+        <b>TalonWDL.sampleWorkflow.transcriptClean.dryRun</b><br />
+        <i>Boolean &mdash; Default: false</i><br />
+        TranscriptClean will read in the data but don't do any correction.
+</p>
+<p name="TalonWDL.sampleWorkflow.transcriptClean.maxLenIndel">
+        <b>TalonWDL.sampleWorkflow.transcriptClean.maxLenIndel</b><br />
+        <i>Int &mdash; Default: 5</i><br />
+        Maximum size indel to correct.
+</p>
+<p name="TalonWDL.sampleWorkflow.transcriptClean.maxSJoffset">
+        <b>TalonWDL.sampleWorkflow.transcriptClean.maxSJoffset</b><br />
+        <i>Int &mdash; Default: 5</i><br />
+        Maximum distance from annotated splice junction to correct.
+</p>
+<p name="TalonWDL.sampleWorkflow.transcriptClean.memory">
+        <b>TalonWDL.sampleWorkflow.transcriptClean.memory</b><br />
+        <i>String &mdash; Default: "25G"</i><br />
+        The amount of memory available to the job.
+</p>
+<p name="TalonWDL.sampleWorkflow.transcriptClean.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.transcriptClean.timeMinutes</b><br />
+        <i>Int &mdash; Default: 2880</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.samtoolsFaidx.memory">
+        <b>TalonWDL.samtoolsFaidx.memory</b><br />
+        <i>String &mdash; Default: "2G"</i><br />
+        The amount of memory available to the job.
+</p>
 <p name="TalonWDL.spliceJunctionsFile">
         <b>TalonWDL.spliceJunctionsFile</b><br />
         <i>File? &mdash; Default: None</i><br />
         A pre-generated splice junction annotation file.
+</p>
+<p name="TalonWDL.talon.memory">
+        <b>TalonWDL.talon.memory</b><br />
+        <i>String &mdash; Default: "25G"</i><br />
+        The amount of memory available to the job.
+</p>
+<p name="TalonWDL.talon.threads">
+        <b>TalonWDL.talon.threads</b><br />
+        <i>Int &mdash; Default: 4</i><br />
+        The number of threads to be used.
+</p>
+<p name="TalonWDL.talon.timeMinutes">
+        <b>TalonWDL.talon.timeMinutes</b><br />
+        <i>Int &mdash; Default: 2880</i><br />
+        The maximum amount of time the job will run in minutes.
 </p>
 <p name="TalonWDL.talonDatabase">
         <b>TalonWDL.talonDatabase</b><br />

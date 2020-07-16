@@ -10,7 +10,7 @@
     "TalonWDL.dockerImagesFile": "dockerImages.yml",
     "TalonWDL.runTranscriptClean": "true",
     "TalonWDL.annotationGTFrefflat": "tests/data/gencode.v34.annotation.refflat",
-    "TalonWDL.executeSampleWorkflow.presetOption": "splice",
-    "TalonWDL.executeSampleWorkflow.variantVCF": "tests/data/common.variants.vcf",
-    "TalonWDL.executeSampleWorkflow.howToFindGTAG": "f"
+    "TalonWDL.sampleWorkflow.presetOption": "splice",
+    "TalonWDL.sampleWorkflow.variantVCF": "tests/data/common.variants.vcf",
+    "TalonWDL.sampleWorkflow.howToFindGTAG": "f"
 }
