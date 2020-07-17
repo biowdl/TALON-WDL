@@ -51,8 +51,6 @@ workflow TalonWDL {
         File? NoneFile #FIXME
     }
 
-    meta {allowNestedInputs: true}
-
     call common.YamlToJson as convertDockerImagesFile {
         input:
             yaml = dockerImagesFile,
@@ -245,5 +243,6 @@ workflow TalonWDL {
         WDL_AID: {
             exclude: ["NoneFile"]
         }
+        allowNestedInputs: true
     }
 }
