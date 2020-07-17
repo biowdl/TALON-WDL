@@ -45,6 +45,8 @@ workflow SampleWorkflow {
         File? annotationGTFrefflat
     }
 
+    meta {allowNestedInputs: true}
+
     Array[Readgroup] readgroups = sample.readgroups
 
     scatter (readgroup in readgroups) {
