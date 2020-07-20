@@ -14,7 +14,7 @@ developed by the SASC team
 at [Leiden University Medical Center](https://www.lumc.nl/).
 
 ## Usage
-You can run this pipelines using
+You can run this pipeline using
 [Cromwell](http://cromwell.readthedocs.io/en/stable/):
 
 ```bash
