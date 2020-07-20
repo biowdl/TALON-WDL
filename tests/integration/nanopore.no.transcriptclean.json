@@ -1,0 +1,15 @@
+{
+    "TalonWDL.sampleConfigFile": "tests/samplesheets/nanopore.csv",
+    "TalonWDL.annotationGTF": "tests/data/gencode.v34.annotation.gtf",
+    "TalonWDL.genomeBuild": "hg38",
+    "TalonWDL.annotationVersion": "gencode_v34",
+    "TalonWDL.referenceGenome": "tests/data/grch38.fasta",
+    "TalonWDL.sequencingPlatform": "Nanopore",
+    "TalonWDL.organismName": "Human",
+    "TalonWDL.pipelineRunName": "nanopore-test",
+    "TalonWDL.dockerImagesFile": "dockerImages.yml",
+    "TalonWDL.runTranscriptClean": "false",
+    "TalonWDL.annotationGTFrefflat": "tests/data/gencode.v34.annotation.refflat",
+    "TalonWDL.sampleWorkflow.presetOption": "splice",
+    "TalonWDL.sampleWorkflow.howToFindGTAG": "f"
+}

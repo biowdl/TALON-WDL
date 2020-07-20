@@ -1,2 +1,4 @@
-2498f6d289e91b028d87080eb23a362e  GM12878.subset.fastq.gz
-0fded322b59b212f111eb3c695cdbc17  K562.subset.fastq.gz
+9991b699438b849731716945dd648039  nanopore.subset.1.fastq.gz
+5d3e3d4ddb5b3fe897e859095231bd31  nanopore.subset.2.fastq.gz
+6a159fd4816ef802bd6f059cb6b83a99  pacbio.subset.1.fastq.gz
+822bd6f71af98503bd8743e675507780  pacbio.subset.2.fastq.gz

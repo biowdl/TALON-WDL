@@ -5,20 +5,24 @@ title: Home
 
 This pipeline can be used to process RNA sequenced by either a Pacific
 Biosciences sequencer or Oxford Nanopore sequencer, starting from fastq files.
-It will perform mapping to a reference genome (using minimap2), INDEL/mismatch
-and noncanonical splice junction correction (using TranscriptClean) and
-identify and count known and novel genes/transcripts (using TALON).
+It performs mapping to a reference genome (using minimap2), INDEL/mismatch
+and noncanonical splice junction correction (using transcriptclean) and
+identify and count known and novel genes/transcripts (using talon).
 
 This pipeline is part of [BioWDL](https://biowdl.github.io/)
 developed by the SASC team
 at [Leiden University Medical Center](https://www.lumc.nl/).
 
 ## Usage
-You can run the pipeline using
+You can run this pipeline using
 [Cromwell](http://cromwell.readthedocs.io/en/stable/):
 
 ```bash
-java -jar cromwell-<version>.jar run -i inputs.json talon-wdl.wdl
+java \
+    -jar cromwell-<version>.jar \
+    run \
+    -i inputs.json \
+    talon-wdl.wdl
 ```
 
 ### Inputs
@@ -42,8 +46,8 @@ For an overview of all available inputs, see [this page](./inputs.html).
     "TalonWDL.pipelineRunName": "A short name to distinguish a run.",
     "TalonWDL.dockerImagesFile": "A file listing the used docker images.",
     "TalonWDL.runTranscriptClean": "Set to true in order to run TranscriptClean, set to false in order to disable TranscriptClean.",
-    "TalonWDL.executeSampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2, this should be either 'splice'(directRNA) or 'splice:hq'(cDNA).",
-    "TalonWDL.executeSampleWorkflow.variantVCF": "A VCF file with common variants should be supplied when running TranscriptClean, this will make sure TranscriptClean does not correct those known variants.",
+    "TalonWDL.sampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2, this should be either 'splice'(directRNA) or 'splice:hq'(cDNA).",
+    "TalonWDL.sampleWorkflow.variantVCF": "A VCF file with common variants should be supplied when running TranscriptClean, this will make sure TranscriptClean does not correct those known variants.",
 }
 ```
 
@@ -51,7 +55,7 @@ Optional settings:
 ```json
 {
     "TalonWDL.novelIDprefix": "A prefix for novel transcript discoveries.",
-    "TalonWDL.executeSampleWorkflow.howToFindGTAG": "How to find canonical splicing sites GT-AG - f: transcript strand; b: both strands; n: no attempt to match GT-AG.",
+    "TalonWDL.sampleWorkflow.howToFindGTAG": "How to find canonical splicing sites GT-AG - f: transcript strand; b: both strands; n: no attempt to match GT-AG.",
     "TalonWDL.spliceJunctionsFile": "A pre-generated splice junction annotation file.",
     "TalonWDL.talonDatabase": "A pre-generated TALON database file.",
     "TalonWDL.annotationGTFrefflat": "A refflat file of the annotation GTF used."
@@ -115,9 +119,9 @@ The following is an example of what an inputs JSON might look like:
     "TalonWDL.dockerImagesFile": "dockerImages.yml",
     "TalonWDL.runTranscriptClean": "true",
     "TalonWDL.annotationGTFrefflat": "tests/data/gencode.v29.annotation.refflat",
-    "TalonWDL.executeSampleWorkflow.presetOption": "splice",
-    "TalonWDL.executeSampleWorkflow.variantVCF": "tests/data/common.variants.vcf",
-    "TalonWDL.executeSampleWorkflow.howToFindGTAG": "f"
+    "TalonWDL.sampleWorkflow.presetOption": "splice",
+    "TalonWDL.sampleWorkflow.variantVCF": "tests/data/common.variants.vcf",
+    "TalonWDL.sampleWorkflow.howToFindGTAG": "f"
 }
 ```
 
@@ -136,7 +140,7 @@ found in the default for the `dockerImages` input.
 
 ### Output
 The workflow will output mapped reads by minimap2 in a .sam file, a
-cleaned .sam file and log information from TranscriptClean, a database
+cleaned .sam file and log information from transcriptclean, a database
 containing transcript information together with a log file of
 read/transcript comparison and a abundance plus summary file of the database.
 It will also output fastqc and picard statistics based on the fastq and
