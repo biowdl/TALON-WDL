@@ -5,20 +5,24 @@ title: Home
 
 This pipeline can be used to process RNA sequenced by either a Pacific
 Biosciences sequencer or Oxford Nanopore sequencer, starting from fastq files.
-It will perform mapping to a reference genome (using minimap2), INDEL/mismatch
-and noncanonical splice junction correction (using TranscriptClean) and
-identify and count known and novel genes/transcripts (using TALON).
+It performs mapping to a reference genome (using minimap2), INDEL/mismatch
+and noncanonical splice junction correction (using transcriptclean) and
+identify and count known and novel genes/transcripts (using talon).
 
 This pipeline is part of [BioWDL](https://biowdl.github.io/)
 developed by the SASC team
 at [Leiden University Medical Center](https://www.lumc.nl/).
 
 ## Usage
-You can run the pipeline using
+You can run these pipelines using
 [Cromwell](http://cromwell.readthedocs.io/en/stable/):
 
 ```bash
-java -jar cromwell-<version>.jar run -i inputs.json talon-wdl.wdl
+java \
+    -jar cromwell-<version>.jar \
+    run \
+    -i inputs.json \
+    talon-wdl.wdl
 ```
 
 ### Inputs
@@ -147,7 +151,7 @@ minimap2 alignment file, combined into a multiqc report.
   <!-- Obscure e-mail address for spammers -->
 For any questions about running this pipeline and feature request (such as
 adding additional tools and options), please use the
-<a href='https://github.com/biowdl/TALON-WDL/issues'>github issue tracker</a>
+<a href='https://github.com/biowdl/germline-DNA/issues'>github issue tracker</a>
 or contact the SASC team directly at: 
 <a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#115;&#99;&#64;&#108;&#117;&#109;&#99;&#46;&#110;&#108;'>
 &#115;&#97;&#115;&#99;&#64;&#108;&#117;&#109;&#99;&#46;&#110;&#108;</a>.

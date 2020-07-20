@@ -5,7 +5,6 @@
 # http://bioconda.github.io/#install-conda
 # This file can be installed with "conda install --file requirements-test.txt".
 
-# TODO: Cromwell 49 bug should be fixed in cromwell 50
 cromwell
 pytest-workflow
 miniwdl
