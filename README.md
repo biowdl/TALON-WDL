@@ -2,9 +2,9 @@
 
 This repository contains the [Biowdl](https://github.com/biowdl) pipeline
 usable for processing RNA-seq data produced by either a Nanopore or PacBio
-sequencer using [Minimap2](https://github.com/lh3/minimap2),
-[TranscriptClean](https://github.com/mortazavilab/TranscriptClean) and
-[TALON](https://github.com/mortazavilab/TALON).
+sequencer using [minimap2](https://github.com/lh3/minimap2),
+[transcriptclean](https://github.com/mortazavilab/TranscriptClean) and
+[talon](https://github.com/mortazavilab/TALON).
 
 ## Documentation
 
