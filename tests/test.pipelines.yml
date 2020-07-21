@@ -46,7 +46,7 @@
     - path: test-output/pacbio-test_talon_summary.tsv
     - path: test-output/run_QC.log
     - path: test-output/run_talon_read_annot.tsv
-    - path: test-output/spliceJunctionsFile.tsv
+    - path: test-output/spliceJunctions.tsv
     - path: test-output/talonConfigFile.csv
 
 - name: pacbio.no.transcriptclean
@@ -115,7 +115,7 @@
     - path: test-output/pacbio-test_talon_summary.tsv
     - path: test-output/run_QC.log
     - path: test-output/run_talon_read_annot.tsv
-    - path: test-output/spliceJunctionsFile.tsv
+    - path: test-output/spliceJunctions.tsv
       should_exist: false
     - path: test-output/talonConfigFile.csv
 
@@ -167,7 +167,7 @@
     - path: test-output/nanopore-test_talon_summary.tsv
     - path: test-output/run_QC.log
     - path: test-output/run_talon_read_annot.tsv
-    - path: test-output/spliceJunctionsFile.tsv
+    - path: test-output/spliceJunctions.tsv
     - path: test-output/talonConfigFile.csv
 
 - name: nanopore.no.transcriptclean
@@ -236,6 +236,6 @@
     - path: test-output/nanopore-test_talon_summary.tsv
     - path: test-output/run_QC.log
     - path: test-output/run_talon_read_annot.tsv
-    - path: test-output/spliceJunctionsFile.tsv
+    - path: test-output/spliceJunctions.tsv
       should_exist: false
     - path: test-output/talonConfigFile.csv
