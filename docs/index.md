@@ -56,7 +56,7 @@ Optional settings:
 {
     "TalonWDL.novelIDprefix": "A prefix for novel transcript discoveries.",
     "TalonWDL.sampleWorkflow.howToFindGTAG": "How to find canonical splicing sites GT-AG - f: transcript strand; b: both strands; n: no attempt to match GT-AG.",
-    "TalonWDL.spliceJunctionsFile": "A pre-generated splice junction annotation file.",
+    "TalonWDL.spliceJunctions": "A pre-generated splice junction annotation file.",
     "TalonWDL.talonDatabase": "A pre-generated talon database file.",
     "TalonWDL.annotationGTFrefflat": "A refflat file of the annotation GTF used."
 }
