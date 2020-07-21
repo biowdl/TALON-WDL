@@ -8,7 +8,7 @@
 <p name="TalonWDL.annotationGTF">
         <b>TalonWDL.annotationGTF</b><br />
         <i>File &mdash; Default: None</i><br />
-        GTF annotation containing genes, transcripts, and edges.
+        Gtf annotation containing genes, transcripts, and edges.
 </p>
 <p name="TalonWDL.annotationVersion">
         <b>TalonWDL.annotationVersion</b><br />
@@ -60,7 +60,7 @@
 <p name="TalonWDL.annotationGTFrefflat">
         <b>TalonWDL.annotationGTFrefflat</b><br />
         <i>File? &mdash; Default: None</i><br />
-        A refflat file of the annotation GTF used.
+        A refflat file of the annotation gtf used.
 </p>
 <p name="TalonWDL.createDatabase.minimumLength">
         <b>TalonWDL.createDatabase.minimumLength</b><br />
@@ -70,7 +70,7 @@
 <p name="TalonWDL.novelIDprefix">
         <b>TalonWDL.novelIDprefix</b><br />
         <i>String &mdash; Default: "TALON"</i><br />
-        Prefix for naming novel discoveries in eventual TALON runs.
+        Prefix for naming novel discoveries in eventual talon runs.
 </p>
 <p name="TalonWDL.outputDirectory">
         <b>TalonWDL.outputDirectory</b><br />
@@ -80,7 +80,7 @@
 <p name="TalonWDL.runTranscriptClean">
         <b>TalonWDL.runTranscriptClean</b><br />
         <i>Boolean &mdash; Default: true</i><br />
-        Option to run TranscriptClean after Minimap2 alignment.
+        Option to run transcriptclean after minimap2 alignment.
 </p>
 <p name="TalonWDL.sampleWorkflow.bamMetricsMinimap2.ampliconIntervals">
         <b>TalonWDL.sampleWorkflow.bamMetricsMinimap2.ampliconIntervals</b><br />
@@ -160,7 +160,7 @@
 <p name="TalonWDL.sampleWorkflow.variantVCF">
         <b>TalonWDL.sampleWorkflow.variantVCF</b><br />
         <i>File? &mdash; Default: None</i><br />
-        VCF formatted file of variants.
+        Vcf formatted file of variants.
 </p>
 <p name="TalonWDL.talon.minimumCoverage">
         <b>TalonWDL.talon.minimumCoverage</b><br />
@@ -956,8 +956,8 @@
         <i>String &mdash; Default: "2G"</i><br />
         The amount of memory available to the job.
 </p>
-<p name="TalonWDL.spliceJunctionsFile">
-        <b>TalonWDL.spliceJunctionsFile</b><br />
+<p name="TalonWDL.spliceJunctions">
+        <b>TalonWDL.spliceJunctions</b><br />
         <i>File? &mdash; Default: None</i><br />
         A pre-generated splice junction annotation file.
 </p>
@@ -979,7 +979,7 @@
 <p name="TalonWDL.talonDatabase">
         <b>TalonWDL.talonDatabase</b><br />
         <i>File? &mdash; Default: None</i><br />
-        A pre-generated TALON database file.
+        A pre-generated talon database file.
 </p>
 </details>
 

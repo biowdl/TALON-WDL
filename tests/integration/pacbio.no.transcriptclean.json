@@ -1,15 +1,15 @@
 {
     "TalonWDL.sampleConfigFile": "tests/samplesheets/pacbio.csv",
-    "TalonWDL.annotationGTF": "tests/data/gencode.v34.annotation.gtf",
+    "TalonWDL.annotationGTF": "tests/data/reference/gencode.v34.annotation.gtf",
     "TalonWDL.genomeBuild": "hg38",
     "TalonWDL.annotationVersion": "gencode_v34",
-    "TalonWDL.referenceGenome": "tests/data/grch38.fasta",
+    "TalonWDL.referenceGenome": "tests/data/reference/grch38.fasta",
     "TalonWDL.sequencingPlatform": "PacBio",
     "TalonWDL.organismName": "Human",
     "TalonWDL.pipelineRunName": "pacbio-test",
     "TalonWDL.dockerImagesFile": "dockerImages.yml",
     "TalonWDL.runTranscriptClean": "false",
-    "TalonWDL.annotationGTFrefflat": "tests/data/gencode.v34.annotation.refflat",
+    "TalonWDL.annotationGTFrefflat": "tests/data/reference/gencode.v34.annotation.refflat",
     "TalonWDL.sampleWorkflow.presetOption": "splice:hq",
     "TalonWDL.sampleWorkflow.howToFindGTAG": "f"
 }

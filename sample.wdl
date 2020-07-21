@@ -139,27 +139,26 @@ workflow SampleWorkflow {
         }
     }
 
+    Array[File] qualityReports = flatten([fastqcTask.htmlReport, fastqcTask.reportZip, flatten(bamMetricsMinimap2.reports), flatten(select_all(bamMetricsTranscriptClean.reports))])
+
     output {
-        Array[File] outputHtmlReport = fastqcTask.htmlReport
-        Array[File] outputZipReport = fastqcTask.reportZip
-        Array[File] outputSAMsampleWorkflow = if (runTranscriptClean) 
+        Array[File] workflowSam = if (runTranscriptClean) 
                     then select_all(labelReadsTranscriptClean.outputLabeledSAM)
                     else labelReadsMinimap2.outputLabeledSAM
-        Array[File] outputMinimap2 = minimap2.outputAlignmentFile
-        Array[File] outputMinimap2SortedBAM = sortMinimap2.outputBam
-        Array[File] outputMinimap2SortedBAI = sortMinimap2.outputBamIndex
-        Array[File] outputBamMetricsReportsMinimap2 = flatten(bamMetricsMinimap2.reports)
-        Array[File] outputMinimap2LabeledSAM = labelReadsMinimap2.outputLabeledSAM
-        Array[File] outputMinimap2ReadLabels = labelReadsMinimap2.outputReadLabels
-        Array[File?] outputTranscriptCleanFasta = transcriptClean.outputTranscriptCleanFasta
-        Array[File?] outputTranscriptCleanLog = transcriptClean.outputTranscriptCleanLog
-        Array[File?] outputTranscriptCleanSAM = transcriptClean.outputTranscriptCleanSAM
-        Array[File?] outputTranscriptCleanTElog = transcriptClean.outputTranscriptCleanTElog
-        Array[File?] outputTranscriptCleanSortedBAM = sortTranscriptClean.outputBam
-        Array[File?] outputTranscriptCleanSortedBAI = sortTranscriptClean.outputBamIndex
-        Array[File?] outputBamMetricsReportsTranscriptClean = flatten(select_all(bamMetricsTranscriptClean.reports))
-        Array[File?] outputTranscriptCleanLabeledSAM = labelReadsTranscriptClean.outputLabeledSAM
-        Array[File?] outputTranscriptCleanReadLabels = labelReadsTranscriptClean.outputReadLabels
+        Array[File] minimap2Sam = minimap2.outputAlignmentFile
+        Array[File] minimap2SortedBam = sortMinimap2.outputBam
+        Array[File] minimap2SortedBai = sortMinimap2.outputBamIndex
+        Array[File] minimap2SamLabeled = labelReadsMinimap2.outputLabeledSAM
+        Array[File] minimap2SamReadLabels = labelReadsMinimap2.outputReadLabels
+        Array[File] workflowReports = qualityReports
+        Array[File?] transcriptCleanFasta = transcriptClean.outputTranscriptCleanFasta
+        Array[File?] transcriptCleanLog = transcriptClean.outputTranscriptCleanLog
+        Array[File?] transcriptCleanSam = transcriptClean.outputTranscriptCleanSAM
+        Array[File?] transcriptCleanTELog = transcriptClean.outputTranscriptCleanTElog
+        Array[File?] transcriptCleanSortedBam = sortTranscriptClean.outputBam
+        Array[File?] transcriptCleanSortedBai = sortTranscriptClean.outputBamIndex
+        Array[File?] transcriptCleanSamLabeled = labelReadsTranscriptClean.outputLabeledSAM
+        Array[File?] transcriptCleanSamReadLabels = labelReadsTranscriptClean.outputReadLabels
     }
 
     parameter_meta {
@@ -170,31 +169,28 @@ workflow SampleWorkflow {
         referenceGenomeIndex: {description: "Reference genome index file.", category: "required"}
         referenceGenomeDict: {description: "Reference genome dictionary file.", category: "required"}
         presetOption: {description: "This option applies multiple options at the same time in minimap2.", category: "common"}
-        runTranscriptClean: {description: "Option to run TranscriptClean after Minimap2 alignment.", category: "common"}
+        runTranscriptClean: {description: "Option to run transcriptclean after minimap2 alignment.", category: "common"}
         dockerImages: {description: "The docker image used for this workflow. Changing this may result in errors which the developers may choose not to address.", category: "advanced"}
-        variantVCF: {description: "VCF formatted file of variants.", category: "common"}
+        variantVCF: {description: "Vcf formatted file of variants.", category: "common"}
         howToFindGTAG: {description: "How to find GT-AG. f:transcript strand, b:both strands, n:don't match GT-AG.", category: "common"}
         spliceJunctionsFile: {description: "A pre-generated splice junction annotation file.", category: "advanced"}
-        annotationGTFrefflat: {description: "A refflat file of the annotation GTF used.", category: "common"}
+        annotationGTFrefflat: {description: "A refflat file of the annotation gtf used.", category: "common"}
 
         # outputs
-        outputHtmlReport: {description: "FastQC output HTML file(s)."}
-        outputZipReport: {description: "FastQC output support file(s)."}
-        outputSAMsampleWorkflow: {description: "Either the minimap2 or TranscriptClean SAM file(s)."}
-        outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
-        outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
-        outputMinimap2SortedBAI: {description: "Index of sorted minimap2 BAM file(s)."}
-        outputBamMetricsReportsMinimap2: {description: "All reports from the BamMetrics pipeline for the minimap2 alignment."}
-        outputMinimap2LabeledSAM: {description: "Minimap2 alignments labeled for internal priming."}
-        outputMinimap2ReadLabels: {description: "Tabular file with fraction description per read for Minimap2 alignment."}
-        outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
-        outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
-        outputTranscriptCleanSAM: {description: "SAM file(s) containing corrected aligned reads."}
-        outputTranscriptCleanTElog: {description: "TE log file(s) of TranscriptClean run."}
-        outputTranscriptCleanSortedBAM: {description: "TranscriptClean BAM file(s) sorted on position."}
-        outputTranscriptCleanSortedBAI: {description: "Index of sorted TranscriptClean BAM file(s)."}
-        outputBamMetricsReportsTranscriptClean: {description: "All reports from the BamMetrics pipeline for the TranscriptClean alignment."}
-        outputTranscriptCleanLabeledSAM: {description: "TranscriptClean alignments labeled for internal priming."}
-        outputTranscriptCleanReadLabels: {description: "Tabular file with fraction description per read for TranscriptClean alignment."}
+        workflowSam: {description: "Either the minimap2 or transcriptclean Sam file(s)."}
+        minimap2Sam: {description: "Mapping and alignment between collections of DNA sequence file(s)."}
+        minimap2SortedBam: {description: "Minimap2 Bam file(s) sorted on position."}
+        minimap2SortedBai: {description: "Index of sorted minimap2 Bam file(s)."}
+        minimap2SamLabeled: {description: "Minimap2 alignments labeled for internal priming."}
+        minimap2SamReadLabels: {description: "Tabular file with fraction description per read for minimap2 alignment."}
+        workflowReports: {description: "A collection of all metrics."}
+        transcriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
+        transcriptCleanLog: {description: "Log file(s) of transcriptclean run."}
+        transcriptCleanSam: {description: "Sam file(s) containing corrected reads."}
+        transcriptCleanTELog: {description: "TE log file(s) of transcriptclean run."}
+        transcriptCleanSortedBam: {description: "Transcriptclean bam file(s) sorted on position."}
+        transcriptCleanSortedBai: {description: "Index of sorted transcriptclean bam file(s)."}
+        transcriptCleanSamLabeled: {description: "Transcriptclean alignments labeled for internal priming."}
+        transcriptCleanSamReadLabels: {description: "Tabular file(s) with fraction description per read for TranscriptClean alignment."}
     }
 }

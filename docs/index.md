@@ -45,9 +45,9 @@ For an overview of all available inputs, see [this page](./inputs.html).
     "TalonWDL.organismName": "The name of the organism from which the samples originated.",
     "TalonWDL.pipelineRunName": "A short name to distinguish a run.",
     "TalonWDL.dockerImagesFile": "A file listing the used docker images.",
-    "TalonWDL.runTranscriptClean": "Set to true in order to run TranscriptClean, set to false in order to disable TranscriptClean.",
+    "TalonWDL.runTranscriptClean": "Set to true in order to run transcriptclean, set to false in order to disable transcriptclean.",
     "TalonWDL.sampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2, this should be either 'splice'(directRNA) or 'splice:hq'(cDNA).",
-    "TalonWDL.sampleWorkflow.variantVCF": "A VCF file with common variants should be supplied when running TranscriptClean, this will make sure TranscriptClean does not correct those known variants.",
+    "TalonWDL.sampleWorkflow.variantVCF": "A VCF file with common variants should be supplied when running transcriptclean, this will make sure transcriptclean does not correct those known variants.",
 }
 ```
 
@@ -57,7 +57,7 @@ Optional settings:
     "TalonWDL.novelIDprefix": "A prefix for novel transcript discoveries.",
     "TalonWDL.sampleWorkflow.howToFindGTAG": "How to find canonical splicing sites GT-AG - f: transcript strand; b: both strands; n: no attempt to match GT-AG.",
     "TalonWDL.spliceJunctionsFile": "A pre-generated splice junction annotation file.",
-    "TalonWDL.talonDatabase": "A pre-generated TALON database file.",
+    "TalonWDL.talonDatabase": "A pre-generated talon database file.",
     "TalonWDL.annotationGTFrefflat": "A refflat file of the annotation GTF used."
 }
 ```

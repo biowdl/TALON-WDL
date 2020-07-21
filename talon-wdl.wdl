@@ -46,9 +46,16 @@ workflow TalonWDL {
         Boolean runTranscriptClean = true
 
         File? talonDatabase
-        File? spliceJunctionsFile
+        File? spliceJunctions
         File? annotationGTFrefflat
         File? NoneFile #FIXME
+    }
+
+    meta {
+        WDL_AID: {
+            exclude: ["NoneFile"]
+        }
+        allowNestedInputs: true
     }
 
     call common.YamlToJson as convertDockerImagesFile {
@@ -69,7 +76,7 @@ workflow TalonWDL {
     SampleConfig sampleConfig = read_json(convertSampleConfig.json)
     Array[Sample] allSamples = sampleConfig.samples
     Boolean userProvidedDatabase = defined(talonDatabase)
-    Boolean userProvidedSJfile = defined(spliceJunctionsFile)
+    Boolean userProvidedSJfile = defined(spliceJunctions)
 
     if (! userProvidedDatabase) {
         call talon.InitializeTalonDatabase as createDatabase {
@@ -89,7 +96,7 @@ workflow TalonWDL {
                 input:
                     GTFfile = annotationGTF,
                     genomeFile = referenceGenome,
-                    outputPrefix = outputDirectory + "/spliceJunctionsFile",
+                    outputPrefix = outputDirectory + "/spliceJunctions",
                     dockerImage = dockerImages["transcriptclean"]
             }
         }
@@ -118,7 +125,7 @@ workflow TalonWDL {
                 referenceGenomeIndex = samtoolsFaidx.outputIndex,
                 referenceGenomeDict = picardDict.outputDict,
                 spliceJunctionsFile = if (runTranscriptClean)
-                                      then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
+                                      then select_first([spliceJunctions, createSJsfile.outputSJsFile])
                                       else NoneFile,
                 runTranscriptClean = runTranscriptClean,
                 annotationGTFrefflat = annotationGTFrefflat,
@@ -128,7 +135,7 @@ workflow TalonWDL {
 
     call talon.Talon as talon {
         input:
-            SAMfiles = flatten(sampleWorkflow.outputSAMsampleWorkflow),
+            SAMfiles = flatten(sampleWorkflow.workflowSam),
             organism = organismName,
             sequencingPlatform = sequencingPlatform,
             databaseFile = select_first([talonDatabase, createDatabase.outputDatabase]),
@@ -153,51 +160,47 @@ workflow TalonWDL {
             dockerImage = dockerImages["talon"]
     }
 
-    Array[File] outputReports = flatten([flatten(sampleWorkflow.outputHtmlReport), flatten(sampleWorkflow.outputZipReport), flatten(sampleWorkflow.outputBamMetricsReportsMinimap2), select_all(flatten(sampleWorkflow.outputBamMetricsReportsTranscriptClean))])
-
     call multiqc.MultiQC as multiqcTask {
         input:
-            reports = outputReports,
+            reports = flatten(sampleWorkflow.workflowReports),
             outDir = outputDirectory + "/multiqc",
             dataDir = true,
             dockerImage = dockerImages["multiqc"]
     }
 
     output {
-        File outputReferenceIndex = samtoolsFaidx.outputIndex
-        File outputReferenceDict = picardDict.outputDict
-        File outputTalonDatabase = talon.outputUpdatedDatabase
-        File outputAbundance = createAbundanceFile.outputAbundanceFile
-        File outputSummary = createSummaryFile.outputSummaryFile
-        File outputTalonLog = talon.outputLog
-        File outputTalonReadAnnot = talon.outputAnnot
-        File outputTalonConfigFile = talon.outputConfigFile
-        Array[File] outputMinimap2 = flatten(sampleWorkflow.outputMinimap2)
-        Array[File] outputMinimap2SortedBAM = flatten(sampleWorkflow.outputMinimap2SortedBAM)
-        Array[File] outputMinimap2SortedBAI = flatten(sampleWorkflow.outputMinimap2SortedBAI)
-        Array[File] outputMinimap2LabeledSAM = flatten(sampleWorkflow.outputMinimap2LabeledSAM)
-        Array[File] outputMinimap2ReadLabels = flatten(sampleWorkflow.outputMinimap2ReadLabels)
-        File outputMultiqcReport = multiqcTask.multiqcReport
-        File? outputMultiqcReportZip = multiqcTask.multiqcDataDirZip
-        Array[File] outputSampleWorkflowReports = outputReports
-        File? outputSpliceJunctionsFile = if (runTranscriptClean)
-              then select_first([spliceJunctionsFile, createSJsfile.outputSJsFile])
-              else NoneFile
-        Array[File?] outputTranscriptCleanFasta = flatten(sampleWorkflow.outputTranscriptCleanFasta)
-        Array[File?] outputTranscriptCleanLog = flatten(sampleWorkflow.outputTranscriptCleanLog)
-        Array[File?] outputTranscriptCleanSAM = flatten(sampleWorkflow.outputTranscriptCleanSAM)
-        Array[File?] outputTranscriptCleanTElog = flatten(sampleWorkflow.outputTranscriptCleanTElog)
-        Array[File?] outputTranscriptCleanSortedBAM = flatten(sampleWorkflow.outputTranscriptCleanSortedBAM)
-        Array[File?] outputTranscriptCleanSortedBAI = flatten(sampleWorkflow.outputTranscriptCleanSortedBAI)
-        Array[File?] outputTranscriptCleanLabeledSAM = flatten(sampleWorkflow.outputTranscriptCleanLabeledSAM)
-        Array[File?] outputTranscriptCleanReadLabels = flatten(sampleWorkflow.outputTranscriptCleanReadLabels)
+        File talonDatabaseFilled = talon.outputUpdatedDatabase
+        File referenceIndex = samtoolsFaidx.outputIndex
+        File referenceDict = picardDict.outputDict
+        Array[File] workflowReports = flatten(sampleWorkflow.workflowReports)
+        Array[File] minimap2Sam = flatten(sampleWorkflow.minimap2Sam)
+        Array[File] minimap2SortedBam = flatten(sampleWorkflow.minimap2SortedBam)
+        Array[File] minimap2SortedBai = flatten(sampleWorkflow.minimap2SortedBai)
+        Array[File] minimap2SamLabeled = flatten(sampleWorkflow.minimap2SamLabeled)
+        Array[File] minimap2SamReadLabels = flatten(sampleWorkflow.minimap2SamReadLabels)
+        File talonConfigFile = talon.outputConfigFile
+        File talonLog = talon.outputLog
+        File talonReadAnnotation = talon.outputAnnot
+        File abundanceFile = createAbundanceFile.outputAbundanceFile
+        File summaryFile = createSummaryFile.outputSummaryFile
+        File multiqcReport = multiqcTask.multiqcReport
+        File? multiqcZip = multiqcTask.multiqcDataDirZip
+        File? spliceJunctionsFile = if (runTranscriptClean) then select_first([spliceJunctions, createSJsfile.outputSJsFile]) else NoneFile
+        Array[File?] transcriptCleanFasta = flatten(sampleWorkflow.transcriptCleanFasta)
+        Array[File?] transcriptCleanLog = flatten(sampleWorkflow.transcriptCleanLog)
+        Array[File?] transcriptCleanSam = flatten(sampleWorkflow.transcriptCleanSam)
+        Array[File?] transcriptCleanTELog = flatten(sampleWorkflow.transcriptCleanTELog)
+        Array[File?] transcriptCleanSortedBam = flatten(sampleWorkflow.transcriptCleanSortedBam)
+        Array[File?] transcriptCleanSortedBai = flatten(sampleWorkflow.transcriptCleanSortedBai)
+        Array[File?] transcriptCleanSamLabeled = flatten(sampleWorkflow.transcriptCleanSamLabeled)
+        Array[File?] transcriptCleanSamReadLabels = flatten(sampleWorkflow.transcriptCleanSamReadLabels)
     }
 
     parameter_meta {
         # inputs
         sampleConfigFile: {description: "Samplesheet describing input fasta/fastq files.", category: "required"}
         outputDirectory: {description: "The directory to which the outputs will be written.", category: "common"}
-        annotationGTF: {description: "GTF annotation containing genes, transcripts, and edges.", category: "required"}
+        annotationGTF: {description: "Gtf annotation containing genes, transcripts, and edges.", category: "required"}
         genomeBuild: {description: "Genome build (i.e. hg38) to use.", category: "required"}
         annotationVersion: {description: "Name of supplied annotation (will be used to label data).", category: "required"}
         referenceGenome: {description: "Reference genome fasta file.", category: "required"}
@@ -205,44 +208,37 @@ workflow TalonWDL {
         organismName: {description: "The name of the organism from which the data was collected.", category: "required"}
         pipelineRunName: {description: "A name describing the pipeline run.", category: "required"}
         dockerImagesFile: {description: "The docker image used for this workflow. Changing this may result in errors which the developers may choose not to address.", category: "required"}
-        novelIDprefix: {description: "Prefix for naming novel discoveries in eventual TALON runs.", category: "common"}
-        runTranscriptClean: {description: "Option to run TranscriptClean after Minimap2 alignment.", category: "common"}
-        talonDatabase: {description: "A pre-generated TALON database file.", category: "advanced"}
-        spliceJunctionsFile: {description: "A pre-generated splice junction annotation file.", category: "advanced"}
-        annotationGTFrefflat: {description: "A refflat file of the annotation GTF used.", category: "common"}
+        novelIDprefix: {description: "Prefix for naming novel discoveries in eventual talon runs.", category: "common"}
+        runTranscriptClean: {description: "Option to run transcriptclean after minimap2 alignment.", category: "common"}
+        talonDatabase: {description: "A pre-generated talon database file.", category: "advanced"}
+        spliceJunctions: {description: "A pre-generated splice junction annotation file.", category: "advanced"}
+        annotationGTFrefflat: {description: "A refflat file of the annotation gtf used.", category: "common"}
 
         # outputs
-        outputReferenceIndex: {description: "Index file of the reference genome."}
-        outputReferenceDict: {description: "Dictionary file of the reference genome."}
-        outputTalonDatabase: {description: "TALON database."}
-        outputAbundance: {description: "Abundance for each transcript in the TALON database across datasets."}
-        outputSummary: {description: "Tab-delimited file of gene and transcript counts for each dataset."}
-        outputTalonLog: {description: "Log file from TALON run."}
-        outputTalonReadAnnot: {description: "Read annotation file from TALON run."}
-        outputTalonConfigFile: {description: "The TALON configuration file."}
-        outputMinimap2: {description: "Mapping and alignment between collections of DNA sequences file(s)."}
-        outputMinimap2SortedBAM: {description: "Minimap2 BAM file(s) sorted on position."}
-        outputMinimap2SortedBAI: {description: "Index of sorted minimap2 BAM file(s)."}
-        outputMinimap2LabeledSAM: {description: "Minimap2 alignments labeled for internal priming."}
-        outputMinimap2ReadLabels: {description: "Tabular files with fraction description per read for Minimap2 alignment."}
-        outputMultiqcReport: {description: "The MultiQC html report."}
-        outputMultiqcReportZip: {description: "The MultiQC data zip file."}
-        outputSampleWorkflowReports: {description: "A collection of all metrics outputs."}
-        outputSpliceJunctionsFile: {description: "Splice junction annotation file."}
-        outputTranscriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
-        outputTranscriptCleanLog: {description: "Log file(s) of TranscriptClean run."}
-        outputTranscriptCleanSAM: {description: "SAM file(s) containing corrected aligned reads."}
-        outputTranscriptCleanTElog: {description: "TE log file(s) of TranscriptClean run."}
-        outputTranscriptCleanSortedBAM: {description: "TranscriptClean BAM file(s) sorted on position."}
-        outputTranscriptCleanSortedBAI: {description: "Index of sorted TranscriptClean BAM file(s)."}
-        outputTranscriptCleanLabeledSAM: {description: "TranscriptClean alignments labeled for internal priming."}
-        outputTranscriptCleanReadLabels: {description: "Tabular files with fraction description per read for TranscriptClean alignment."}
-    }
-
-    meta {
-        WDL_AID: {
-            exclude: ["NoneFile"]
-        }
-        allowNestedInputs: true
+        talonDatabaseFilled: {description: "Talon database after talon process."}
+        referenceIndex: {description: "Index file of the reference genome."}
+        referenceDict: {description: "Dictionary file of the reference genome."}
+        workflowReports: {description: "A collection of all metrics outputs."}
+        minimap2Sam: {description: "Mapping and alignment between collections of dna sequences file(s)."}
+        minimap2SortedBam: {description: "Minimap2 bam file(s) sorted on position."}
+        minimap2SortedBai: {description: "Index of sorted minimap2 BAM file(s)."}
+        minimap2SamLabeled: {description: "Minimap2 alignments labeled for internal priming."}
+        minimap2SamReadLabels: {description: "Tabular files with fraction description per read for minimap2 alignment."}
+        talonConfigFile: {description: "The talon configuration file."}
+        talonLog: {description: "Log file from talon run."}
+        talonReadAnnotation: {description: "Read annotation file from talon run."}
+        abundanceFile: {description: "Abundance for each transcript in the talon database across datasets."}
+        summaryFile: {description: "Tab-delimited file of gene and transcript counts for each dataset."}
+        multiqcReport: {description: "The multiqc html report."}
+        multiqcZip: {description: "The multiqc data zip file."}
+        spliceJunctionsFile: {description: "A pre-generated splice junction annotation file.", category: "advanced"}
+        transcriptCleanFasta: {description: "Fasta file(s) containing corrected reads."}
+        transcriptCleanLog: {description: "Log file(s) of transcriptclean run."}
+        transcriptCleanSam: {description: "Sam file(s) containing corrected aligned reads."}
+        transcriptCleanTELog: {description: "TE log file(s) of transcriptclean run."}
+        transcriptCleanSortedBam: {description: "Transcriptclean bam file(s) sorted on position."}
+        transcriptCleanSortedBai: {description: "Index of sorted transcriptclean bam file(s)."}
+        transcriptCleanSamLabeled: {description: "Transcriptclean alignments labeled for internal priming."}
+        transcriptCleanSamReadLabels: {description: "Tabular files with fraction description per read for transcriptclean alignment."}
     }
 }
