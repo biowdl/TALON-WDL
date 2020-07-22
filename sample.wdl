@@ -111,7 +111,7 @@ workflow SampleWorkflow {
 
             call samtools.Sort as sortTranscriptClean {
                 input:
-                    inputBam = transcriptClean.samFile,
+                    inputBam = transcriptClean.outputSam,
                     outputPath = outputDirectory + "/" + readgroupIdentifier + "_clean" + ".sorted.bam",
                     dockerImage = dockerImages["samtools"]
             }
@@ -131,7 +131,7 @@ workflow SampleWorkflow {
 
             call talon.LabelReads as labelReadsTranscriptClean {
                 input:
-                    inputSam = transcriptClean.samFile,
+                    inputSam = transcriptClean.outputSam,
                     referenceGenome = referenceGenome,
                     outputPrefix = outputDirectory + "/" + readgroupIdentifier + "_clean",
                     dockerImage = dockerImages["talon"]
@@ -143,7 +143,7 @@ workflow SampleWorkflow {
 
     output {
         Array[File] workflowSam = if (runTranscriptClean) 
-                    then select_all(labelReadsTranscriptClean.outputLabeledSAM)
+                    then select_all(labelReadsTranscriptClean.labeledSam)
                     else labelReadsMinimap2.labeledSam
         Array[File] minimap2Sam = minimap2.alignmentFile
         Array[File] minimap2SortedBam = sortMinimap2.outputBam
@@ -153,12 +153,12 @@ workflow SampleWorkflow {
         Array[File] workflowReports = qualityReports
         Array[File?] transcriptCleanFasta = transcriptClean.fastaFile
         Array[File?] transcriptCleanLog = transcriptClean.logFile
-        Array[File?] transcriptCleanSam = transcriptClean.samFile
+        Array[File?] transcriptCleanSam = transcriptClean.outputSam
         Array[File?] transcriptCleanTELog = transcriptClean.logFileTE
         Array[File?] transcriptCleanSortedBam = sortTranscriptClean.outputBam
         Array[File?] transcriptCleanSortedBai = sortTranscriptClean.outputBamIndex
-        Array[File?] transcriptCleanSamLabeled = labelReadsTranscriptClean.outputLabeledSAM
-        Array[File?] transcriptCleanSamReadLabels = labelReadsTranscriptClean.outputReadLabels
+        Array[File?] transcriptCleanSamLabeled = labelReadsTranscriptClean.labeledSam
+        Array[File?] transcriptCleanSamReadLabels = labelReadsTranscriptClean.readLabels
     }
 
     parameter_meta {
