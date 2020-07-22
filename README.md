@@ -1,5 +1,4 @@
 # TALON-WDL
-
 This repository contains the [Biowdl](https://github.com/biowdl) pipeline
 usable for processing RNA-seq data produced by either a Nanopore or PacBio
 sequencer using [minimap2](https://github.com/lh3/minimap2),
@@ -7,7 +6,6 @@ sequencer using [minimap2](https://github.com/lh3/minimap2),
 [talon](https://github.com/mortazavilab/TALON).
 
 ## Documentation
-
 Documentation for this pipeline can be
 found [here](https://biowdl.github.io/TALON-WDL).
 
