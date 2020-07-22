@@ -10,6 +10,7 @@ that users understand how the changes affect the new version.
 
 version develop
 ---------------------------
++ Update tasks and the input/output names.
 + Rename workflow outputs to shorter names.
 + Add `meta {allowNestedInputs: true}` to the workflows, to allow for the use
   of nested inputs.

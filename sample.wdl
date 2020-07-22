@@ -64,15 +64,15 @@ workflow SampleWorkflow {
                 referenceFile = referenceGenome,
                 outputPrefix = outputDirectory + "/" + readgroupIdentifier + ".sam",
                 presetOption = presetOption,
-                outputSAM = true,
+                outputSam = true,
                 howToFindGTAG = howToFindGTAG,
-                addMDtagToSAM = true,
+                addMDTagToSam = true,
                 dockerImage = dockerImages["minimap2"]
         }
 
         call samtools.Sort as sortMinimap2 {
             input:
-                inputBam = minimap2.outputAlignmentFile,
+                inputBam = minimap2.alignmentFile,
                 outputPath = outputDirectory + "/" + readgroupIdentifier + ".sorted.bam",
                 dockerImage = dockerImages["samtools"]
         }
@@ -91,7 +91,7 @@ workflow SampleWorkflow {
 
         call talon.LabelReads as labelReadsMinimap2 {
             input:
-                SAMfile = minimap2.outputAlignmentFile,
+                inputSam = minimap2.alignmentFile,
                 referenceGenome = referenceGenome,
                 outputPrefix = outputDirectory + "/" + readgroupIdentifier,
                 dockerImage = dockerImages["talon"]
@@ -100,7 +100,7 @@ workflow SampleWorkflow {
         if (runTranscriptClean) {
             call transcriptClean.TranscriptClean as transcriptClean {
                 input:
-                    SAMfile = minimap2.outputAlignmentFile,
+                    inputSam = minimap2.alignmentFile,
                     referenceGenome = referenceGenome,
                     outputPrefix = outputDirectory + "/" + readgroupIdentifier,
                     spliceJunctionAnnotation = spliceJunctionsFile,
@@ -111,7 +111,7 @@ workflow SampleWorkflow {
 
             call samtools.Sort as sortTranscriptClean {
                 input:
-                    inputBam = transcriptClean.outputTranscriptCleanSAM,
+                    inputBam = transcriptClean.outputSam,
                     outputPath = outputDirectory + "/" + readgroupIdentifier + "_clean" + ".sorted.bam",
                     dockerImage = dockerImages["samtools"]
             }
@@ -131,7 +131,7 @@ workflow SampleWorkflow {
 
             call talon.LabelReads as labelReadsTranscriptClean {
                 input:
-                    SAMfile = transcriptClean.outputTranscriptCleanSAM,
+                    inputSam = transcriptClean.outputSam,
                     referenceGenome = referenceGenome,
                     outputPrefix = outputDirectory + "/" + readgroupIdentifier + "_clean",
                     dockerImage = dockerImages["talon"]
@@ -143,22 +143,22 @@ workflow SampleWorkflow {
 
     output {
         Array[File] workflowSam = if (runTranscriptClean) 
-                    then select_all(labelReadsTranscriptClean.outputLabeledSAM)
-                    else labelReadsMinimap2.outputLabeledSAM
-        Array[File] minimap2Sam = minimap2.outputAlignmentFile
+                    then select_all(labelReadsTranscriptClean.labeledSam)
+                    else labelReadsMinimap2.labeledSam
+        Array[File] minimap2Sam = minimap2.alignmentFile
         Array[File] minimap2SortedBam = sortMinimap2.outputBam
         Array[File] minimap2SortedBai = sortMinimap2.outputBamIndex
-        Array[File] minimap2SamLabeled = labelReadsMinimap2.outputLabeledSAM
-        Array[File] minimap2SamReadLabels = labelReadsMinimap2.outputReadLabels
+        Array[File] minimap2SamLabeled = labelReadsMinimap2.labeledSam
+        Array[File] minimap2SamReadLabels = labelReadsMinimap2.readLabels
         Array[File] workflowReports = qualityReports
-        Array[File?] transcriptCleanFasta = transcriptClean.outputTranscriptCleanFasta
-        Array[File?] transcriptCleanLog = transcriptClean.outputTranscriptCleanLog
-        Array[File?] transcriptCleanSam = transcriptClean.outputTranscriptCleanSAM
-        Array[File?] transcriptCleanTELog = transcriptClean.outputTranscriptCleanTElog
+        Array[File?] transcriptCleanFasta = transcriptClean.fastaFile
+        Array[File?] transcriptCleanLog = transcriptClean.logFile
+        Array[File?] transcriptCleanSam = transcriptClean.outputSam
+        Array[File?] transcriptCleanTELog = transcriptClean.logFileTE
         Array[File?] transcriptCleanSortedBam = sortTranscriptClean.outputBam
         Array[File?] transcriptCleanSortedBai = sortTranscriptClean.outputBamIndex
-        Array[File?] transcriptCleanSamLabeled = labelReadsTranscriptClean.outputLabeledSAM
-        Array[File?] transcriptCleanSamReadLabels = labelReadsTranscriptClean.outputReadLabels
+        Array[File?] transcriptCleanSamLabeled = labelReadsTranscriptClean.labeledSam
+        Array[File?] transcriptCleanSamReadLabels = labelReadsTranscriptClean.readLabels
     }
 
     parameter_meta {
