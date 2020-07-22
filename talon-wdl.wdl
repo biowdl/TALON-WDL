@@ -81,10 +81,10 @@ workflow TalonWDL {
     if (! userProvidedDatabase) {
         call talon.InitializeTalonDatabase as createDatabase {
             input:
-                gtfFile = annotationGTF,
+                GTFfile = annotationGTF,
                 genomeBuild = genomeBuild,
                 annotationVersion = annotationVersion,
-                novelPrefix = novelIDprefix,
+                novelIDprefix = novelIDprefix,
                 outputPrefix = outputDirectory + "/" + pipelineRunName,
                 dockerImage = dockerImages["talon"]
         }
@@ -94,7 +94,7 @@ workflow TalonWDL {
         if (runTranscriptClean) {
             call transcriptClean.GetSJsFromGtf as createSJsfile {
                 input:
-                    gtfFile = annotationGTF,
+                    GTFfile = annotationGTF,
                     genomeFile = referenceGenome,
                     outputPrefix = outputDirectory + "/spliceJunctions",
                     dockerImage = dockerImages["transcriptclean"]
@@ -125,7 +125,7 @@ workflow TalonWDL {
                 referenceGenomeIndex = samtoolsFaidx.outputIndex,
                 referenceGenomeDict = picardDict.outputDict,
                 spliceJunctionsFile = if (runTranscriptClean)
-                                      then select_first([spliceJunctions, createSJsfile.spliceJunctionFile])
+                                      then select_first([spliceJunctions, createSJsfile.outputSJsFile])
                                       else NoneFile,
                 runTranscriptClean = runTranscriptClean,
                 annotationGTFrefflat = annotationGTFrefflat,
@@ -135,10 +135,10 @@ workflow TalonWDL {
 
     call talon.Talon as talon {
         input:
-            samFiles = flatten(sampleWorkflow.workflowSam),
+            SAMfiles = flatten(sampleWorkflow.workflowSam),
             organism = organismName,
             sequencingPlatform = sequencingPlatform,
-            databaseFile = select_first([talonDatabase, createDatabase.databaseFile]),
+            databaseFile = select_first([talonDatabase, createDatabase.outputDatabase]),
             genomeBuild = genomeBuild,
             outputPrefix = outputDirectory,
             dockerImage = dockerImages["talon"]
@@ -146,7 +146,7 @@ workflow TalonWDL {
 
     call talon.CreateAbundanceFileFromDatabase as createAbundanceFile {
         input:
-            databaseFile = talon.updatedDatabase,
+            databaseFile = talon.outputUpdatedDatabase,
             annotationVersion = annotationVersion,
             genomeBuild = genomeBuild,
             outputPrefix = outputDirectory + "/" + pipelineRunName,
@@ -155,7 +155,7 @@ workflow TalonWDL {
 
     call talon.SummarizeDatasets as createSummaryFile {
         input:
-            databaseFile = talon.updatedDatabase,
+            databaseFile = talon.outputUpdatedDatabase,
             outputPrefix = outputDirectory + "/" + pipelineRunName,
             dockerImage = dockerImages["talon"]
     }
@@ -169,7 +169,7 @@ workflow TalonWDL {
     }
 
     output {
-        File talonDatabaseFilled = talon.updatedDatabase
+        File talonDatabaseFilled = talon.outputUpdatedDatabase
         File referenceIndex = samtoolsFaidx.outputIndex
         File referenceDict = picardDict.outputDict
         Array[File] workflowReports = flatten(sampleWorkflow.workflowReports)
@@ -178,14 +178,14 @@ workflow TalonWDL {
         Array[File] minimap2SortedBai = flatten(sampleWorkflow.minimap2SortedBai)
         Array[File] minimap2SamLabeled = flatten(sampleWorkflow.minimap2SamLabeled)
         Array[File] minimap2SamReadLabels = flatten(sampleWorkflow.minimap2SamReadLabels)
-        File talonLog = talon.talonLog
-        File talonReadAnnotation = talon.talonAnnotation
-        File talonConfigFile = talon.talonConfigFile
-        File abundanceFile = createAbundanceFile.abundanceFile
-        File summaryFile = createSummaryFile.summaryFile
+        File talonConfigFile = talon.outputConfigFile
+        File talonLog = talon.outputLog
+        File talonReadAnnotation = talon.outputAnnot
+        File abundanceFile = createAbundanceFile.outputAbundanceFile
+        File summaryFile = createSummaryFile.outputSummaryFile
         File multiqcReport = multiqcTask.multiqcReport
         File? multiqcZip = multiqcTask.multiqcDataDirZip
-        File? spliceJunctionsFile = if (runTranscriptClean) then select_first([spliceJunctions, createSJsfile.spliceJunctionFile]) else NoneFile
+        File? spliceJunctionsFile = if (runTranscriptClean) then select_first([spliceJunctions, createSJsfile.outputSJsFile]) else NoneFile
         Array[File?] transcriptCleanFasta = flatten(sampleWorkflow.transcriptCleanFasta)
         Array[File?] transcriptCleanLog = flatten(sampleWorkflow.transcriptCleanLog)
         Array[File?] transcriptCleanSam = flatten(sampleWorkflow.transcriptCleanSam)
@@ -224,9 +224,9 @@ workflow TalonWDL {
         minimap2SortedBai: {description: "Index of sorted minimap2 BAM file(s)."}
         minimap2SamLabeled: {description: "Minimap2 alignments labeled for internal priming."}
         minimap2SamReadLabels: {description: "Tabular files with fraction description per read for minimap2 alignment."}
+        talonConfigFile: {description: "The talon configuration file."}
         talonLog: {description: "Log file from talon run."}
         talonReadAnnotation: {description: "Read annotation file from talon run."}
-        talonConfigFile: {description: "The talon configuration file."}
         abundanceFile: {description: "Abundance for each transcript in the talon database across datasets."}
         summaryFile: {description: "Tab-delimited file of gene and transcript counts for each dataset."}
         multiqcReport: {description: "The multiqc html report."}
