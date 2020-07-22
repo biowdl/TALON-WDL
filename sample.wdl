@@ -131,7 +131,7 @@ workflow SampleWorkflow {
 
             call talon.LabelReads as labelReadsTranscriptClean {
                 input:
-                    SAMfile = transcriptClean.outputTranscriptCleanSAM,
+                    inputSam = transcriptClean.samFile,
                     referenceGenome = referenceGenome,
                     outputPrefix = outputDirectory + "/" + readgroupIdentifier + "_clean",
                     dockerImage = dockerImages["talon"]
