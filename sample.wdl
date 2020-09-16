@@ -24,6 +24,7 @@ import "structs.wdl" as structs
 import "BamMetrics/bammetrics.wdl" as metrics
 import "tasks/fastqc.wdl" as fastqc
 import "tasks/minimap2.wdl" as minimap2
+import "tasks/nanopack.wdl" as nanopack	
 import "tasks/samtools.wdl" as samtools
 import "tasks/talon.wdl" as talon
 import "tasks/transcriptclean.wdl" as transcriptClean
@@ -56,6 +57,22 @@ workflow SampleWorkflow {
                 seqFile = readgroup.R1,
                 outdirPath = outputDirectory + "/" + readgroupIdentifier + "-fastqc",
                 dockerImage = dockerImages["fastqc"]
+        }
+
+        call nanopack.NanoPlot as nanoPlot {
+            input:
+                inputFile = readgroup.R1,
+                inputFileType = "fastq",
+                outputDir = outputDirectory + "/nanoplot/",
+                outputPrefix = readgroupIdentifier + "_",
+                dockerImage = dockerImages["nanoplot"]
+        }
+
+        call nanopack.NanoQc as nanoQc {
+            input:
+                inputFile = readgroup.R1,
+                outputDir = outputDirectory + "/nanoqc/",
+                dockerImage = dockerImages["nanoqc"]
         }
 
         call minimap2.Mapping as minimap2 {
