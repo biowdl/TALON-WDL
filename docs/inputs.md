@@ -45,6 +45,11 @@
         <i>File &mdash; Default: None</i><br />
         Samplesheet describing input fasta/fastq files.
 </p>
+<p name="TalonWDL.sampleWorkflow.nanoPlot.format">
+        <b>TalonWDL.sampleWorkflow.nanoPlot.format</b><br />
+        <i>String &mdash; Default: "png"</i><br />
+        Specify the output format of the plots.
+</p>
 <p name="TalonWDL.sampleWorkflow.presetOption">
         <b>TalonWDL.sampleWorkflow.presetOption</b><br />
         <i>String &mdash; Default: None</i><br />
@@ -131,6 +136,26 @@
         <b>TalonWDL.sampleWorkflow.labelReadsTranscriptClean.fracaRangeSize</b><br />
         <i>Int &mdash; Default: 20</i><br />
         Size of post-transcript interval to compute fraction.
+</p>
+<p name="TalonWDL.sampleWorkflow.nanoPlot.outputTsvStats">
+        <b>TalonWDL.sampleWorkflow.nanoPlot.outputTsvStats</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Output the stats file as a properly formatted TSV.
+</p>
+<p name="TalonWDL.sampleWorkflow.nanoPlot.showN50">
+        <b>TalonWDL.sampleWorkflow.nanoPlot.showN50</b><br />
+        <i>Boolean &mdash; Default: true</i><br />
+        Show the N50 mark in the read length histogram.
+</p>
+<p name="TalonWDL.sampleWorkflow.nanoPlot.title">
+        <b>TalonWDL.sampleWorkflow.nanoPlot.title</b><br />
+        <i>String &mdash; Default: basename(outputPrefix)</i><br />
+        Add a title to all plots, requires quoting if using spaces.
+</p>
+<p name="TalonWDL.sampleWorkflow.nanoQc.directRna">
+        <b>TalonWDL.sampleWorkflow.nanoQc.directRna</b><br />
+        <i>Boolean &mdash; Default: false</i><br />
+        Fastq is from direct RNA-seq and contains U nucleotides.
 </p>
 <p name="TalonWDL.sampleWorkflow.transcriptClean.bufferSize">
         <b>TalonWDL.sampleWorkflow.transcriptClean.bufferSize</b><br />
@@ -856,6 +881,66 @@
         <i>Int &mdash; Default: 1 + ceil((size(queryFile,"G") * 200 / cores))</i><br />
         The maximum amount of time the job will run in minutes.
 </p>
+<p name="TalonWDL.sampleWorkflow.nanoPlot.dropOutliers">
+        <b>TalonWDL.sampleWorkflow.nanoPlot.dropOutliers</b><br />
+        <i>Boolean &mdash; Default: false</i><br />
+        Drop outlier reads with extreme long length.
+</p>
+<p name="TalonWDL.sampleWorkflow.nanoPlot.logLengths">
+        <b>TalonWDL.sampleWorkflow.nanoPlot.logLengths</b><br />
+        <i>Boolean &mdash; Default: false</i><br />
+        Additionally show logarithmic scaling of lengths in plots.
+</p>
+<p name="TalonWDL.sampleWorkflow.nanoPlot.maxLength">
+        <b>TalonWDL.sampleWorkflow.nanoPlot.maxLength</b><br />
+        <i>Int? &mdash; Default: None</i><br />
+        Hide reads longer than length specified.
+</p>
+<p name="TalonWDL.sampleWorkflow.nanoPlot.memory">
+        <b>TalonWDL.sampleWorkflow.nanoPlot.memory</b><br />
+        <i>String &mdash; Default: "2G"</i><br />
+        The amount of memory available to the job.
+</p>
+<p name="TalonWDL.sampleWorkflow.nanoPlot.minLength">
+        <b>TalonWDL.sampleWorkflow.nanoPlot.minLength</b><br />
+        <i>Int? &mdash; Default: None</i><br />
+        Hide reads shorter than length specified.
+</p>
+<p name="TalonWDL.sampleWorkflow.nanoPlot.minQual">
+        <b>TalonWDL.sampleWorkflow.nanoPlot.minQual</b><br />
+        <i>Int? &mdash; Default: None</i><br />
+        Drop reads with an average quality lower than specified.
+</p>
+<p name="TalonWDL.sampleWorkflow.nanoPlot.readType">
+        <b>TalonWDL.sampleWorkflow.nanoPlot.readType</b><br />
+        <i>String? &mdash; Default: None</i><br />
+        Which read type to extract information about from summary. Options are 1D, 2D, 1D2
+</p>
+<p name="TalonWDL.sampleWorkflow.nanoPlot.threads">
+        <b>TalonWDL.sampleWorkflow.nanoPlot.threads</b><br />
+        <i>Int &mdash; Default: 2</i><br />
+        The number of threads to be used.
+</p>
+<p name="TalonWDL.sampleWorkflow.nanoPlot.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.nanoPlot.timeMinutes</b><br />
+        <i>Int &mdash; Default: 15</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
+<p name="TalonWDL.sampleWorkflow.nanoQc.memory">
+        <b>TalonWDL.sampleWorkflow.nanoQc.memory</b><br />
+        <i>String &mdash; Default: "2G"</i><br />
+        The amount of memory available to the job.
+</p>
+<p name="TalonWDL.sampleWorkflow.nanoQc.minLength">
+        <b>TalonWDL.sampleWorkflow.nanoQc.minLength</b><br />
+        <i>Int? &mdash; Default: None</i><br />
+        Filters the reads on a minimal length of the given range. Also plots the given length/2 of the begin and end of the reads.
+</p>
+<p name="TalonWDL.sampleWorkflow.nanoQc.timeMinutes">
+        <b>TalonWDL.sampleWorkflow.nanoQc.timeMinutes</b><br />
+        <i>Int &mdash; Default: 15</i><br />
+        The maximum amount of time the job will run in minutes.
+</p>
 <p name="TalonWDL.sampleWorkflow.sortMinimap2.compressionLevel">
         <b>TalonWDL.sampleWorkflow.sortMinimap2.compressionLevel</b><br />
         <i>Int &mdash; Default: 1</i><br />
@@ -984,6 +1069,16 @@
 </details>
 
 
+
+### Other inputs
+<details>
+<summary> Show/Hide </summary>
+<p name="TalonWDL.sampleWorkflow.nanoPlot.outputPath">
+        <b>TalonWDL.sampleWorkflow.nanoPlot.outputPath</b><br />
+        <i>String &mdash; Default: outputDir + outputPrefix</i><br />
+        ???
+</p>
+</details>
 
 
 

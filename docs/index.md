@@ -17,12 +17,24 @@ at [Leiden University Medical Center](https://www.lumc.nl/).
 You can run this pipeline using
 [Cromwell](http://cromwell.readthedocs.io/en/stable/):
 
+First download the latest version of the pipeline wdl file(s) and 
+from the
+[releases page](https://github.com/biowdl/TALON-WDL/releases).
+
 ```bash
 java \
     -jar cromwell-<version>.jar \
     run \
+    -o options.json \
     -i inputs.json \
     talon-wdl.wdl
+```
+
+Where `options.json` contains the following json:
+```json
+{
+    "final_workflow_log_dir": "/path/to/logs/folder"
+}
 ```
 
 ### Inputs
@@ -46,8 +58,10 @@ For an overview of all available inputs, see [this page](./inputs.html).
     "TalonWDL.pipelineRunName": "A short name to distinguish a run.",
     "TalonWDL.dockerImagesFile": "A file listing the used docker images.",
     "TalonWDL.runTranscriptClean": "Set to true in order to run transcriptclean, set to false in order to disable transcriptclean.",
+    "TalonWDL.annotationGTFrefflat": "A refflat file of the annotation gtf used.",
     "TalonWDL.sampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2, this should be either 'splice'(directRNA) or 'splice:hq'(cDNA).",
     "TalonWDL.sampleWorkflow.variantVCF": "A VCF file with common variants should be supplied when running transcriptclean, this will make sure transcriptclean does not correct those known variants.",
+    "TalonWDL.sampleWorkflow.howToFindGTAG": "How to find canonical splicing sites GT-AG - f: transcript strand; b: both strands; n: no attempt to match GT-AG."
 }
 ```
 
@@ -55,10 +69,8 @@ Optional settings:
 ```json
 {
     "TalonWDL.novelIDprefix": "A prefix for novel transcript discoveries.",
-    "TalonWDL.sampleWorkflow.howToFindGTAG": "How to find canonical splicing sites GT-AG - f: transcript strand; b: both strands; n: no attempt to match GT-AG.",
     "TalonWDL.spliceJunctions": "A pre-generated splice junction annotation file.",
-    "TalonWDL.talonDatabase": "A pre-generated talon database file.",
-    "TalonWDL.annotationGTFrefflat": "A refflat file of the annotation GTF used."
+    "TalonWDL.talonDatabase": "A pre-generated talon database file."
 }
 ```
 
@@ -107,21 +119,21 @@ The following is an example of what an inputs JSON might look like:
 
 ```json
 {
-    "TalonWDL.sampleConfigFile": "tests/samplesheets/GM12878.K562.csv",
-    "TalonWDL.outputDirectory": "tests/test-output",
-    "TalonWDL.annotationGTF": "tests/data/gencode.v29.annotation.gtf",
+    "TalonWDL.sampleConfigFile": "tests/samplesheets/nanopore.csv",
+    "TalonWDL.annotationGTF": "tests/data/reference/gencode.v34.annotation.gtf",
     "TalonWDL.genomeBuild": "hg38",
-    "TalonWDL.annotationVersion": "gencode_v29",
-    "TalonWDL.referenceGenome": "tests/data/grch38.fasta",
+    "TalonWDL.annotationVersion": "gencode_v34",
+    "TalonWDL.referenceGenome": "tests/data/reference/grch38.fasta",
     "TalonWDL.sequencingPlatform": "Nanopore",
     "TalonWDL.organismName": "Human",
-    "TalonWDL.pipelineRunName": "testRun",
+    "TalonWDL.pipelineRunName": "nanopore-test",
     "TalonWDL.dockerImagesFile": "dockerImages.yml",
     "TalonWDL.runTranscriptClean": "true",
-    "TalonWDL.annotationGTFrefflat": "tests/data/gencode.v29.annotation.refflat",
+    "TalonWDL.annotationGTFrefflat": "tests/data/reference/gencode.v34.annotation.refflat",
     "TalonWDL.sampleWorkflow.presetOption": "splice",
-    "TalonWDL.sampleWorkflow.variantVCF": "tests/data/common.variants.vcf",
-    "TalonWDL.sampleWorkflow.howToFindGTAG": "f"
+    "TalonWDL.sampleWorkflow.variantVCF": "tests/data/reference/common.variants.vcf",
+    "TalonWDL.sampleWorkflow.howToFindGTAG": "f",
+    "TalonWDL.outputDirectory": "tests/test-output"
 }
 ```
 
