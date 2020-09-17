@@ -128,7 +128,7 @@ The following is an example of what an inputs JSON might look like:
     "TalonWDL.organismName": "Human",
     "TalonWDL.pipelineRunName": "nanopore-test",
     "TalonWDL.dockerImagesFile": "dockerImages.yml",
-    "TalonWDL.runTranscriptClean": "true",
+    "TalonWDL.runTranscriptClean": true,
     "TalonWDL.annotationGTFrefflat": "tests/data/reference/gencode.v34.annotation.refflat",
     "TalonWDL.sampleWorkflow.presetOption": "splice",
     "TalonWDL.sampleWorkflow.variantVCF": "tests/data/reference/common.variants.vcf",
