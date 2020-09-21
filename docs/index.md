@@ -33,6 +33,8 @@ java \
 Where `options.json` contains the following json:
 ```json
 {
+    "final_workflow_outputs_dir": "/path/to/outputs",
+    "use_relative_output_paths": true,
     "final_workflow_log_dir": "/path/to/logs/folder"
 }
 ```
