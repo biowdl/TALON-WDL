@@ -156,7 +156,7 @@ workflow SampleWorkflow {
         }
     }
 
-    Array[File] qualityReports = flatten([fastqcTask.htmlReport, fastqcTask.reportZip, flatten(bamMetricsMinimap2.reports), flatten(select_all(bamMetricsTranscriptClean.reports))])
+    Array[File] qualityReports = flatten([fastqcTask.htmlReport, fastqcTask.reportZip, flatten(bamMetricsMinimap2.reports), flatten(select_all(bamMetricsTranscriptClean.reports)), nanoPlot.dynamicHistogram, nanoPlot.readLengthHistogram, nanoPlot.logScaleReadLengthHistogram, nanoPlot.report, nanoPlot.weightedHistogram, nanoPlot.weightedLogScaleHistogram, nanoPlot.yieldByLength, select_all(nanoPlot.lengthVsQualityScatterPlotDot), select_all(nanoPlot.lengthVsQualityScatterPlotKde), select_all(nanoPlot.stats), nanoQc.report])
 
     output {
         Array[File] workflowSam = if (runTranscriptClean) 
