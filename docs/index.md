@@ -3,11 +3,12 @@ layout: default
 title: Home
 ---
 
-This pipeline can be used to process RNA sequenced by either a Pacific
-Biosciences sequencer or Oxford Nanopore sequencer, starting from fastq files.
-It performs mapping to a reference genome (using minimap2), INDEL/mismatch
-and noncanonical splice junction correction (using transcriptclean) and
-identify and count known and novel genes/transcripts (using talon).
+This pipeline can be used to process RNA sequenced with either a Pacific
+Biosciences sequencer or Oxford Nanopore sequencer. Input files should be
+in fastq format. The pipeline performs mapping to a reference
+genome (using minimap2), INDEL/mismatch and noncanonical splice junction
+correction (using transcriptclean) and identification and counting of
+known and novel genes/transcripts (using talon).
 
 This pipeline is part of [BioWDL](https://biowdl.github.io/)
 developed by the SASC team
@@ -19,7 +20,7 @@ You can run this pipeline using
 
 First download the latest version of the pipeline wdl file(s)
 from the
-[releases page](https://github.com/biowdl/TALON-WDL/releases).
+[github page](https://github.com/biowdl/TALON-WDL).
 
 ```bash
 java \
@@ -50,7 +51,6 @@ For an overview of all available inputs, see [this page](./inputs.html).
 ```json
 {
     "TalonWDL.sampleConfigFile": "A sample configuration file (see below).",
-    "TalonWDL.outputDirectory": "The path to the output directory.",
     "TalonWDL.annotationGTF": "GTF annotation containing genes, transcripts, and edges.",
     "TalonWDL.genomeBuild": "Name of genome build that the GTF file is based on (ie hg38).",
     "TalonWDL.annotationVersion": "Name of supplied annotation (will be used to label data).",
@@ -60,10 +60,10 @@ For an overview of all available inputs, see [this page](./inputs.html).
     "TalonWDL.pipelineRunName": "A short name to distinguish a run.",
     "TalonWDL.dockerImagesFile": "A file listing the used docker images.",
     "TalonWDL.runTranscriptClean": "Set to true in order to run transcriptclean, set to false in order to disable transcriptclean.",
-    "TalonWDL.annotationGTFrefflat": "A refflat file of the annotation gtf used.",
     "TalonWDL.sampleWorkflow.presetOption": "This option applies multiple options at the same time to minimap2, this should be either 'splice'(directRNA) or 'splice:hq'(cDNA).",
     "TalonWDL.sampleWorkflow.variantVCF": "A VCF file with common variants should be supplied when running transcriptclean, this will make sure transcriptclean does not correct those known variants.",
-    "TalonWDL.sampleWorkflow.howToFindGTAG": "How to find canonical splicing sites GT-AG - f: transcript strand; b: both strands; n: no attempt to match GT-AG."
+    "TalonWDL.sampleWorkflow.howToFindGTAG": "How to find canonical splicing sites GT-AG - f: transcript strand; b: both strands; n: no attempt to match GT-AG.",
+    "TalonWDL.outputDirectory": "The path to the output directory."
 }
 ```
 
@@ -71,8 +71,9 @@ Optional settings:
 ```json
 {
     "TalonWDL.novelIDprefix": "A prefix for novel transcript discoveries.",
-    "TalonWDL.spliceJunctions": "A pre-generated splice junction annotation file.",
     "TalonWDL.talonDatabase": "A pre-generated talon database file."
+    "TalonWDL.spliceJunctions": "A pre-generated splice junction annotation file.",
+    "TalonWDL.annotationGTFrefflat": "A refflat file of the annotation gtf used."
 }
 ```
 
@@ -100,6 +101,8 @@ library | library ID. These are the libraries that are sequenced. Usually there 
 readgroup | readgroup ID. Usually a library is sequenced on multiple lanes in the sequencer, which gives multiple fastq files (referred to as readgroups). Each readgroup pair should have an ID.
 R1| The fastq file containing the first reads of the read pairs.
 R1_md5 | Optional: md5sum for the R1 file.
+R2| Optional: The fastq file containing the reverse reads.
+R2_md5| Optional: md5sum for the R2 file.
 
 The easiest way to create a samplesheet is to use a spreadsheet program
 such as LibreOffice Calc or Microsoft Excel, and create a table:
@@ -121,18 +124,18 @@ The following is an example of what an inputs JSON might look like:
 
 ```json
 {
-    "TalonWDL.sampleConfigFile": "tests/samplesheets/nanopore.csv",
+    "TalonWDL.sampleConfigFile": "tests/samplesheets/pacbio.csv",
     "TalonWDL.annotationGTF": "tests/data/reference/gencode.v34.annotation.gtf",
     "TalonWDL.genomeBuild": "hg38",
     "TalonWDL.annotationVersion": "gencode_v34",
     "TalonWDL.referenceGenome": "tests/data/reference/grch38.fasta",
-    "TalonWDL.sequencingPlatform": "Nanopore",
+    "TalonWDL.sequencingPlatform": "PacBio",
     "TalonWDL.organismName": "Human",
-    "TalonWDL.pipelineRunName": "nanopore-test",
+    "TalonWDL.pipelineRunName": "pacbio-test",
     "TalonWDL.dockerImagesFile": "dockerImages.yml",
-    "TalonWDL.runTranscriptClean": true,
+    "TalonWDL.runTranscriptClean": "true",
     "TalonWDL.annotationGTFrefflat": "tests/data/reference/gencode.v34.annotation.refflat",
-    "TalonWDL.sampleWorkflow.presetOption": "splice",
+    "TalonWDL.sampleWorkflow.presetOption": "splice:hq",
     "TalonWDL.sampleWorkflow.variantVCF": "tests/data/reference/common.variants.vcf",
     "TalonWDL.sampleWorkflow.howToFindGTAG": "f",
     "TalonWDL.outputDirectory": "tests/test-output"
@@ -153,12 +156,12 @@ biowdl pipelines. The list of default images for this pipeline can be
 found in the default for the `dockerImages` input.
 
 ### Output
-The workflow will output mapped reads by minimap2 in a .sam file, a
-cleaned .sam file and log information from transcriptclean, a database
+The workflow will output mapped reads by minimap2 in a .sam file. A
+cleaned .sam file and log information from transcriptclean. A database
 containing transcript information together with a log file of
 read/transcript comparison and a abundance plus summary file of the database.
-It will also output fastqc and picard statistics based on the fastq and
-minimap2 alignment file, combined into a multiqc report.
+It will also output fastqc and picard statistics based on the fastq files and
+minimap2 alignment files, combined into a multiqc report.
 
 ## Contact
 <p>
