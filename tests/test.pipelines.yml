@@ -169,6 +169,7 @@
     - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_Weighted_HistogramReadlength.png
     - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_Weighted_LogTransformed_HistogramReadlength.png
     - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_Yield_By_Length.png
+    - path: test-output/nanopore.1/nanoqc/nanoQC.html
     - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.fa
     - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean_labeled.sam
     - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.log
@@ -183,7 +184,6 @@
     - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sam
     - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sorted.bai
     - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sorted.bam
-    - path: test-output/nanopore.1/nanoqc/nanoQC.html
     - path: test-output/nanopore.2/metrics-minimap2
     - path: test-output/nanopore.2/metrics-transcriptclean
     - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_Dynamic_Histogram_Read_length.html
@@ -196,6 +196,7 @@
     - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_Weighted_HistogramReadlength.png
     - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_Weighted_LogTransformed_HistogramReadlength.png
     - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_Yield_By_Length.png
+    - path: test-output/nanopore.2/nanoqc/nanoQC.html
     - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.fa
     - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean_labeled.sam
     - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.log
@@ -210,7 +211,6 @@
     - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sam
     - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sorted.bai
     - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sorted.bam
-    - path: test-output/nanopore.2/nanoqc/nanoQC.html
     - path: test-output/nanopore-test.db
     - path: test-output/nanopore-test_talon_abundance.tsv
     - path: test-output/nanopore-test_talon_summary.tsv
@@ -240,6 +240,7 @@
     - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_Weighted_HistogramReadlength.png
     - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_Weighted_LogTransformed_HistogramReadlength.png
     - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_Yield_By_Length.png
+    - path: test-output/nanopore.1/nanoqc/nanoQC.html
     - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.fa
       should_exist: false
     - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean_labeled.sam
@@ -262,7 +263,6 @@
     - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sam
     - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sorted.bai
     - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sorted.bam
-    - path: test-output/nanopore.1/nanoqc/nanoQC.html
     - path: test-output/nanopore.2/metrics-minimap2
     - path: test-output/nanopore.2/metrics-transcriptclean
       should_exist: false
@@ -276,6 +276,7 @@
     - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_Weighted_HistogramReadlength.png
     - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_Weighted_LogTransformed_HistogramReadlength.png
     - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_Yield_By_Length.png
+    - path: test-output/nanopore.2/nanoqc/nanoQC.html
     - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.fa
       should_exist: false
     - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean_labeled.sam
@@ -298,7 +299,6 @@
     - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sam
     - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sorted.bai
     - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sorted.bam
-    - path: test-output/nanopore.2/nanoqc/nanoQC.html
     - path: test-output/nanopore-test.db
     - path: test-output/nanopore-test_talon_abundance.tsv
     - path: test-output/nanopore-test_talon_summary.tsv

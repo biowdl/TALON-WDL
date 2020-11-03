@@ -71,7 +71,7 @@ Optional settings:
 ```json
 {
     "TalonWDL.novelIDprefix": "A prefix for novel transcript discoveries.",
-    "TalonWDL.talonDatabase": "A pre-generated talon database file."
+    "TalonWDL.talonDatabase": "A pre-generated talon database file.",
     "TalonWDL.spliceJunctions": "A pre-generated splice junction annotation file.",
     "TalonWDL.annotationGTFrefflat": "A refflat file of the annotation gtf used."
 }
