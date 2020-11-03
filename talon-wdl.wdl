@@ -1,6 +1,6 @@
 version 1.0
 
-# Copyright (c) 2019 Sequencing Analysis Support Core - Leiden University Medical Center
+# Copyright (c) 2019 Leiden University Medical Center
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -8,10 +8,10 @@ version 1.0
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -41,7 +41,6 @@ workflow TalonWDL {
         String sequencingPlatform
         String organismName
         String pipelineRunName
-        File dockerImagesFile
         String novelIDprefix = "TALON"
         Boolean runTranscriptClean = true
 
@@ -49,6 +48,8 @@ workflow TalonWDL {
         File? spliceJunctions
         File? annotationGTFrefflat
         File? NoneFile #FIXME
+
+        File dockerImagesFile
     }
 
     meta {
@@ -207,12 +208,12 @@ workflow TalonWDL {
         sequencingPlatform: {description: "The sequencing machine used to generate the data.", category: "required"}
         organismName: {description: "The name of the organism from which the data was collected.", category: "required"}
         pipelineRunName: {description: "A name describing the pipeline run.", category: "required"}
-        dockerImagesFile: {description: "The docker image used for this workflow. Changing this may result in errors which the developers may choose not to address.", category: "required"}
         novelIDprefix: {description: "Prefix for naming novel discoveries in eventual talon runs.", category: "common"}
         runTranscriptClean: {description: "Option to run transcriptclean after minimap2 alignment.", category: "common"}
         talonDatabase: {description: "A pre-generated talon database file.", category: "advanced"}
         spliceJunctions: {description: "A pre-generated splice junction annotation file.", category: "advanced"}
         annotationGTFrefflat: {description: "A refflat file of the annotation gtf used.", category: "common"}
+        dockerImagesFile: {description: "The docker image used for this workflow. Changing this may result in errors which the developers may choose not to address.", category: "required"}
 
         # outputs
         talonDatabaseFilled: {description: "Talon database after talon process."}

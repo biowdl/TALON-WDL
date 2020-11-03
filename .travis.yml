@@ -20,7 +20,6 @@ before_install:
   - conda config --add channels conda-forge
 
 stages:
-  - lint
   - test
 
 stage: test
@@ -37,8 +36,7 @@ after_failure:
 
 matrix:
   include:
-    - env: TEST="womtool validate and submodule up to date"
-      stage: lint
+    - env: TEST="Womtool validate and submodule up to date."
       install:
         - conda install cromwell miniwdl wdl-aid
       script: bash scripts/biowdl_lint.sh
