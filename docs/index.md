@@ -22,6 +22,7 @@ First download the latest version of the pipeline wdl file(s)
 from the
 [github page](https://github.com/biowdl/TALON-WDL).
 
+The pipeline can then be run with the following command:
 ```bash
 java \
     -jar cromwell-<version>.jar \
@@ -121,7 +122,6 @@ csv format.
 
 #### Example
 The following is an example of what an inputs JSON might look like:
-
 ```json
 {
     "TalonWDL.sampleConfigFile": "tests/samplesheets/pacbio.csv",

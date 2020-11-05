@@ -42,11 +42,7 @@ matrix:
       script: bash scripts/biowdl_lint.sh
       after_failure:
         - echo "Linting failed"
-    - env:
-      - TEST="pacbio.integration.test"
-    - env:
-      - TEST="pacbio.no.transcriptclean"
-    - env:
-      - TEST="nanopore.integration.test"
-    - env:
-      - TEST="nanopore.no.transcriptclean"
+    - env: TEST="pacbio.integration.test"
+    - env: TEST="pacbio.no.transcriptclean"
+    - env: TEST="nanopore.integration.test"
+    - env: TEST="nanopore.no.transcriptclean"
