@@ -1,12 +1,12 @@
 # TALON-WDL
-This repository contains the [Biowdl](https://github.com/biowdl) pipeline
+This repository contains the [Biowdl](https://github.com/biowdl) workflow
 usable for processing RNA-seq data produced by either a Nanopore or PacBio
 sequencer using [minimap2](https://github.com/lh3/minimap2),
 [transcriptclean](https://github.com/mortazavilab/TranscriptClean) and
 [talon](https://github.com/mortazavilab/TALON).
 
 ## Documentation
-Documentation for this pipeline can be
+Documentation for this workflow can be
 found [here](https://biowdl.github.io/TALON-WDL).
 
 ## About

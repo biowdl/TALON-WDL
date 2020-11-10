@@ -3,14 +3,14 @@ layout: default
 title: Home
 ---
 
-This pipeline can be used to process RNA sequenced with either a Pacific
+This workflow can be used to process RNA sequenced with either a Pacific
 Biosciences sequencer or Oxford Nanopore sequencer. Input files should be
-in fastq format. The pipeline performs mapping to a reference
+in fastq format. The workflow performs mapping to a reference
 genome (using minimap2), INDEL/mismatch and noncanonical splice junction
 correction (using transcriptclean) and identification and counting of
 known and novel genes/transcripts (using talon).
 
-This pipeline is part of [BioWDL](https://biowdl.github.io/)
+This workflow is part of [BioWDL](https://biowdl.github.io/)
 developed by the SASC team
 at [Leiden University Medical Center](https://www.lumc.nl/).
 
@@ -18,11 +18,11 @@ at [Leiden University Medical Center](https://www.lumc.nl/).
 This workflow can be run using
 [Cromwell](http://cromwell.readthedocs.io/en/stable/):
 
-First download the latest version of the pipeline wdl file(s)
+First download the latest version of the workflow wdl file(s)
 from the
 [github page](https://github.com/biowdl/TALON-WDL).
 
-The pipeline can then be run with the following command:
+The workflow can then be run with the following command:
 ```bash
 java \
     -jar cromwell-<version>.jar \
@@ -115,7 +115,7 @@ Sample2|lib1|rg1|tests/data/K562.subset.fastq.gz|0fded322b59b212f111eb3c695cdbc1
 
 NOTE: R1_md5, R2 and R2_md5 are optional do not have to be filled. And
 additional fields may be added (eg. for documentation purposes), these will be
-ignored by the pipeline.
+ignored by the workflow.
 
 After creating the table in a spreadsheet program it can be saved in 
 csv format.
@@ -143,8 +143,8 @@ The following is an example of what an inputs JSON might look like:
 ```
 
 ## Dependency requirements and tool versions
-Biowdl pipelines use docker images to ensure  reproducibility. This
-means that biowdl pipelines will run on any system that has docker
+Biowdl workflows use docker images to ensure  reproducibility. This
+means that biowdl workflows will run on any system that has docker
 installed. Alternatively they can be run with singularity.
 
 For more advanced configuration of docker or singularity please check
@@ -152,7 +152,7 @@ the [cromwell documentation on containers](
 https://cromwell.readthedocs.io/en/stable/tutorials/Containers/).
 
 Images from [biocontainers](https://biocontainers.pro) are preferred for
-biowdl pipelines. The list of default images for this pipeline can be
+biowdl workflows. The list of default images for this workflow can be
 found in the default for the `dockerImages` input.
 
 ## Output

@@ -10,7 +10,8 @@ that users understand how the changes affect the new version.
 
 version develop
 ---------------------------
-+ Add NanoPlot & NanoQC as additional QC steps for Nanopore & PacBio, to the pipeline.
++ Add NanoPlot & NanoQC as additional QC steps for Nanopore & PacBio, to
+  the pipeline.
 + Update tasks and the input/output names.
 + Rename workflow outputs to shorter names.
 + Add `meta {allowNestedInputs: true}` to the workflows, to allow for the use
@@ -20,8 +21,8 @@ version develop
   a index.
 + Replace test files and tests for nanopore.
 + Add new test files and tests for pacbio.
-+ Add `LabelReads` task from talon for labeling possible internal priming, both
-  on minimap2 and transcriptclean alignments.
++ Add `LabelReads` task from talon for labeling possible internal priming,
+  both on minimap2 and transcriptclean alignments.
 + Update talon to version 5.0.
 + Make the multiqc task suitable for use with a `final_workflow_outputs_dir`
   so it can be used on all of cromwell's supported backends.
@@ -48,8 +49,10 @@ version develop
 + Add parameter_meta to pipeline.wdl workflow.
 + Update talon to version 4.4.
 + Update transcriptclean to version 2.0.2.
-+ Change samplesheet converter from SampleConfigToSampleReadgroupLists to InputConverter.
-+ Splice junctions file is no longer created when transcriptclean is set to FALSE.
++ Change samplesheet converter from SampleConfigToSampleReadgroupLists
+  to InputConverter.
++ Splice junctions file is no longer created when transcriptclean is
+  set to FALSE.
 + Talon logs are now in the specified output directory.
 + Added link to documentation in README.
 + Added test for transcriptclean skip and renamed tests.
