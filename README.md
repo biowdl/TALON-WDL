@@ -7,7 +7,7 @@ sequencer using [minimap2](https://github.com/lh3/minimap2),
 
 ## Documentation
 Documentation for this workflow can be
-found [here](https://biowdl.github.io/TALON-WDL).
+found [here](https://biowdl.github.io/TALON-WDL/).
 
 ## About
 This workflow is part of [Biowdl](https://github.com/biowdl) developed by the
