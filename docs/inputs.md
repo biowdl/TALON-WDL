@@ -221,6 +221,11 @@
         <i>Boolean &mdash; Default: false</i><br />
         Whether or not the MD5 sums of the files mentioned in the samplesheet should be checked.
 </p>
+<p name="TalonWDL.convertSampleConfig.memory">
+        <b>TalonWDL.convertSampleConfig.memory</b><br />
+        <i>String &mdash; Default: "128M"</i><br />
+        The amount of memory needed for the job.
+</p>
 <p name="TalonWDL.convertSampleConfig.old">
         <b>TalonWDL.convertSampleConfig.old</b><br />
         <i>Boolean &mdash; Default: false</i><br />
@@ -911,6 +916,11 @@
         <i>Int? &mdash; Default: None</i><br />
         Drop reads with an average quality lower than specified.
 </p>
+<p name="TalonWDL.sampleWorkflow.nanoPlot.outputPath">
+        <b>TalonWDL.sampleWorkflow.nanoPlot.outputPath</b><br />
+        <i>String &mdash; Default: outputDir + outputPrefix</i><br />
+        Combination of the outputDir & outputPrefix strings.
+</p>
 <p name="TalonWDL.sampleWorkflow.nanoPlot.readType">
         <b>TalonWDL.sampleWorkflow.nanoPlot.readType</b><br />
         <i>String? &mdash; Default: None</i><br />
@@ -954,7 +964,7 @@
 <p name="TalonWDL.sampleWorkflow.sortMinimap2.memoryPerThreadGb">
         <b>TalonWDL.sampleWorkflow.sortMinimap2.memoryPerThreadGb</b><br />
         <i>Int &mdash; Default: 4</i><br />
-        The amount of memory used per sort thread in gigabytes
+        The amount of memory used per sort thread in gigabytes.
 </p>
 <p name="TalonWDL.sampleWorkflow.sortMinimap2.sortByName">
         <b>TalonWDL.sampleWorkflow.sortMinimap2.sortByName</b><br />
@@ -984,7 +994,7 @@
 <p name="TalonWDL.sampleWorkflow.sortTranscriptClean.memoryPerThreadGb">
         <b>TalonWDL.sampleWorkflow.sortTranscriptClean.memoryPerThreadGb</b><br />
         <i>Int &mdash; Default: 4</i><br />
-        The amount of memory used per sort thread in gigabytes
+        The amount of memory used per sort thread in gigabytes.
 </p>
 <p name="TalonWDL.sampleWorkflow.sortTranscriptClean.sortByName">
         <b>TalonWDL.sampleWorkflow.sortTranscriptClean.sortByName</b><br />
@@ -1069,16 +1079,6 @@
 </details>
 
 
-
-### Other inputs
-<details>
-<summary> Show/Hide </summary>
-<p name="TalonWDL.sampleWorkflow.nanoPlot.outputPath">
-        <b>TalonWDL.sampleWorkflow.nanoPlot.outputPath</b><br />
-        <i>String &mdash; Default: outputDir + outputPrefix</i><br />
-        ???
-</p>
-</details>
 
 
 

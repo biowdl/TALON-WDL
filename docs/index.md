@@ -98,8 +98,11 @@ columns: sample, library, readgroup, R1, R1_md5, R2, R2_md5.
 column name | function
 ---|---
 sample | sample ID
-library | library ID. These are the libraries that are sequenced. Usually there is only one library per sample.
-readgroup | readgroup ID. Usually a library is sequenced on multiple lanes in the sequencer, which gives multiple fastq files (referred to as readgroups). Each readgroup pair should have an ID.
+library | library ID. These are the libraries that are sequenced. Usually
+there is only one library per sample.
+readgroup | readgroup ID. Usually a library is sequenced on multiple lanes in
+the sequencer, which gives multiple fastq files (referred to as readgroups).
+Each readgroup pair should have an ID.
 R1| The fastq file containing the first reads of the read pairs.
 R1_md5 | Optional: md5sum for the R1 file.
 R2| Optional: The fastq file containing the reverse reads.
@@ -168,8 +171,8 @@ minimap2 alignment files, combined into a multiqc report.
   <!-- Obscure e-mail address for spammers -->
 For any questions about running this workflow and feature requests (such as
 adding additional tools and options), please use the
-<a href='https://github.com/biowdl/TALON-WDL/issues'>github issue tracker</a>
+<a href="https://github.com/biowdl/TALON-WDL/issues">github issue tracker</a>
 or contact the SASC team directly at: 
-<a href='&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#115;&#99;&#64;&#108;&#117;&#109;&#99;&#46;&#110;&#108;'>
+<a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#115;&#97;&#115;&#99;&#64;&#108;&#117;&#109;&#99;&#46;&#110;&#108;">
 &#115;&#97;&#115;&#99;&#64;&#108;&#117;&#109;&#99;&#46;&#110;&#108;</a>.
 </p>
