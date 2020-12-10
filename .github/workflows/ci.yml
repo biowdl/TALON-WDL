@@ -27,7 +27,7 @@ jobs:
           channels: defaults,bioconda,conda-forge
         # Conda-incubator uses 'test' environment by default.
       - name: Install requirements.
-        run: conda install -n test cromwell womtool pytest-workflow miniwdl wdl-aid
+        run: conda install -n test cromwell miniwdl wdl-aid
       - name: Run linting.
         run: bash scripts/biowdl_lint.sh
   test:
