@@ -170,7 +170,7 @@ workflow TalonWDL {
     }
 
     output {
-        File dockerImages = convertDockerTagsFile.json
+        File dockerImagesList = convertDockerTagsFile.json
         File talonDatabaseFilled = talon.updatedDatabase
         File referenceIndex = samtoolsFaidx.outputIndex
         File referenceDict = picardDict.outputDict
@@ -217,7 +217,7 @@ workflow TalonWDL {
         dockerImagesFile: {description: "The docker image used for this workflow. Changing this may result in errors which the developers may choose not to address.", category: "required"}
 
         # outputs
-        dockerImages: {description: "Json file describing the docker images used by the pipeline."}
+        dockerImagesList: {description: "Json file describing the docker images used by the pipeline."}
         talonDatabaseFilled: {description: "Talon database after talon process."}
         referenceIndex: {description: "Index file of the reference genome."}
         referenceDict: {description: "Dictionary file of the reference genome."}
