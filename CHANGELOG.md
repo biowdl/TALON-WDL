@@ -10,6 +10,7 @@ that users understand how the changes affect the new version.
 
 version develop
 ---------------------------
++ Add the dockerImages to the output section.
 + Replace travis with github CI.
 + Update Picard to version 2.23.8, Samtools to version 1.11.
 + Add NanoPlot & NanoQC as additional QC steps for Nanopore & PacBio, to

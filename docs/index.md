@@ -80,9 +80,9 @@ Optional settings:
 
 #### Sample configuration
 ##### Verification
-All samplesheet formats can be verified using `biowdl-input-converter`. 
+All samplesheet formats can be verified using `biowdl-input-converter`.
 It can be installed with `pip install biowdl-input-converter` or 
-`conda install biowdl-input-converter` (from the bioconda channel). 
+`conda install biowdl-input-converter` (from the bioconda channel).
 Python 3.7 or higher is required.
 
 With `biowdl-input-converter --validate samplesheet.csv` The file
@@ -92,7 +92,7 @@ information check out the [biowdl-input-converter readthedocs page](
 https://biowdl-input-converter.readthedocs.io).
 
 ##### CSV format
-The sample configuration can be given as a csv file with the following 
+The sample configuration can be given as a csv file with the following
 columns: sample, library, readgroup, R1, R1_md5, R2, R2_md5.
 
 column name | function
