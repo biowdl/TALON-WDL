@@ -7,6 +7,6 @@
 
 cromwell
 womtool
-pytest-workflow
+pytest-workflow>=1.4.0
 miniwdl
 wdl-aid
