@@ -170,7 +170,7 @@ workflow TalonWDL {
     }
 
     output {
-        File dockerImagesList = convertDockerTagsFile.json
+        File dockerImagesList = convertDockerImagesFile.json
         File talonDatabaseFilled = talon.updatedDatabase
         File referenceIndex = samtoolsFaidx.outputIndex
         File referenceDict = picardDict.outputDict
