@@ -1,3 +1,312 @@
+- name: nanopore.integration.test
+  tags:
+    - integration
+  command: >-
+    cromwell run -o tests/cromwell.options.json
+    -i tests/integration/nanopore.integration.test.json talon-wdl.wdl
+  files:
+    - path: test-output/multiqc/multiqc_data.zip
+    - path: test-output/multiqc/multiqc_report.html
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.alignment_summary_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.bait_bias_detail_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.bait_bias_summary_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.base_distribution_by_cycle_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.base_distribution_by_cycle.pdf
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.error_summary_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.flagstats
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.gc_bias.detail_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.gc_bias.pdf
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.gc_bias.summary_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.pre_adapter_detail_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.pre_adapter_summary_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.quality_by_cycle_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.quality_by_cycle.pdf
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.quality_distribution_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.quality_distribution.pdf
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.quality_yield_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.RNA_Metrics
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.bait_bias_detail_metrics
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.bait_bias_summary_metrics
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.base_distribution_by_cycle_metrics
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.base_distribution_by_cycle.pdf
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.error_summary_metrics
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.flagstats
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.gc_bias.detail_metrics
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.gc_bias.pdf
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.gc_bias.summary_metrics
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.pre_adapter_detail_metrics
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.pre_adapter_summary_metrics
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.quality_distribution_metrics
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.quality_yield_metrics
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_Dynamic_Histogram_Read_length.html
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_HistogramReadlength.png
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_LengthvsQualityScatterPlot_dot.png
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_LengthvsQualityScatterPlot_kde.png
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_LogTransformed_HistogramReadlength.png
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_NanoPlot-report.html
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_NanoStats.txt
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_Weighted_HistogramReadlength.png
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_Weighted_LogTransformed_HistogramReadlength.png
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_Yield_By_Length.png
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.fa
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean_labeled.sam
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.log
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean_read_labels.tsv
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.sam
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.sorted.bai
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.sorted.bam
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.TE.log
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1-fastqc/nanopore.subset.1_fastqc.html
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1-fastqc/nanopore.subset.1_fastqc.zip
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_labeled.sam
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_read_labels.tsv
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sam
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sorted.bai
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sorted.bam
+    - path: test-output/nanopore.1/nanoqc/nanoQC.html
+    - path: test-output/nanopore.1/nanoqc/NanoQC.log
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.alignment_summary_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.bait_bias_detail_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.bait_bias_summary_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.base_distribution_by_cycle_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.base_distribution_by_cycle.pdf
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.error_summary_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.flagstats
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.gc_bias.detail_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.gc_bias.pdf
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.gc_bias.summary_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.pre_adapter_detail_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.pre_adapter_summary_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.quality_by_cycle_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.quality_by_cycle.pdf
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.quality_distribution_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.quality_distribution.pdf
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.quality_yield_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.RNA_Metrics
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.bait_bias_detail_metrics
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.bait_bias_summary_metrics
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.base_distribution_by_cycle_metrics
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.base_distribution_by_cycle.pdf
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.error_summary_metrics
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.flagstats
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.gc_bias.detail_metrics
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.gc_bias.pdf
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.gc_bias.summary_metrics
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.pre_adapter_detail_metrics
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.pre_adapter_summary_metrics
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.quality_distribution_metrics
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.quality_yield_metrics
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_Dynamic_Histogram_Read_length.html
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_HistogramReadlength.png
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_LengthvsQualityScatterPlot_dot.png
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_LengthvsQualityScatterPlot_kde.png
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_LogTransformed_HistogramReadlength.png
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_NanoPlot-report.html
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_NanoStats.txt
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_Weighted_HistogramReadlength.png
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_Weighted_LogTransformed_HistogramReadlength.png
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_Yield_By_Length.png
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.fa
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean_labeled.sam
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.log
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean_read_labels.tsv
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.sam
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.sorted.bai
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.sorted.bam
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.TE.log
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1-fastqc/nanopore.subset.2_fastqc.html
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1-fastqc/nanopore.subset.2_fastqc.zip
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_labeled.sam
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_read_labels.tsv
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sam
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sorted.bai
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sorted.bam
+    - path: test-output/nanopore.2/nanoqc/nanoQC.html
+    - path: test-output/nanopore.2/nanoqc/NanoQC.log
+    - path: test-output/nanopore-test.db
+    - path: test-output/nanopore-test_talon_abundance.tsv
+    - path: test-output/nanopore-test_talon_summary.tsv
+    - path: test-output/run_QC.log
+    - path: test-output/run_talon_read_annot.tsv
+    - path: test-output/spliceJunctions.tsv
+    - path: test-output/talonConfigFile.csv
+
+- name: nanopore.no.transcriptclean
+  tags:
+    - integration
+  command: >-
+    cromwell run -o tests/cromwell.options.json
+    -i tests/integration/nanopore.no.transcriptclean.json talon-wdl.wdl
+  files:
+    - path: test-output/multiqc/multiqc_data.zip
+    - path: test-output/multiqc/multiqc_report.html
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.alignment_summary_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.bait_bias_detail_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.bait_bias_summary_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.base_distribution_by_cycle_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.base_distribution_by_cycle.pdf
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.error_summary_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.flagstats
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.gc_bias.detail_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.gc_bias.pdf
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.gc_bias.summary_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.pre_adapter_detail_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.pre_adapter_summary_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.quality_by_cycle_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.quality_by_cycle.pdf
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.quality_distribution_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.quality_distribution.pdf
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.quality_yield_metrics
+    - path: test-output/nanopore.1/metrics-minimap2/nanopore.1-lib1-rg1.sorted.RNA_Metrics
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.bait_bias_detail_metrics
+      should_exist: false
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.bait_bias_summary_metrics
+      should_exist: false
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.base_distribution_by_cycle_metrics
+      should_exist: false
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.base_distribution_by_cycle.pdf
+      should_exist: false
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.error_summary_metrics
+      should_exist: false
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.flagstats
+      should_exist: false
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.gc_bias.detail_metrics
+      should_exist: false
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.gc_bias.pdf
+      should_exist: false
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.gc_bias.summary_metrics
+      should_exist: false
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.pre_adapter_detail_metrics
+      should_exist: false
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.pre_adapter_summary_metrics
+      should_exist: false
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.quality_distribution_metrics
+      should_exist: false
+    - path: test-output/nanopore.1/metrics-transcriptclean/nanopore.1-lib1-rg1_clean.sorted.quality_yield_metrics
+      should_exist: false
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_Dynamic_Histogram_Read_length.html
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_HistogramReadlength.png
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_LengthvsQualityScatterPlot_dot.png
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_LengthvsQualityScatterPlot_kde.png
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_LogTransformed_HistogramReadlength.png
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_NanoPlot-report.html
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_NanoStats.txt
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_Weighted_HistogramReadlength.png
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_Weighted_LogTransformed_HistogramReadlength.png
+    - path: test-output/nanopore.1/nanoplot/nanopore.1-lib1-rg1_Yield_By_Length.png
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.fa
+      should_exist: false
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean_labeled.sam
+      should_exist: false
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.log
+      should_exist: false
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean_read_labels.tsv
+      should_exist: false
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.sam
+      should_exist: false
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.sorted.bai
+      should_exist: false
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.sorted.bam
+      should_exist: false
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.TE.log
+      should_exist: false
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1-fastqc/nanopore.subset.1_fastqc.html
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1-fastqc/nanopore.subset.1_fastqc.zip
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_labeled.sam
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_read_labels.tsv
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sam
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sorted.bai
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sorted.bam
+    - path: test-output/nanopore.1/nanoqc/nanoQC.html
+    - path: test-output/nanopore.1/nanoqc/NanoQC.log
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.alignment_summary_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.bait_bias_detail_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.bait_bias_summary_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.base_distribution_by_cycle_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.base_distribution_by_cycle.pdf
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.error_summary_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.flagstats
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.gc_bias.detail_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.gc_bias.pdf
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.gc_bias.summary_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.pre_adapter_detail_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.pre_adapter_summary_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.quality_by_cycle_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.quality_by_cycle.pdf
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.quality_distribution_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.quality_distribution.pdf
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.quality_yield_metrics
+    - path: test-output/nanopore.2/metrics-minimap2/nanopore.2-lib1-rg1.sorted.RNA_Metrics
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.bait_bias_detail_metrics
+      should_exist: false
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.bait_bias_summary_metrics
+      should_exist: false
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.base_distribution_by_cycle_metrics
+      should_exist: false
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.base_distribution_by_cycle.pdf
+      should_exist: false
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.error_summary_metrics
+      should_exist: false
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.flagstats
+      should_exist: false
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.gc_bias.detail_metrics
+      should_exist: false
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.gc_bias.pdf
+      should_exist: false
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.gc_bias.summary_metrics
+      should_exist: false
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.pre_adapter_detail_metrics
+      should_exist: false
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.pre_adapter_summary_metrics
+      should_exist: false
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.quality_distribution_metrics
+      should_exist: false
+    - path: test-output/nanopore.2/metrics-transcriptclean/nanopore.2-lib1-rg1_clean.sorted.quality_yield_metrics
+      should_exist: false
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_Dynamic_Histogram_Read_length.html
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_HistogramReadlength.png
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_LengthvsQualityScatterPlot_dot.png
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_LengthvsQualityScatterPlot_kde.png
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_LogTransformed_HistogramReadlength.png
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_NanoPlot-report.html
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_NanoStats.txt
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_Weighted_HistogramReadlength.png
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_Weighted_LogTransformed_HistogramReadlength.png
+    - path: test-output/nanopore.2/nanoplot/nanopore.2-lib1-rg1_Yield_By_Length.png
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.fa
+      should_exist: false
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean_labeled.sam
+      should_exist: false
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.log
+      should_exist: false
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean_read_labels.tsv
+      should_exist: false
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.sam
+      should_exist: false
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.sorted.bai
+      should_exist: false
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.sorted.bam
+      should_exist: false
+    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.TE.log
+      should_exist: false
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1-fastqc/nanopore.subset.1_fastqc.html
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1-fastqc/nanopore.subset.1_fastqc.zip
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_labeled.sam
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_read_labels.tsv
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sam
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sorted.bai
+    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sorted.bam
+    - path: test-output/nanopore.2/nanoqc/nanoQC.html
+    - path: test-output/nanopore.2/nanoqc/NanoQC.log
+    - path: test-output/nanopore-test.db
+    - path: test-output/nanopore-test_talon_abundance.tsv
+    - path: test-output/nanopore-test_talon_summary.tsv
+    - path: test-output/run_QC.log
+    - path: test-output/run_talon_read_annot.tsv
+    - path: test-output/spliceJunctions.tsv
+      should_exist: false
+    - path: test-output/talonConfigFile.csv
+
 - name: pacbio.integration.test
   tags:
     - integration
@@ -5,12 +314,50 @@
     cromwell run -o tests/cromwell.options.json
     -i tests/integration/pacbio.integration.test.json talon-wdl.wdl
   files:
-    - path: test-output/grch38.fasta.dict
-    - path: test-output/grch38.fasta.fai
     - path: test-output/multiqc/multiqc_data.zip
     - path: test-output/multiqc/multiqc_report.html
-    - path: test-output/pacbio.1/metrics-minimap2
-    - path: test-output/pacbio.1/metrics-transcriptclean
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.alignment_summary_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.bait_bias_detail_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.bait_bias_summary_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.base_distribution_by_cycle_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.base_distribution_by_cycle.pdf
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.error_summary_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.flagstats
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.gc_bias.detail_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.gc_bias.pdf
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.gc_bias.summary_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.pre_adapter_detail_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.pre_adapter_summary_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.quality_by_cycle_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.quality_by_cycle.pdf
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.quality_distribution_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.quality_distribution.pdf
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.quality_yield_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.RNA_Metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.RNA_Metrics.pdf
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.bait_bias_detail_metrics
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.bait_bias_summary_metrics
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.base_distribution_by_cycle_metrics
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.base_distribution_by_cycle.pdf
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.error_summary_metrics
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.flagstats
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.gc_bias.detail_metrics
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.gc_bias.pdf
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.gc_bias.summary_metrics
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.pre_adapter_detail_metrics
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.pre_adapter_summary_metrics
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.quality_distribution_metrics
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.quality_yield_metrics
+    - path: test-output/pacbio.1/nanoplot/pacbio.1-lib1-rg1_Dynamic_Histogram_Read_length.html
+    - path: test-output/pacbio.1/nanoplot/pacbio.1-lib1-rg1_HistogramReadlength.png
+    - path: test-output/pacbio.1/nanoplot/pacbio.1-lib1-rg1_LogTransformed_HistogramReadlength.png
+    - path: test-output/pacbio.1/nanoplot/pacbio.1-lib1-rg1_NanoPlot-report.html
+    - path: test-output/pacbio.1/nanoplot/pacbio.1-lib1-rg1_NanoStats.txt
+    - path: test-output/pacbio.1/nanoplot/pacbio.1-lib1-rg1_Weighted_HistogramReadlength.png
+    - path: test-output/pacbio.1/nanoplot/pacbio.1-lib1-rg1_Weighted_LogTransformed_HistogramReadlength.png
+    - path: test-output/pacbio.1/nanoplot/pacbio.1-lib1-rg1_Yield_By_Length.png
+    - path: test-output/pacbio.1/nanoqc/nanoQC.html
+    - path: test-output/pacbio.1/nanoqc/NanoQC.log
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1_clean.fa
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1_clean_labeled.sam
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1_clean.log
@@ -19,14 +366,55 @@
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1_clean.sorted.bai
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1_clean.sorted.bam
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1_clean.TE.log
-    - path: test-output/pacbio.1/pacbio.1-lib1-rg1-fastqc
+    - path: test-output/pacbio.1/pacbio.1-lib1-rg1-fastqc/pacbio.subset.1_fastqc.html
+    - path: test-output/pacbio.1/pacbio.1-lib1-rg1-fastqc/pacbio.subset.1_fastqc.zip
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1_labeled.sam
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1_read_labels.tsv
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1.sam
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1.sorted.bai
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1.sorted.bam
-    - path: test-output/pacbio.2/metrics-minimap2
-    - path: test-output/pacbio.2/metrics-transcriptclean
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.alignment_summary_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.bait_bias_detail_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.bait_bias_summary_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.base_distribution_by_cycle_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.base_distribution_by_cycle.pdf
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.error_summary_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.flagstats
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.gc_bias.detail_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.gc_bias.pdf
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.gc_bias.summary_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.pre_adapter_detail_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.pre_adapter_summary_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.quality_by_cycle_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.quality_by_cycle.pdf
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.quality_distribution_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.quality_distribution.pdf
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.quality_yield_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.RNA_Metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.RNA_Metrics.pdf
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.bait_bias_detail_metrics
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.bait_bias_summary_metrics
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.base_distribution_by_cycle_metrics
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.base_distribution_by_cycle.pdf
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.error_summary_metrics
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.flagstats
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.gc_bias.detail_metrics
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.gc_bias.pdf
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.gc_bias.summary_metrics
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.pre_adapter_detail_metrics
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.pre_adapter_summary_metrics
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.quality_distribution_metrics
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.quality_yield_metrics
+    - path: test-output/pacbio.2/nanoplot/pacbio.2-lib1-rg1_Dynamic_Histogram_Read_length.html
+    - path: test-output/pacbio.2/nanoplot/pacbio.2-lib1-rg1_HistogramReadlength.png
+    - path: test-output/pacbio.2/nanoplot/pacbio.2-lib1-rg1_LogTransformed_HistogramReadlength.png
+    - path: test-output/pacbio.2/nanoplot/pacbio.2-lib1-rg1_NanoPlot-report.html
+    - path: test-output/pacbio.2/nanoplot/pacbio.2-lib1-rg1_NanoStats.txt
+    - path: test-output/pacbio.2/nanoplot/pacbio.2-lib1-rg1_Weighted_HistogramReadlength.png
+    - path: test-output/pacbio.2/nanoplot/pacbio.2-lib1-rg1_Weighted_LogTransformed_HistogramReadlength.png
+    - path: test-output/pacbio.2/nanoplot/pacbio.2-lib1-rg1_Yield_By_Length.png
+    - path: test-output/pacbio.2/nanoqc/nanoQC.html
+    - path: test-output/pacbio.2/nanoqc/NanoQC.log
     - path: test-output/pacbio.2/pacbio.2-lib1-rg1_clean.fa
     - path: test-output/pacbio.2/pacbio.2-lib1-rg1_clean_labeled.sam
     - path: test-output/pacbio.2/pacbio.2-lib1-rg1_clean.log
@@ -35,7 +423,8 @@
     - path: test-output/pacbio.2/pacbio.2-lib1-rg1_clean.sorted.bai
     - path: test-output/pacbio.2/pacbio.2-lib1-rg1_clean.sorted.bam
     - path: test-output/pacbio.2/pacbio.2-lib1-rg1_clean.TE.log
-    - path: test-output/pacbio.2/pacbio.2-lib1-rg1-fastqc
+    - path: test-output/pacbio.2/pacbio.2-lib1-rg1-fastqc/pacbio.subset.2_fastqc.html
+    - path: test-output/pacbio.2/pacbio.2-lib1-rg1-fastqc/pacbio.subset.2_fastqc.zip
     - path: test-output/pacbio.2/pacbio.2-lib1-rg1_labeled.sam
     - path: test-output/pacbio.2/pacbio.2-lib1-rg1_read_labels.tsv
     - path: test-output/pacbio.2/pacbio.2-lib1-rg1.sam
@@ -56,13 +445,63 @@
     cromwell run -o tests/cromwell.options.json
     -i tests/integration/pacbio.no.transcriptclean.json talon-wdl.wdl
   files:
-    - path: test-output/grch38.fasta.dict
-    - path: test-output/grch38.fasta.fai
     - path: test-output/multiqc/multiqc_data.zip
     - path: test-output/multiqc/multiqc_report.html
-    - path: test-output/pacbio.1/metrics-minimap2
-    - path: test-output/pacbio.1/metrics-transcriptclean
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.alignment_summary_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.bait_bias_detail_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.bait_bias_summary_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.base_distribution_by_cycle_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.base_distribution_by_cycle.pdf
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.error_summary_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.flagstats
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.gc_bias.detail_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.gc_bias.pdf
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.gc_bias.summary_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.pre_adapter_detail_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.pre_adapter_summary_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.quality_by_cycle_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.quality_by_cycle.pdf
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.quality_distribution_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.quality_distribution.pdf
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.quality_yield_metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.RNA_Metrics
+    - path: test-output/pacbio.1/metrics-minimap2/pacbio.1-lib1-rg1.sorted.RNA_Metrics.pdf
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.bait_bias_detail_metrics
       should_exist: false
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.bait_bias_summary_metrics
+      should_exist: false
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.base_distribution_by_cycle_metrics
+      should_exist: false
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.base_distribution_by_cycle.pdf
+      should_exist: false
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.error_summary_metrics
+      should_exist: false
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.flagstats
+      should_exist: false
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.gc_bias.detail_metrics
+      should_exist: false
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.gc_bias.pdf
+      should_exist: false
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.gc_bias.summary_metrics
+      should_exist: false
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.pre_adapter_detail_metrics
+      should_exist: false
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.pre_adapter_summary_metrics
+      should_exist: false
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.quality_distribution_metrics
+      should_exist: false
+    - path: test-output/pacbio.1/metrics-transcriptclean/pacbio.1-lib1-rg1_clean.sorted.quality_yield_metrics
+      should_exist: false
+    - path: test-output/pacbio.1/nanoplot/pacbio.1-lib1-rg1_Dynamic_Histogram_Read_length.html
+    - path: test-output/pacbio.1/nanoplot/pacbio.1-lib1-rg1_HistogramReadlength.png
+    - path: test-output/pacbio.1/nanoplot/pacbio.1-lib1-rg1_LogTransformed_HistogramReadlength.png
+    - path: test-output/pacbio.1/nanoplot/pacbio.1-lib1-rg1_NanoPlot-report.html
+    - path: test-output/pacbio.1/nanoplot/pacbio.1-lib1-rg1_NanoStats.txt
+    - path: test-output/pacbio.1/nanoplot/pacbio.1-lib1-rg1_Weighted_HistogramReadlength.png
+    - path: test-output/pacbio.1/nanoplot/pacbio.1-lib1-rg1_Weighted_LogTransformed_HistogramReadlength.png
+    - path: test-output/pacbio.1/nanoplot/pacbio.1-lib1-rg1_Yield_By_Length.png
+    - path: test-output/pacbio.1/nanoqc/nanoQC.html
+    - path: test-output/pacbio.1/nanoqc/NanoQC.log
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1_clean.fa
       should_exist: false
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1_clean_labeled.sam
@@ -79,15 +518,68 @@
       should_exist: false
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1_clean.TE.log
       should_exist: false
-    - path: test-output/pacbio.1/pacbio.1-lib1-rg1-fastqc
+    - path: test-output/pacbio.1/pacbio.1-lib1-rg1-fastqc/pacbio.subset.1_fastqc.html
+    - path: test-output/pacbio.1/pacbio.1-lib1-rg1-fastqc/pacbio.subset.1_fastqc.zip
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1_labeled.sam
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1_read_labels.tsv
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1.sam
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1.sorted.bai
     - path: test-output/pacbio.1/pacbio.1-lib1-rg1.sorted.bam
-    - path: test-output/pacbio.2/metrics-minimap2
-    - path: test-output/pacbio.2/metrics-transcriptclean
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.alignment_summary_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.bait_bias_detail_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.bait_bias_summary_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.base_distribution_by_cycle_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.base_distribution_by_cycle.pdf
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.error_summary_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.flagstats
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.gc_bias.detail_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.gc_bias.pdf
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.gc_bias.summary_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.pre_adapter_detail_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.pre_adapter_summary_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.quality_by_cycle_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.quality_by_cycle.pdf
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.quality_distribution_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.quality_distribution.pdf
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.quality_yield_metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.RNA_Metrics
+    - path: test-output/pacbio.2/metrics-minimap2/pacbio.2-lib1-rg1.sorted.RNA_Metrics.pdf
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.bait_bias_detail_metrics
       should_exist: false
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.bait_bias_summary_metrics
+      should_exist: false
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.base_distribution_by_cycle_metrics
+      should_exist: false
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.base_distribution_by_cycle.pdf
+      should_exist: false
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.error_summary_metrics
+      should_exist: false
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.flagstats
+      should_exist: false
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.gc_bias.detail_metrics
+      should_exist: false
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.gc_bias.pdf
+      should_exist: false
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.gc_bias.summary_metrics
+      should_exist: false
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.pre_adapter_detail_metrics
+      should_exist: false
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.pre_adapter_summary_metrics
+      should_exist: false
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.quality_distribution_metrics
+      should_exist: false
+    - path: test-output/pacbio.2/metrics-transcriptclean/pacbio.2-lib1-rg1_clean.sorted.quality_yield_metrics
+      should_exist: false
+    - path: test-output/pacbio.2/nanoplot/pacbio.2-lib1-rg1_Dynamic_Histogram_Read_length.html
+    - path: test-output/pacbio.2/nanoplot/pacbio.2-lib1-rg1_HistogramReadlength.png
+    - path: test-output/pacbio.2/nanoplot/pacbio.2-lib1-rg1_LogTransformed_HistogramReadlength.png
+    - path: test-output/pacbio.2/nanoplot/pacbio.2-lib1-rg1_NanoPlot-report.html
+    - path: test-output/pacbio.2/nanoplot/pacbio.2-lib1-rg1_NanoStats.txt
+    - path: test-output/pacbio.2/nanoplot/pacbio.2-lib1-rg1_Weighted_HistogramReadlength.png
+    - path: test-output/pacbio.2/nanoplot/pacbio.2-lib1-rg1_Weighted_LogTransformed_HistogramReadlength.png
+    - path: test-output/pacbio.2/nanoplot/pacbio.2-lib1-rg1_Yield_By_Length.png
+    - path: test-output/pacbio.2/nanoqc/nanoQC.html
+    - path: test-output/pacbio.2/nanoqc/NanoQC.log
     - path: test-output/pacbio.2/pacbio.2-lib1-rg1_clean.fa
       should_exist: false
     - path: test-output/pacbio.2/pacbio.2-lib1-rg1_clean_labeled.sam
@@ -104,7 +596,8 @@
       should_exist: false
     - path: test-output/pacbio.2/pacbio.2-lib1-rg1_clean.TE.log
       should_exist: false
-    - path: test-output/pacbio.2/pacbio.2-lib1-rg1-fastqc
+    - path: test-output/pacbio.2/pacbio.2-lib1-rg1-fastqc/pacbio.subset.2_fastqc.html
+    - path: test-output/pacbio.2/pacbio.2-lib1-rg1-fastqc/pacbio.subset.2_fastqc.zip
     - path: test-output/pacbio.2/pacbio.2-lib1-rg1_labeled.sam
     - path: test-output/pacbio.2/pacbio.2-lib1-rg1_read_labels.tsv
     - path: test-output/pacbio.2/pacbio.2-lib1-rg1.sam
@@ -113,127 +606,6 @@
     - path: test-output/pacbio-test.db
     - path: test-output/pacbio-test_talon_abundance.tsv
     - path: test-output/pacbio-test_talon_summary.tsv
-    - path: test-output/run_QC.log
-    - path: test-output/run_talon_read_annot.tsv
-    - path: test-output/spliceJunctions.tsv
-      should_exist: false
-    - path: test-output/talonConfigFile.csv
-
-- name: nanopore.integration.test
-  tags:
-    - integration
-  command: >-
-    cromwell run -o tests/cromwell.options.json
-    -i tests/integration/nanopore.integration.test.json talon-wdl.wdl
-  files:
-    - path: test-output/grch38.fasta.dict
-    - path: test-output/grch38.fasta.fai
-    - path: test-output/multiqc/multiqc_data.zip
-    - path: test-output/multiqc/multiqc_report.html
-    - path: test-output/nanopore.1/metrics-minimap2
-    - path: test-output/nanopore.1/metrics-transcriptclean
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.fa
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean_labeled.sam
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.log
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean_read_labels.tsv
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.sam
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.sorted.bai
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.sorted.bam
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.TE.log
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1-fastqc
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_labeled.sam
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_read_labels.tsv
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sam
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sorted.bai
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sorted.bam
-    - path: test-output/nanopore.2/metrics-minimap2
-    - path: test-output/nanopore.2/metrics-transcriptclean
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.fa
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean_labeled.sam
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.log
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean_read_labels.tsv
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.sam
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.sorted.bai
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.sorted.bam
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.TE.log
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1-fastqc
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_labeled.sam
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_read_labels.tsv
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sam
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sorted.bai
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sorted.bam
-    - path: test-output/nanopore-test.db
-    - path: test-output/nanopore-test_talon_abundance.tsv
-    - path: test-output/nanopore-test_talon_summary.tsv
-    - path: test-output/run_QC.log
-    - path: test-output/run_talon_read_annot.tsv
-    - path: test-output/spliceJunctions.tsv
-    - path: test-output/talonConfigFile.csv
-
-- name: nanopore.no.transcriptclean
-  tags:
-    - integration
-  command: >-
-    cromwell run -o tests/cromwell.options.json
-    -i tests/integration/nanopore.no.transcriptclean.json talon-wdl.wdl
-  files:
-    - path: test-output/grch38.fasta.dict
-    - path: test-output/grch38.fasta.fai
-    - path: test-output/multiqc/multiqc_data.zip
-    - path: test-output/multiqc/multiqc_report.html
-    - path: test-output/nanopore.1/metrics-minimap2
-    - path: test-output/nanopore.1/metrics-transcriptclean
-      should_exist: false
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.fa
-      should_exist: false
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean_labeled.sam
-      should_exist: false
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.log
-      should_exist: false
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean_read_labels.tsv
-      should_exist: false
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.sam
-      should_exist: false
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.sorted.bai
-      should_exist: false
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.sorted.bam
-      should_exist: false
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_clean.TE.log
-      should_exist: false
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1-fastqc
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_labeled.sam
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1_read_labels.tsv
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sam
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sorted.bai
-    - path: test-output/nanopore.1/nanopore.1-lib1-rg1.sorted.bam
-    - path: test-output/nanopore.2/metrics-minimap2
-    - path: test-output/nanopore.2/metrics-transcriptclean
-      should_exist: false
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.fa
-      should_exist: false
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean_labeled.sam
-      should_exist: false
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.log
-      should_exist: false
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean_read_labels.tsv
-      should_exist: false
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.sam
-      should_exist: false
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.sorted.bai
-      should_exist: false
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.sorted.bam
-      should_exist: false
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_clean.TE.log
-      should_exist: false
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1-fastqc
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_labeled.sam
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1_read_labels.tsv
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sam
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sorted.bai
-    - path: test-output/nanopore.2/nanopore.2-lib1-rg1.sorted.bam
-    - path: test-output/nanopore-test.db
-    - path: test-output/nanopore-test_talon_abundance.tsv
-    - path: test-output/nanopore-test_talon_summary.tsv
     - path: test-output/run_QC.log
     - path: test-output/run_talon_read_annot.tsv
     - path: test-output/spliceJunctions.tsv

@@ -1,6 +1,6 @@
 version 1.0
 
-# Copyright (c) 2019 Sequencing Analysis Support Core - Leiden University Medical Center
+# Copyright (c) 2019 Leiden University Medical Center
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -8,10 +8,10 @@ version 1.0
 # to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 # copies of the Software, and to permit persons to whom the Software is
 # furnished to do so, subject to the following conditions:
-
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -24,6 +24,7 @@ import "structs.wdl" as structs
 import "BamMetrics/bammetrics.wdl" as metrics
 import "tasks/fastqc.wdl" as fastqc
 import "tasks/minimap2.wdl" as minimap2
+import "tasks/nanopack.wdl" as nanopack
 import "tasks/samtools.wdl" as samtools
 import "tasks/talon.wdl" as talon
 import "tasks/transcriptclean.wdl" as transcriptClean
@@ -37,12 +38,13 @@ workflow SampleWorkflow {
         File referenceGenomeDict
         String presetOption
         Boolean runTranscriptClean = true
-        Map[String, String] dockerImages
 
         File? variantVCF
         String? howToFindGTAG
         File? spliceJunctionsFile
         File? annotationGTFrefflat
+
+        Map[String, String] dockerImages
     }
 
     meta {allowNestedInputs: true}
@@ -56,6 +58,22 @@ workflow SampleWorkflow {
                 seqFile = readgroup.R1,
                 outdirPath = outputDirectory + "/" + readgroupIdentifier + "-fastqc",
                 dockerImage = dockerImages["fastqc"]
+        }
+
+        call nanopack.NanoPlot as nanoPlot {
+            input:
+                inputFile = readgroup.R1,
+                inputFileType = "fastq",
+                outputDir = outputDirectory + "/nanoplot/",
+                outputPrefix = readgroupIdentifier + "_",
+                dockerImage = dockerImages["nanoplot"]
+        }
+
+        call nanopack.NanoQc as nanoQc {
+            input:
+                inputFile = readgroup.R1,
+                outputDir = outputDirectory + "/nanoqc/",
+                dockerImage = dockerImages["nanoqc"]
         }
 
         call minimap2.Mapping as minimap2 {
@@ -139,7 +157,7 @@ workflow SampleWorkflow {
         }
     }
 
-    Array[File] qualityReports = flatten([fastqcTask.htmlReport, fastqcTask.reportZip, flatten(bamMetricsMinimap2.reports), flatten(select_all(bamMetricsTranscriptClean.reports))])
+    Array[File] qualityReports = flatten([fastqcTask.htmlReport, fastqcTask.reportZip, flatten(bamMetricsMinimap2.reports), flatten(select_all(bamMetricsTranscriptClean.reports)), nanoPlot.dynamicHistogram, nanoPlot.readLengthHistogram, nanoPlot.logScaleReadLengthHistogram, nanoPlot.report, nanoPlot.weightedHistogram, nanoPlot.weightedLogScaleHistogram, nanoPlot.yieldByLength, select_all(nanoPlot.lengthVsQualityScatterPlotDot), select_all(nanoPlot.lengthVsQualityScatterPlotKde), select_all(nanoPlot.stats), nanoQc.report, nanoQc.log])
 
     output {
         Array[File] workflowSam = if (runTranscriptClean) 
@@ -170,11 +188,11 @@ workflow SampleWorkflow {
         referenceGenomeDict: {description: "Reference genome dictionary file.", category: "required"}
         presetOption: {description: "This option applies multiple options at the same time in minimap2.", category: "common"}
         runTranscriptClean: {description: "Option to run transcriptclean after minimap2 alignment.", category: "common"}
-        dockerImages: {description: "The docker image used for this workflow. Changing this may result in errors which the developers may choose not to address.", category: "advanced"}
         variantVCF: {description: "Vcf formatted file of variants.", category: "common"}
         howToFindGTAG: {description: "How to find GT-AG. f:transcript strand, b:both strands, n:don't match GT-AG.", category: "common"}
         spliceJunctionsFile: {description: "A pre-generated splice junction annotation file.", category: "advanced"}
         annotationGTFrefflat: {description: "A refflat file of the annotation gtf used.", category: "common"}
+        dockerImages: {description: "The docker image used for this workflow. Changing this may result in errors which the developers may choose not to address.", category: "advanced"}
 
         # outputs
         workflowSam: {description: "Either the minimap2 or transcriptclean Sam file(s)."}
