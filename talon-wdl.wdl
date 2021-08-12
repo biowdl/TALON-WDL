@@ -24,20 +24,20 @@ import "sample.wdl" as sampleWorkflow
 import "structs.wdl" as structs
 import "tasks/biowdl.wdl" as biowdl
 import "tasks/common.wdl" as common
+import "tasks/multiqc.wdl" as multiqc
+import "tasks/picard.wdl" as picard
+import "tasks/samtools.wdl" as samtools
 import "tasks/talon.wdl" as talon
 import "tasks/transcriptclean.wdl" as transcriptClean
-import "tasks/samtools.wdl" as samtools
-import "tasks/picard.wdl" as picard
-import "tasks/multiqc.wdl" as multiqc
 
 workflow TalonWDL {
     input {
         File sampleConfigFile
-        String outputDirectory = "."
         File annotationGTF
+        File referenceGenome
+        String outputDirectory = "."
         String genomeBuild
         String annotationVersion
-        File referenceGenome
         String sequencingPlatform
         String organismName
         String pipelineRunName
