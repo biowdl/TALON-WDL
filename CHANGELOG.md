@@ -12,7 +12,6 @@ version develop
 ---------------------------
 + Update samtools to version 1.13.
 + Update picard to version 2.25.7.
-+ Update nanoplot to version 1.38.1.
 + Update multiqc to version 1.11.
 + Update biowdl-input-converter to version 3.0.
 + Replace travis with github CI.
