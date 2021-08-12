@@ -27,13 +27,13 @@
 
 # Tools are sorted alphabetically for ease of use.
 
-biowdl-input-converter: "quay.io/biocontainers/biowdl-input-converter:0.2.1--py_0"
-fastqc: "quay.io/biocontainers/fastqc:0.11.9--0"
-minimap2: "quay.io/biocontainers/minimap2:2.17--hed695b0_3"
-multiqc: "quay.io/biocontainers/multiqc:1.9--py_1"
-nanoplot: "quay.io/biocontainers/nanoplot:1.32.1--py_0"
+biowdl-input-converter: "quay.io/biocontainers/biowdl-input-converter:0.3.0--pyhdfd78af_0"
+fastqc: "quay.io/biocontainers/fastqc:0.11.9--hdfd78af_1"
+minimap2: "quay.io/biocontainers/minimap2:2.20--h5bf99c6_0"
+multiqc: "quay.io/biocontainers/multiqc:1.10.1--pyhdfd78af_1"
+nanoplot: "quay.io/biocontainers/nanoplot:1.38.0--pyhdfd78af_0"
 nanoqc: "quay.io/biocontainers/nanoqc:0.9.4--py_0"
-picard: "quay.io/biocontainers/picard:2.23.8--0"
-samtools: "quay.io/biocontainers/samtools:1.11--h6270b1f_0"
+picard: "quay.io/biocontainers/picard:2.25.5--hdfd78af_0"
+samtools: "quay.io/biocontainers/samtools:1.12--h9aed4be_1"
 talon: "biocontainers/talon:v5.0_cv1"
 transcriptclean: "biocontainers/transcriptclean:v2.0.2_cv1"
